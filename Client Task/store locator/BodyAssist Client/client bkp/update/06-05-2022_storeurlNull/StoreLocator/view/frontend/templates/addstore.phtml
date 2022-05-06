@@ -1,0 +1,1063 @@
+<?php 
+$saveurl = $this->getUrl('storelocator/index/save');
+$countryList = $block->getCountries();
+$hourarray = $block->getHourarray();
+$minutearray = $block->getMinutearray();
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$customerSession = $objectManager->create('Magento\Customer\Model\Session');
+if ($customerSession->isLoggedIn()) {
+    $CustomerEmail= $customerSession->getCustomer()->getEmail(); 
+}
+?>
+<div class="dealercontent">
+	<form action="<?php echo $saveurl; ?>" method="post" enctype="multipart/form-data" id="dealerform" >
+		<div class="infotab">
+			<span id="information" class="infotitle">Information</span>
+			<div  class="dealerinfo information">
+				<fieldset class="fieldset info">
+					<div class="field">
+						 <div class="fields group group-2">
+						 	<div class="field">
+								<label class="label">Name <span class="requiredInput">*</span></label>
+								<div class="control"><input type="text" class="input-text required-entry" name="sname" id="sname"></div>
+								<div class="error_msg_sname"></div>
+							</div>
+							<div class="field">
+								<label class="label">Position</label>
+								<div class="control"><input type="text" class="input-text" name="position"></div>
+							</div>
+						 </div>
+					</div>
+					<div class="field">
+						 <div class="fields group group-2">					
+							<div class="field">
+								<label class="label">Store Image</label>
+								<div class="control"><input type="file" class="input-text" name="image"></div>
+							</div>
+							<div class="field">
+								<label class="label">Google Map Icon</label>
+								<div class="control"><input type="file" class="input-text" name="icon"></div>
+							</div>
+						</div>
+					</div>
+				</fieldset>
+			</div>
+		</div>
+		<div class="infotab">
+			<span id="address" class="infotitle">Address</span>
+			<div class="dealerinfo address">
+				<fieldset class="fieldset info">
+					<div class="field">
+						 <div class="fields group group-2">
+					<div class="field">
+						<label class="label">Address <span class="requiredInput">*</span></label>
+						<div class="control"><input class="input-text required-entry" type="text" name="address" id="add"></div>
+						<div class="error_msg_add"></div>
+					</div>
+					<div class="field">
+						<label class="label">Region</label>
+						<div class="control"><input class="input-text" type="text" name="region"></div>
+					</div>
+				</div></div>
+				<div class="field">
+						 <div class="fields group group-2">
+					<div class="field">
+						<label class="label">City <span class="requiredInput">*</span></label>
+						<div class="control"><input class="input-text required-entry" type="text" name="city" id="city"></div>
+						<div class="error_msg_city"></div>
+					</div>
+					<div class="field">
+						<label class="label">Postcode</label>
+						<div class="control"><input class="input-text required-entry" type="text" name="postcode"></div>
+					</div>
+				</div>
+			</div>
+					<div class="field">
+						<label class="label">Country <span class="requiredInput">*</span></label>
+							<?php echo $countryList?>
+						<div class="error_msg_country"></div>
+					</div>
+				</fieldset>
+			</div>
+		</div>
+		<div class="infotab">
+			<span id="storecoordinates" class="infotitle">Store Coordinates</span>
+			<div class="dealerinfo storecoordinates">
+				<fieldset class="fieldset info">
+					<div class="field">
+						<div class="fields group group-2">
+							<div class="field">
+								<label class="label">Latitude <span class="requiredInput">*</span></label>
+								<div class="control"><input type="text" class="input-text required-entry" name="latitude" id="latitude"></div>
+								<div class="error_msg_latitude"></div>
+							</div>
+							<div class="field">
+								<label class="label">Longitude <span class="requiredInput">*</span></label>
+								<div class="control"><input type="text" class="input-text required-entry" name="longitude" id="longitude"></div>
+								<div class="error_msg_longitude"></div> 
+							</div>
+						</div>
+					</div>
+				</fieldset>
+			</div>
+		</div>
+		<div class="infotab">
+			<span id="contact" class="infotitle">Contact</span>
+			<div  class="dealerinfo contact"> 
+				<fieldset class="fieldset info">
+					<div class="field">
+						<div class="fields group group-2">
+							<div class="field">
+								<label class="label">Website <span class="requiredInput">*</span></label>
+								<div class="control"><input type="text" class="input-text required-entry" name="link" id="website"></div>
+								<div class="error_msg_website"></div>
+							</div>
+							<div class="field">
+								<label class="label">Store Url <span class="requiredInput">*</span></label>
+								<div class="control"><input type="text" class="input-text required-entry" name="storeurl" id="storeurl"></div>
+								<div class="error_msg_storeurl"></div>
+							</div>							
+						</div>						
+					</div>
+					<div class="field">
+						<div class="fields group group-2">
+							<div class="field">
+								<label class="label">Phone</label>
+								<div class="control"><input type="text" class="input-text" name="phone"></div>
+							</div>
+							<div class="field">
+								<label class="label">Email-Id <span class="requiredInput">*</span></label>
+								<div class="control"><input type="text" class="input-text required-entry" name="email" id="email" value="<?php echo $CustomerEmail;?>"></div>
+								<div class="error_msg_email"></div>
+							</div>
+						</div>
+					</div>
+				</fieldset>		
+			</div>
+		</div>
+		<div class="infotab">
+			<span id="storeschedule" class="infotitle">Store Schedule</span>
+			<div class="dealerinfo storeschedule"> 
+				<fieldset class="fieldset info">
+					<div class="field">
+						<div class="fields group group-2">
+							<label class="label"><strong>MONDAY</strong></label>
+							<div class="field">
+								<label class="label">Open</label>
+								<select class="timeschedule" id="montime" name="mon_open">
+									<option value="0">No</option>
+									<option value="1">Yes</option>
+								</select>
+							</div>
+							<div class="scheduletime montime field">
+								<div class="fields group group-2">
+									<div class="field">
+										<label class="label">Opening Time</label>
+										<div class="fields group group-2">
+											<div class="field">
+												<select name="mon_otime[]" tabindex="1" type="time">
+													<?php 
+														foreach ($hourarray as $value) {
+															?>
+																<option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+															<?php 
+														}
+													?>
+												</select>
+											</div>
+											<div class="field">
+												<select name="mon_otime[]" tabindex="1" type="time">
+													<?php 
+														foreach ($minutearray as $value) {
+															?>
+																<option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+															<?php 
+														}
+													?>
+												</select>
+											</div>
+										</div>
+									</div>									
+									<div class="field">
+										<label class="label">Break Start Time</label>
+										<div class="fields group group-2">
+											<div class="field">
+												<select name="mon_bstime[]" tabindex="1" type="time">
+													<?php 
+														foreach ($hourarray as $value) {
+															?>
+																<option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+															<?php 
+														}
+													?>
+												</select>										
+											</div>
+											<div class="field">
+												<select name="mon_bstime[]" tabindex="1" type="time">
+													<?php 
+														foreach ($minutearray as $value) {
+															?>
+																<option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+															<?php 
+														}
+													?>
+												</select>
+											</div>
+										</div>
+									</div>
+								</div>
+								<hr />
+								<div class="fields group group-2">
+									<div class="field">
+									<label class="label">Break End Time</label>
+									<div class="fields group group-2">
+										<div class="field">
+											<select name="mon_betime[]" tabindex="1" type="time">
+												<?php 
+													foreach ($hourarray as $value) {
+														?>
+															<option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+														<?php 
+													}
+												?>
+											</select>
+										</div>
+										<div class="field">
+											<select name="mon_betime[]" tabindex="1" type="time">
+												<?php 
+													foreach ($minutearray as $value) {
+														?>
+															<option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+														<?php 
+													}
+												?>
+											</select>
+										</div>
+									</div>
+									</div>
+									<div class="field">
+										<label class="label">Closing Time</label>
+										<div class="fields group group-2">
+											<div class="field">
+												<select name="mon_ctime[]" tabindex="1" type="time">
+													<?php 
+														foreach ($hourarray as $value) {
+															?>
+																<option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+															<?php 
+														}
+													?>
+												</select>
+											</div>
+											<div class="field">
+												<select name="mon_ctime[]" tabindex="1" type="time">
+													<?php 
+														foreach ($minutearray as $value) {
+															?>
+																<option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+															<?php 
+														}
+													?>
+												</select>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="field">
+							<fieldset class="fieldset info">
+								<div class="field">
+									<div class="fields group group-2">
+										<label class="label"><strong>TUESDAY</strong></label>
+										<div class="field">
+											<label class="label">Open</label>
+											<select class="timeschedule" id="tuetime" name="tue_open">
+												<option value="0">No</option>
+												<option value="1">Yes</option>
+											</select>
+										</div>
+										<div class="scheduletime tuetime field">
+											<div class="fields group group-2">
+												<div class="field">
+													<label class="label">Opening Time</label>
+													<div class="fields group group-2">
+														<div class="field">
+															<select name="tue_otime[]" tabindex="1" type="time">
+																<?php 
+																	foreach ($hourarray as $value) {
+																		?>
+																			<option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+																		<?php 
+																	}
+																?>
+															</select>
+														</div>
+														<div class="field">
+															<select name="tue_otime[]" tabindex="1" type="time">
+																<?php 
+																	foreach ($minutearray as $value) {
+																		?>
+																			<option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+																		<?php 
+																	}
+																?>
+															</select>
+														</div>
+													</div>
+												</div>
+												<div class="field">
+													<label class="label">Break Start Time</label>
+													<div class="fields group group-2">
+														<div class="field">
+															<select name="tue_bstime[]" tabindex="1" type="time">
+																<?php 
+																	foreach ($hourarray as $value) {
+																		?>
+																			<option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+																		<?php 
+																	}
+																?>
+															</select>
+														</div>
+														<div class="field">
+															<select name="tue_bstime[]" tabindex="1" type="time">
+																<?php 
+																	foreach ($minutearray as $value) {
+																		?>
+																			<option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+																		<?php 
+																	}
+																?>
+															</select>
+														</div>
+													</div>
+												</div>
+											</div>
+											<hr />
+											<div class="fields group group-2">
+												<div class="field">
+													<label class="label">Break End Time</label>
+													<div class="fields group group-2">
+														<div class="field">
+															<select name="tue_betime[]" tabindex="1" type="time">
+																<?php 
+																	foreach ($hourarray as $value) {
+																		?>
+																			<option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+																		<?php 
+																	}
+																?>
+															</select>
+														</div>
+														<div class="field">
+															<select name="tue_betime[]" tabindex="1" type="time">
+																<?php 
+																	foreach ($minutearray as $value) {
+																		?>
+																			<option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+																		<?php 
+																	}
+																?>
+															</select>
+														</div>
+													</div>
+												</div>
+												<div class="field">
+													<label class="label">Closing Time</label>
+													<div class="fields group group-2">
+														<div class="field">
+															<select name="tue_ctime[]" tabindex="1" type="time">
+																<?php 
+																	foreach ($hourarray as $value) {
+																		?>
+																			<option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+																		<?php 
+																	}
+																?>
+															</select>
+														</div>
+														<div class="field">
+															<select name="tue_ctime[]" tabindex="1" type="time">
+																<?php 
+																	foreach ($minutearray as $value) {
+																		?>
+																			<option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+																		<?php 
+																	}
+																?>
+															</select>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</fieldset>
+						</div>					
+					<div class="field">
+						<fieldset class="fieldset info">
+							<div class="field">
+								<div class="fields group group-2">
+									<label class="label"><strong>WEDNESDAY</strong></label>
+									<div class="field">
+										<label class="label">Open</label>
+										<select class="timeschedule" id="wedtime" name="wed_open">
+											<option value="0">No</option>
+											<option value="1">Yes</option>
+										</select>
+									</div>
+									<div class="scheduletime wedtime field">
+										<div class="fields group group-2">
+											<div class="field">
+												<label class="label">Opening Time</label>
+												<div class="fields group group-2">
+													<div class="field">
+														<select name="wed_otime[]" tabindex="1" type="time">
+															<?php 
+																foreach ($hourarray as $value) {
+																	?>
+																		<option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+																	<?php 
+																}
+															?>
+														</select>
+													</div>
+													<div class="field">
+														<select name="wed_otime[]" tabindex="1" type="time">
+															<?php 
+																foreach ($minutearray as $value) {
+																	?>
+																		<option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+																	<?php 
+																}
+															?>
+														</select>
+													</div>
+												</div>
+											</div>
+											<div class="field">
+												<label class="label">Break Start Time</label>
+												<div class="fields group group-2">
+													<div class="field">
+														<select name="wed_bstime[]" tabindex="1" type="time">
+															<?php 
+																foreach ($hourarray as $value) {
+																	?>
+																		<option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+																	<?php 
+																}
+															?>
+														</select>
+													</div>
+													<div class="field">
+														<select name="wed_bstime[]" tabindex="1" type="time">
+															<?php 
+																foreach ($minutearray as $value) {
+																	?>
+																		<option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+																	<?php 
+																}
+															?>
+														</select>
+													</div>
+												</div>
+											</div>
+										</div>
+										<hr />
+										<div class="fields group group-2">
+											<div class="field">
+												<label class="label">Break End Time</label>
+												<div class="fields group group-2">
+													<div class="field">
+														<select name="wed_betime[]" tabindex="1" type="time">
+															<?php 
+																foreach ($hourarray as $value) {
+																	?>
+																		<option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+																	<?php 
+																}
+															?>
+														</select>
+													</div>
+													<div class="field">
+														<select name="wed_betime[]" tabindex="1" type="time">
+															<?php 
+																foreach ($minutearray as $value) {
+																	?>
+																		<option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+																	<?php 
+																}
+															?>
+														</select>
+													</div>
+												</div>
+											</div>
+											<div class="field">
+												<label class="label">Closing Time</label>
+												<div class="fields group group-2">
+													<div class="field">
+														<select name="wed_ctime[]" tabindex="1" type="time">
+															<?php 
+																foreach ($hourarray as $value) {
+																	?>
+																		<option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+																	<?php 
+																}
+															?>
+														</select>
+													</div>
+													<div class="field">
+														<select name="wed_ctime[]" tabindex="1" type="time">
+															<?php 
+																foreach ($minutearray as $value) {
+																	?>
+																		<option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+																	<?php 
+																}
+															?>
+														</select>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</fieldset>
+					</div>
+					<div class="field">
+						<fieldset class="fieldset info">
+							<div class="field">
+								<div class="fields group group-2">
+									<label class="label"><strong>THURSDAY</strong></label>
+									<div class="field">
+										<label class="label">Open</label>
+										<select class="timeschedule" id="thutime" name="thu_open">
+											<option value="0">No</option>
+											<option value="1">Yes</option>
+										</select>
+									</div>
+									<div class="scheduletime thutime field">
+										<div class="fields group group-2">
+											<div class="field">
+												<label class="label">Opening Time</label>
+												<div class="fields group group-2">
+													<div class="field">
+														<select name="thu_otime[]" tabindex="1" type="time">
+															<?php 
+																foreach ($hourarray as $value) {
+																	?>
+																		<option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+																	<?php 
+																}
+															?>
+														</select>
+													</div>
+													<div class="field">
+														<select name="thu_otime[]" tabindex="1" type="time">
+															<?php 
+																foreach ($minutearray as $value) {
+																	?>
+																		<option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+																	<?php 
+																}
+															?>
+														</select>
+													</div>
+												</div>
+											</div>
+											<div class="field">
+												<label class="label">Break Start Time</label>
+												<div class="fields group group-2">
+													<div class="field">
+														<select name="thu_bstime[]" tabindex="1" type="time">
+															<?php 
+																foreach ($hourarray as $value) {
+																	?>
+																		<option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+																	<?php 
+																}
+															?>
+														</select>
+													</div>
+													<div class="field">
+														<select name="thu_bstime[]" tabindex="1" type="time">
+															<?php 
+																foreach ($minutearray as $value) {
+																	?>
+																		<option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+																	<?php 
+																}
+															?>
+														</select>
+													</div>
+												</div>
+											</div>
+										</div>
+										<hr />
+										<div class="fields group group-2">
+											<div class="field">
+												<label>Break End Time</label>
+												<div class="fields group group-2">
+													<div class="field">
+														<select name="thu_betime[]" tabindex="1" type="time">
+															<?php 
+																foreach ($hourarray as $value) {
+																	?>
+																		<option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+																	<?php 
+																}
+															?>
+														</select>
+													</div>
+													<div class="field">
+														<select name="thu_betime[]" tabindex="1" type="time">
+															<?php 
+																foreach ($minutearray as $value) {
+																	?>
+																		<option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+																	<?php 
+																}
+															?>
+														</select>
+													</div>
+												</div>
+											</div>
+											<div class="field">
+												<label class="label">Closing Time</label>
+												<div class="fields group group-2">
+													<div class="field">
+														<select name="thu_ctime[]" tabindex="1" type="time">
+															<?php 
+																foreach ($hourarray as $value) {
+																	?>
+																		<option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+																	<?php 
+																}
+															?>
+														</select>
+													</div>
+													<div class="field">
+														<select name="thu_ctime[]" tabindex="1" type="time">
+															<?php 
+																foreach ($minutearray as $value) {
+																	?>
+																		<option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+																	<?php 
+																}
+															?>
+														</select>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</fieldset>
+					</div>
+					<div class="field">
+						<fieldset class="fieldset info">
+							<div class="field">
+								<div class="fields group group-2">
+									<label class="label"><strong>FRIDAY</strong></label>
+									<div class="field">
+										<label class="label">Open</label>
+										<select class="timeschedule" id="fritime" name="fri_open">
+											<option value="0">No</option>
+											<option value="1">Yes</option>
+										</select>
+									</div>
+									<div class="scheduletime fritime field">
+										<div class="fields group group-2">
+											<div class="field">
+												<label class="label">Opening Time</label>
+												<div class="fields group group-2">
+													<div class="field">
+														<select name="fri_otime[]" tabindex="1" type="time">
+															<?php 
+																foreach ($hourarray as $value) {
+																	?>
+																		<option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+																	<?php 
+																}
+															?>
+														</select>												
+													</div>
+													<div class="field">
+														<select name="fri_otime[]" tabindex="1" type="time">
+															<?php 
+																foreach ($minutearray as $value) {
+																	?>
+																		<option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+																	<?php 
+																}
+															?>
+														</select>
+													</div>
+												</div>
+											</div>
+											<div class="field">
+												<label class="label">Break Start Time</label>
+												<div class="fields group group-2">
+													<div class="field">
+														<select name="fri_bstime[]" tabindex="1" type="time">
+															<?php 
+																foreach ($hourarray as $value) {
+																	?>
+																		<option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+																	<?php 
+																}
+															?>
+														</select>												
+													</div>
+													<div class="field">
+														<select name="fri_bstime[]" tabindex="1" type="time">
+															<?php 
+																foreach ($minutearray as $value) {
+																	?>
+																		<option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+																	<?php 
+																}
+															?>
+														</select>
+													</div>
+												</div>
+											</div>
+										</div>
+										<hr />
+										<div class="fields group group-2">
+											<div class="field">
+												<label class="label">Break End Time</label>
+												<div class="fields group group-2">
+													<div class="field">
+														<select name="fri_betime[]" tabindex="1" type="time">
+															<?php 
+																foreach ($hourarray as $value) {
+																	?>
+																		<option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+																	<?php 
+																}
+															?>
+														</select>												
+													</div>
+													<div class="field">
+														<select name="fri_betime[]" tabindex="1" type="time">
+															<?php 
+																foreach ($minutearray as $value) {
+																	?>
+																		<option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+																	<?php 
+																}
+															?>
+														</select>
+													</div>
+												</div>
+											</div>
+											<div class="field">
+												<label class="label">Closing Time</label>
+												<div class="fields group group-2">
+													<div class="field">
+														<select name="fri_ctime[]" tabindex="1" type="time">
+															<?php 
+																foreach ($hourarray as $value) {
+																	?>
+																		<option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+																	<?php 
+																}
+															?>
+														</select>
+														
+													</div>
+													<div class="field">
+														<select name="fri_ctime[]" tabindex="1" type="time">
+															<?php 
+																foreach ($minutearray as $value) {
+																	?>
+																		<option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+																	<?php 
+																}
+															?>
+														</select>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</fieldset>
+					</div> 
+					<div class="field">
+						<fieldset class="fieldset info">
+							<div class="field">
+								<div class="fields group group-2">
+									<label class="label"><strong>SATURDAY</strong></label>
+									<div class="field">
+										<label class="label">Open</label>
+										<select class="timeschedule" id="sattime" name="sat_open">
+											<option value="0">No</option>
+											<option value="1">Yes</option>
+										</select>
+									</div>
+									<div class="scheduletime sattime field">
+										<div class="fields group group-2">
+											<div class="field">
+												<label class="label">Opening Time</label>
+												<div class="fields group group-2">
+													<div class="field">
+														<select name="sat_otime[]" tabindex="1" type="time">
+															<?php 
+																foreach ($hourarray as $value) {
+																	?>
+																		<option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+																	<?php 
+																}
+															?>
+														</select>
+													</div>
+													<div class="field">
+														<select name="sat_otime[]" tabindex="1" type="time">
+															<?php 
+																foreach ($minutearray as $value) {
+																	?>
+																		<option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+																	<?php 
+																}
+															?>
+														</select>
+													</div>
+												</div>
+											</div>
+											<div class="field">
+												<label class="label">Break Start Time</label>
+												<div class="fields group group-2">
+													<div class="field">
+														<select name="sat_bstime[]" tabindex="1" type="time">
+															<?php 
+																foreach ($hourarray as $value) {
+																	?>
+																		<option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+																	<?php 
+																}
+															?>
+														</select>
+													</div>
+													<div class="field">
+														<select name="sat_bstime[]" tabindex="1" type="time">
+															<?php 
+																foreach ($minutearray as $value) {
+																	?>
+																		<option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+																	<?php 
+																}
+															?>
+														</select>
+													</div>
+												</div>
+											</div>
+										</div>
+										<hr />
+										<div class="fields group group-2">
+											<div class="field">
+												<label class="label">Break End Time</label>
+												<div class="fields group group-2">
+													<div class="field">
+														<select name="sat_betime[]" tabindex="1" type="time">
+															<?php 
+																foreach ($hourarray as $value) {
+																	?>
+																		<option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+																	<?php 
+																}
+															?>
+														</select>
+													</div>
+													<div class="field">
+														<select name="sat_betime[]" tabindex="1" type="time">
+															<?php 
+																foreach ($minutearray as $value) {
+																	?>
+																		<option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+																	<?php 
+																}
+															?>
+														</select>
+													</div>
+												</div>
+											</div>
+											<div class="field">
+												<label class="label">Closing Time</label>
+												<div class="fields group group-2">
+													<div class="field">
+														<select name="sat_ctime[]" tabindex="1" type="time">
+															<?php 
+																foreach ($hourarray as $value) {
+																	?>
+																		<option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+																	<?php 
+																}
+															?>
+														</select>
+													</div>
+													<div class="field">
+														<select name="sat_ctime[]" tabindex="1" type="time">
+															<?php 
+																foreach ($minutearray as $value) {
+																	?>
+																		<option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+																	<?php 
+																}
+															?>
+														</select>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</fieldset>
+					</div>
+					<div class="field">
+						<fieldset class="fieldset info">
+							<div class="field">
+								<div class="fields group group-2">
+									<label class="label"><strong>SUNDAY</strong></label>
+									<div class="field">
+										<label class="label">Open</label>
+										<select class="timeschedule" id="suntime" name="sun_open">
+											<option value="0">No</option>
+											<option value="1">Yes</option>
+										</select>
+									</div>
+									<div class="scheduletime suntime field">
+										<div class="fields group group-2">
+											<div class="field">
+												<label class="label">Opening Time</label>
+												<div class="fields group group-2">
+													<div class="field">
+														<select name="sun_otime[]" tabindex="1" type="time">
+															<?php 
+																foreach ($hourarray as $value) {
+																	?>
+																		<option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+																	<?php 
+																}
+															?>
+														</select>
+													</div>
+													<div class="field">
+														<select name="sun_otime[]" tabindex="1" type="time">
+															<?php 
+																foreach ($minutearray as $value) {
+																	?>
+																		<option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+																	<?php 
+																}
+															?>
+														</select>
+													</div>
+												</div>
+											</div>
+											<div class="field">
+												<label class="label">Break Start Time</label>
+												<div class="fields group group-2">
+													<div class="field">
+														<select name="sun_bstime[]" tabindex="1" type="time">
+															<?php 
+																foreach ($hourarray as $value) {
+																	?>
+																		<option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+																	<?php 
+																}
+															?>
+														</select>
+													</div>
+													<div class="field">
+														<select name="sun_bstime[]" tabindex="1" type="time">
+															<?php 
+																foreach ($minutearray as $value) {
+																	?>
+																		<option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+																	<?php 
+																}
+															?>
+														</select>
+													</div>
+												</div>
+											</div>
+										</div>
+										<hr />
+										<div class="fields group group-2">
+											<div class="field">
+												<label class="label">Break End Time</label>
+												<div class="fields group group-2">
+													<div class="field">
+														<select name="sun_betime[]" tabindex="1" type="time">
+															<?php 
+																foreach ($hourarray as $value) {
+																	?>
+																		<option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+																	<?php 
+																}
+															?>
+														</select>
+													</div>
+													<div class="field">
+														<select name="sun_betime[]" tabindex="1" type="time">
+															<?php 
+																foreach ($minutearray as $value) {
+																	?>
+																		<option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+																	<?php 
+																}
+															?>
+														</select>
+													</div>
+												</div>
+											</div>
+											<div class="field">
+												<label class="label">Closing Time</label>
+												<div class="fields group group-2">
+													<div class="field">
+														<select name="sun_ctime[]" tabindex="1" type="time">
+															<?php 
+																foreach ($hourarray as $value) {
+																	?>
+																		<option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+																	<?php 
+																}
+															?>
+														</select>
+													</div>
+													<div class="field">
+														<select name="sun_ctime[]" tabindex="1" type="time">
+															<?php 
+																foreach ($minutearray as $value) {
+																	?>
+																		<option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+																	<?php 
+																}
+															?>
+														</select>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div> 
+								</div>
+							</div>
+						</fieldset>
+					</div>
+				</fieldset>
+			</div>
+		</div>
+		<div class="infotab">
+			<button type="submit" class="btnsubmit action save primary" name="submit">Submit</button>
+		</div>
+	</form>
+</div>

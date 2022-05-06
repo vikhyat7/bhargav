@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation=" urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+
+    <columns name="product_columns">
+        <actionsColumn name="new_action" class = "Mageants\BarcodeGenerator\Ui\Component\Listing\Columns\ProductActions">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="resizeEnabled" xsi:type="boolean">false</item>
+                    <!-- <item name="bodyTmpl" xsi:type="string">ui/grid/cells/html</item> -->
+                    <item name="label" xsi:type="string" translate="true">Print Barcode</item>
+                    <item name="resizeDefaultWidth" xsi:type="string">107</item>
+                    <item name="indexField" xsi:type="string">id</item>
+                </item>
+            </argument>
+        </actionsColumn>
+    </columns>
+
+</listing>
+
+ 

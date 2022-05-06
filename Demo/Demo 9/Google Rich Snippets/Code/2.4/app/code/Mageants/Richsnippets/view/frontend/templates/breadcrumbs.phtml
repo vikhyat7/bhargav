@@ -1,0 +1,44 @@
+<?php /**
+       * @category Mageants Richsnippets
+       * @package Mageants_Richsnippets
+       * @copyright Copyright (c) 2019 Mageants
+       * @author Mageants Team <support@mageants.com>
+       */
+?>
+<?php
+  $product = $block->getPropductCollection();
+  $counter = 1 ;
+?>
+<?php if ($block->getConfigrations()->isBreadcrumsEnable()) : ?>
+    <?php $crumbs = $block->getCrumbs($product, $product->getId()); ?>
+    <?php $limit = count($crumbs); ?>
+    <?php if ($crumbs && is_array($crumbs)) : ?>
+        <script type="application/ld+json">
+            {
+              "@context": "https://schema.org",
+              "@type": "BreadcrumbList",
+              "itemListElement": [
+                <?php foreach ($crumbs as $crumbName => $crumbInfo) : ?>
+                <?php if ($counter != $limit) : ?>
+                    {
+                    "@type": "ListItem",
+                    "position": <?php echo $counter ?>,
+                    "name": "<?php echo $crumbInfo['label']; ?>",
+                    "item": "<?php echo $crumbInfo['link']; ?>"
+                    },
+                <?php else : ?>
+                    {
+                    "@type": "ListItem",
+                    "position": <?php echo $counter ?>,
+                    "name": "<?php echo $crumbInfo['label']; ?>",
+                    "item": "<?php echo $crumbInfo['link']; ?>"
+                    }
+                <?php endif; ?>
+              
+                <?php $counter++ ?>
+                <?php endforeach; ?>
+              ]
+            }
+        </script>
+    <?php endif; ?>
+<?php endif; ?>

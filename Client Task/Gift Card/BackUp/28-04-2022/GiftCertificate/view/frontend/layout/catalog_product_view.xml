@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<page layout="1column" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+	<head>
+		<css src="Mageants_GiftCertificate::css/css/giftcertificate.css"/>
+	</head>
+    <body>
+        <referenceContainer name="product.info.form.content" >
+            <block class="Mageants\GiftCertificate\Block\GiftCertificate" name="gift_certificate" template="Mageants_GiftCertificate::giftcertificate.phtml" before='-' cacheable="false" ifconfig="giftcertificate/general/statusgc"
+			></block>
+        </referenceContainer>
+        <referenceContainer name="content">
+        	<!-- <container name="product.info.media" htmlTag="div" htmlClass="product media" after="product.info.main"> -->
+                <block class="Magento\Catalog\Block\Product\View\Gallery" name="product.info.media.image" template="Mageants_GiftCertificate::product/view/gallery.phtml" />
+            <!-- </container> -->
+        </referenceContainer>
+    </body>
+</page>

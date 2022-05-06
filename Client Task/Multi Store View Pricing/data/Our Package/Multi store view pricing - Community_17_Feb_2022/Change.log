@@ -1,0 +1,21 @@
+#   Multi Store View Pricing Extension
+	
+	Current version number: 2.0.8
+	Date:- 17/02/2022
+	****************************************************************
+	Bug fixes
+	****************************************************************
+	-> Price is not setting Proper for Configurable Products at backend and frontend.
+	-> If we change the price then 'Use Default Value' checkbox of price is always remains checked.
+
+	****************************************************************
+	File Changes  
+	****************************************************************
+	-> Mageants\StoreViewPricing\composer.json
+    -> Mageants\StoreViewPricing\etc\module.xml
+	-> Mageants\StoreViewPricing\Observer\Saveprice.php
+	-> Mageants\StoreViewPricing\Observer\Productview.php
+	-> Mageants\StoreViewPricing\Observer\Productprice.php
+	-> Mageants\StoreViewPricing\Plugin\Price.php
+	-> Mageants\StoreViewPricing\Setup\UpgradeSchema.php
+	-> Mageants\StoreViewPricing\Ui\Component\Listing\Columns\Column\Price.php

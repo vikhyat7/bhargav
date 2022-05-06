@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright © Magestore. All rights reserved.
+  ~ See COPYING.txt for license details.
+  -->
+
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">
+                os_supplier_transaction_edit.os_supplier_transaction_edit_data_source
+            </item>
+        </item>
+        <item name="template" xsi:type="string">templates/form/collapsible</item>
+    </argument>
+    <settings>
+        <namespace>os_supplier_transaction_edit</namespace>
+        <deps>
+            <dep>os_supplier_transaction_edit.os_supplier_transaction_edit_data_source</dep>
+        </deps>
+        <dataScope>data</dataScope>
+    </settings>
+    <dataSource name="os_supplier_transaction_edit_data_source">
+        <argument name="data" xsi:type="array">
+            <item name="js_config" xsi:type="array">
+                <item name="component" xsi:type="string">Magento_Ui/js/form/provider</item>
+            </item>
+        </argument>
+        <settings>
+            <submitUrl path="purchaseordercustomization/supplier_transaction/save"/>
+        </settings>
+        <dataProvider class="Magestore\PurchaseOrderCustomization\Ui\DataProvider\Supplier\Transaction\Form\Transaction\Edit"
+                      name="os_supplier_transaction_edit_data_source">
+            <settings>
+                <requestFieldName>entity_id</requestFieldName>
+                <primaryFieldName>entity_id</primaryFieldName>
+            </settings>
+        </dataProvider>
+    </dataSource>
+    <fieldset name="transaction_edit_general">
+        <settings>
+            <label translate="true">Transaction Information</label>
+        </settings>
+        <field name="supplier_transaction_id" formElement="hidden">
+            <settings>
+                <dataType>text</dataType>
+            </settings>
+        </field>
+        <field name="supplier_id" formElement="hidden">
+            <settings>
+                <label translate="true">Purchase Order ID</label>
+                <dataType>text</dataType>
+            </settings>
+        </field>
+        <field name="transaction_created_date_edit" formElement="date"
+               component="Magestore_PurchaseOrderCustomization/js/form/element/date">
+            <settings>
+                <required>true</required>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+                <dataType>date</dataType>
+                <label translate="true">Transaction created date</label>
+                <dataScope>transaction_created_date</dataScope>
+            </settings>
+        </field>
+        <field name="transaction_date_edit" formElement="date"
+               component="Magestore_PurchaseOrderCustomization/js/form/element/date">
+            <settings>
+                <required>true</required>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+                <dataType>date</dataType>
+                <label translate="true">Transaction date</label>
+                <dataScope>transaction_date</dataScope>
+            </settings>
+        </field>
+<!--        <field name="transaction_date_edit"-->
+<!--               formElement="date"-->
+<!--               component="Magestore_PurchaseOrderCustomization/js/form/element/date">-->
+<!--            <settings>-->
+<!--                <label translate="true">ETA</label>-->
+<!--                <dataType>text</dataType>-->
+<!--                <validation>-->
+<!--                    <rule name="validate-date" xsi:type="boolean">true</rule>-->
+<!--                </validation>-->
+<!--            </settings>-->
+<!--        </field>-->
+<!--        <field name="transaction_date_edit" formElement="date">-->
+<!--            <settings>-->
+<!--                <required>true</required>-->
+<!--                <validation>-->
+<!--                    <rule name="required-entry" xsi:type="boolean">true</rule>-->
+<!--&lt;!&ndash;                    <rule name="validate-date" xsi:type="boolean">true</rule>&ndash;&gt;-->
+<!--                </validation>-->
+<!--                <dataType>date</dataType>-->
+<!--                <label translate="true">Transaction date</label>-->
+<!--                <dataScope>transaction_date</dataScope>-->
+<!--            </settings>-->
+<!--        </field>-->
+        <field name="type_edit" formElement="select">
+            <settings>
+                <label translate="true">Transaction Type</label>
+                <dataType>text</dataType>
+                <dataScope>type</dataScope>
+                <required>true</required>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options class="Magestore\PurchaseOrderCustomization\Model\Supplier\Transaction\Options\Type"/>
+                    </settings>
+                </select>
+            </formElements>
+        </field>
+        <field name="doc_no_edit" formElement="input">
+            <settings>
+                <label translate="true">Doc No.</label>
+                <dataType>text</dataType>
+                <required>true</required>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+                <dataScope>doc_no</dataScope>
+            </settings>
+        </field>
+        <field name="chq_no_edit" formElement="input">
+            <settings>
+                <label translate="true">Chq No.</label>
+                <dataType>text</dataType>
+                <required>true</required>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+                <dataScope>chq_no</dataScope>
+            </settings>
+        </field>
+        <field name="amount_edit" formElement="input">
+            <settings>
+                <label translate="true">Amount</label>
+                <dataType>number</dataType>
+                <required>true</required>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                    <rule name="validate-number" xsi:type="boolean">true</rule>
+                </validation>
+                <dataScope>amount</dataScope>
+            </settings>
+        </field>
+        <field name="currency_edit" formElement="select">
+            <settings>
+                <label translate="true">Currency</label>
+                <dataType>text</dataType>
+                <dataScope>currency</dataScope>
+                <required>true</required>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options class="Magestore\PurchaseOrderCustomization\Model\Supplier\Transaction\Options\Currency"/>
+                    </settings>
+                </select>
+            </formElements>
+        </field>
+        <field name="description_option_edit" formElement="select">
+            <settings>
+                <label translate="true">Description option</label>
+                <dataType>text</dataType>
+                <dataScope>description_option</dataScope>
+                <required>true</required>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options class="Magestore\PurchaseOrderCustomization\Model\Supplier\Transaction\Options\DescriptionOptions"/>
+                    </settings>
+                </select>
+            </formElements>
+        </field>
+    </fieldset>
+</form>

@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!-- 
+ * @category Mageants MaintenanceMode
+ * @package Mageants_MaintenanceMode
+ * @copyright Copyright (c) 2019 Mageants
+ * @author Mageants Team <support@mageants.com>
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <css src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" src_type="url"/>
+    </head>
+    <body>
+        <referenceContainer name="content">
+            <block class="Mageants\MaintenanceMode\Block\Redirect" name="maintenancemode.redirect" ifconfig="maintenancemode/general/enabled"/>
+        </referenceContainer>
+    </body>
+</page>

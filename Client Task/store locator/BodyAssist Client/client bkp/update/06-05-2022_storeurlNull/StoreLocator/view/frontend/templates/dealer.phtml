@@ -1,0 +1,72 @@
+<?php 
+$addstoreurl = $this->getUrl('storelocator/index/addstore');
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$customerSession = $objectManager->create('Magento\Customer\Model\Session');
+$multipleStore = $this->helper('Mageants\StoreLocator\Helper\Data')->getConfigValue('StoreLocator/dealer/dealer_store');
+$storecollection = $block->getDealerStoreCollection();
+$arrLength =count($storecollection);
+if($multipleStore == 0 && $arrLength==0){
+		?>
+		<a class="action primary" href="<?php echo $addstoreurl; ?>">Register as a Dealer</a>
+		<?php
+}
+if($multipleStore == 1){
+	if($block->getDealerConfigValue()){
+		?>
+		<a class="action primary" href="<?php echo $addstoreurl; ?>">Register as a Dealer</a>
+		<?php
+	}
+}
+$mediaurl = $this->helper('\Magento\Cms\Helper\Wysiwyg\Images')->getBaseUrl();
+/*
+if($block->getDealerConfigValue()){
+	?>
+	<a class="action primary" href="<?php echo $addstoreurl; ?>">Register as a Dealer</a>
+	<?php
+}*/
+?>
+
+<table class="data table stores-table">
+	<tr>
+		<th>Dealer Name</th>
+		<th>Store Image</th>
+		<th>Email Id</th>
+		<th>Status</th>
+		<th>Action</th>
+	</tr>
+	
+	<?php
+	if ($customerSession->isLoggedIn()) {
+		$customerSession->setRegisterEventId('1');
+	    $CustomerID= $customerSession->getCustomer()->getId();
+		foreach ($storecollection as $store) {
+			$storedata = $store->getData(); 
+			if($CustomerID == $storedata['user_id']){
+				if($storedata['store_type_status'] == 'Dealer'){
+					$storecollection = $block->getDealerStoreCollection();
+					if($storedata['sstatus'] == 'Disabled'){
+						$storedata['sstatus'] = 'Pending';
+					}
+					if($storedata['sstatus'] == 'Enabled'){
+						$storedata['sstatus'] = 'Approved';
+					}
+					?>
+					<tr>
+						<td><?php echo $storedata['sname']; ?></td>
+						<td><img src="<?php echo $mediaurl.'/'.$storedata['image']; ?>" alt="" height='50px' width='85px' ></td>
+						<td><?php echo $storedata['email']; ?></td>
+						<td><?php echo $storedata['sstatus']; ?></td>
+						<?php 
+							$editstoreurl = $block->getUrl('storelocator/index/editstore',['store_id'=> $storedata['store_id']]);
+							$deletestoreurl = $block->getUrl('storelocator/index/deletestore',['store_id'=> $storedata['store_id']]);
+						?>
+						<td><a class="edit_store" href="<?php echo $editstoreurl; ?>"></a><span class="delete_store" value="<?php echo $deletestoreurl; ?>" ></span></td>
+					</tr>
+				<?php
+				}
+			}
+		}
+	}
+	?>
+	
+</table>

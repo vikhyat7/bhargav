@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+
+<!--
+  ~ Copyright © 2018 Magestore. All rights reserved.
+  ~ See COPYING.txt for license details.
+  -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="suppliersuccess">
+            <group id="description_config" translate="label" sortOrder="999" type="text" showInDefault="1" showInWebsite="0" showInStore="0">
+                <label>Description Configuration</label>
+                <field id="title" translate="label" sortOrder="30" type="text" showInDefault="1" showInWebsite="0">
+                    <label>Description options for transactions</label>
+                    <frontend_model>Magestore\PurchaseOrderCustomization\Block\Adminhtml\Config\DescriptionTransfer</frontend_model>
+                        <backend_model>Magento\Config\Model\Config\Backend\Serialized\ArraySerialized</backend_model>
+                </field>
+            </group>
+            <group id="print_config" translate="label" sortOrder="1100" type="text" showInDefault="1" showInWebsite="0" showInStore="0">
+                <label>Supplier Statement Print Configuration</label>
+                <field id="statement_header" translate="label comment" sortOrder="50" type="textarea" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Statement Header</label>
+                    <comment>HTML Code</comment>
+                </field>
+                <field id="statement_footer" translate="label comment" sortOrder="50" type="textarea" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Statement Footer</label>
+                    <comment>HTML Code</comment>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

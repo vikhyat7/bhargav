@@ -1,0 +1,84 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="mageants" translate="label" sortOrder="70">
+            <label>Mageants</label>
+        </tab>
+        <section id="StoreLocator"  showInDefault="1" showInWebsite="1" showInStore="1" >
+            <tab>mageants</tab>
+            <label>Store Locator</label>
+            <resource>Mageants_StoreLocator::config_Mageants_storelocator</resource>
+            <group id="module" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Module</label>
+                <field id="storelocator" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enabled StoreLocator</label>
+                    <source_model>Magento\Config\Model\Config\Source\Enabledisable</source_model>
+                </field>
+                <field id="storelocatorlink" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enabled StoreLocator Link</label>
+                    <source_model>Magento\Config\Model\Config\Source\Enabledisable</source_model>
+                </field>
+            </group>
+            <group id="general" translate="label" type="text" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>General</label>
+                <field id="title" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>StoreLocator Title</label>
+                </field>                
+                <field id="mark_template" translate="label" type="textarea" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Google Mark Template</label>
+                    <comment>Use {{Field name}} for Display. Ex {{name}},{{image}},{{address}}</comment>
+                </field>                
+                <field id="maxradius" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Max Radius  </label>
+                    <validate>required-entry validate-digits validate-digits-range digits-range-1-6371</validate>
+                    <comment>Max no of Radius for slider. Range 1-6371 only.</comment>
+                </field>
+                <field id="fronturl" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Front Location URL </label>
+                    <comment>Enter url for StoreLocator</comment>
+                </field>
+                <field id="pplabel" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Product Page Label </label>
+                    <comment>Label display in product page</comment>
+                </field>
+                <!-- <field id="showAdditional" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Show Additional Attribute </label>
+                    <comment>Display in Store List </comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field> -->
+                
+            </group> 
+            
+            <group id="dealer" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Dealer Store</label>
+                <field id="dealer_store_enable" translate="label" type="select" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enable Dealer Store</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="dealer_store" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Dealer can add multipal store</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="sender" translate="label" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Email sender</label>
+                    <source_model>Magento\Config\Model\Config\Source\Email\Identity</source_model>
+                </field>
+                <field id="customer_email_receiver" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="1" translate="label" type="text">
+                    <label>Admin Email</label>
+                </field> 
+                <field id="template_notification" translate="label comment" type="select" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Email Template</label>
+                    <source_model>Magento\Config\Model\Config\Source\Email\Template</source_model>
+                </field>
+            </group>  
+
+            <group id="map" translate="label" type="text" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Google Map</label>
+                <field id="map_key" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enter Google Map API Key</label>
+                     <comment><![CDATA[ you must set key for google map to make it visible in frontend. You can get Key from <a href="https://developers.google.com/maps/documentation/javascript/get-api-key" target="_blank" > click </a> here.]]></comment>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

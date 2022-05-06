@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Acl/etc/acl.xsd">
+    <acl>
+        <resources>
+            <resource id="Magento_Backend::admin">
+                <resource id="Magento_Backend::stores">
+                    <resource id="Magento_Backend::stores_settings">
+                        <resource id="Magento_Config::config">
+                            <resource id="Mageants_GiftCertificate::main" title="Gift Certificates"  sortOrder="10" >
+                        <resource id="Mageants_GiftCertificate::giftcertificate" title="Gift Certificates"  sortOrder="10" >
+                            <resource id="Mageants_GiftCertificate::GiftCertificate" title="GiftCertificate"  sortOrder="10" />
+                        </resource>
+
+                        <resource id="Mageants_GiftCertificate::giftcard_codes" title="Gift Certificate Code"  sortOrder="10" />
+                        <resource id="Mageants_GiftCertificate::giftcard_accounts" title="Gift Certificate Accounts"  sortOrder="10" >
+                            <resource id="Mageants_GiftCertificate::GiftCertificateAccount" title="GiftCertificate"  sortOrder="10" />
+                        </resource>
+                        <resource id="Mageants_GiftCertificate::giftcard_images" title="Gift Certificate Templates"  sortOrder="10">
+                            <resource id="Mageants_GiftCertificate::GiftCertificateImage" title="GiftCertificate"  sortOrder="10" />
+                        </resource>                
+                        <resource id="Mageants_GiftCertificate::gcconfig" title="Gift Certificate Setting"  sortOrder="10" >
+                             <resource id="Mageants_GiftCertificate::mageants_giftcertificate" title="GiftCertificate"  sortOrder="10" />
+                        </resource>           
+                    </resource>
+                </resource> 
+            </resource>
+        </resource>
+    </resource>
+        </resources>
+    </acl>
+</config>

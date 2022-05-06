@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @category Mageants CustomStockStatus
+ * @package Mageants_CustomStockStatus
+ * @copyright Copyright (c) 2018 Mageants
+ * @author Mageants Team <info@mageants.com>
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceContainer name="product.info.type">
+        	<referenceBlock name="product.info.configurable">
+            <action method="setTemplate" ifconfig="CustomStockSt/display_setting/displayonproductlist">
+                <argument name="template" xsi:type="string">Mageants_CustomStockStatus::product/view/type/default.phtml
+                </argument>
+            </action>
+          </referenceBlock>
+        </referenceContainer>
+        <referenceBlock name="product.info.options.configurable">
+            <action method="setTemplate" ifconfig="CustomStockSt/display_setting/displayonproductlist">
+                <argument name="template" xsi:type="string">Mageants_CustomStockStatus::product/view/type/options/configurable.phtml
+                </argument>
+            </action>
+        </referenceBlock>
+    </body>
+</page>
+

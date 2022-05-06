@@ -1,0 +1,78 @@
+<?php // @codingStandardsIgnoreFile ?>
+<div id="purchase_email_header_block" class="purchase_email"
+     data-modal-info="<?php /* @escapeNotVerified */ echo $block->getWidgetOptions();?>">
+    <div class="admin__page-section-item email-header">
+        <table class="data-table admin__table-secondary email-header-table" style="font-size: 13px">
+            <tr class="col-0"> 
+                <td class="label" style="width: 39%">
+                    <strong>Bazaarcom company for food supplies</strong>
+                    <p>Address: Farwaniya governate / Ardiya Industry / Block 2 / Building 93</p>
+                    <p>License Number:  2022/1340</p>
+                    <p>Fax: 22203386</p>
+                    <p>Phone: 2434480</p>
+                    <p>Email: Purchase@bazaar.com.kw</p>
+                </td>
+                <td class="label" style="width: 20%;padding: 10px;text-align: center;">
+                    <?php $logo = $block->getLayout()->createBlock(\Magento\Theme\Block\Html\Header\Logo::class); ?>
+                    <img src="https://bazaar.com.kw/media/email/logo/stores/1/logo.png"
+                         title="<?= $logo->escapeHtmlAttr($logo->getLogoAlt()) ?>"
+                         alt="<?= $logo->escapeHtmlAttr($logo->getLogoAlt()) ?>"
+                         width="100%"
+                    />
+                    <a href="https://bazaar.com.kw">Bazaar.com.kw</a>
+                </td>
+                <td class="label" style="width: 39%;text-align: right;">
+                    <strong>شركة بازار كوم للتجهيزات الغذائية</strong>
+                    <p>العنوان: محافظة الفروانيه / العارضيه الصناعية / قطعة 2 / مبني 93</p>
+                    <p>رقم الترخيص: 2022/1340</p>
+                    <p>فاكس: 22203386</p>
+                    <p>تليفون: 2434480</p>
+                    <p>Purchase@bazaar.com.kw :ايميل</p>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+<div id="purchase_email_header_block" class="purchase_email" style="margin-top: 30px;"
+     data-modal-info="<?php /* @escapeNotVerified */ echo $block->getWidgetOptions();?>">
+    <div class="admin__page-section-item email-header">
+        <table class="data-table admin__table-secondary email-header-table" style="font-size: 13px">
+            <tr class="col-0">
+                <td class="label" style="width: 32%">
+                    <strong><?php echo __('Purchase From') ?></strong>
+                </td>
+                <td class="label" style="width: 32%">
+                    <?php if($block->getPurchaseOrderData('shipping_address')): ?>
+                        <strong><?php echo __('Delivery To') ?></strong>
+                    <?php endif; ?>
+                </td>
+                <td class="label" style="width: 32%">
+                    <strong><?php echo __('Purchase Sales') ?></strong>
+                </td>
+            </tr>
+            <tr class="col-1">
+                <td class="label" valign="top">
+                    <?php echo $block->getDataHtml('supplier_name') ?>
+                    <?php echo $block->getDataHtml('street') ?>
+                    <?php echo $groupAddress = $block->getCityRegionPostCode(); ?>
+                    <?php echo $block->getCountry() ?>
+                    <span><?php echo __('Telephone: ') ?></span>
+                    <span><?php echo $block->getSupplierData('telephone') ?></span><br/>
+                    <?php echo __('Email: ') ?></span>
+                    <?php echo $block->getDataHtml('contact_email') ?>
+                </td>
+                <td valign="top">
+                    <span><?php echo $block->getPurchaseOrderData('shipping_address') ?></span>
+                </td>
+                <td valign="top">
+                    <span><?php echo __('P.O#: ') ?></span>
+                    <span><?php echo $block->getPurchaseOrderCode() ?></span><br/>
+                    <span><?php echo __('Created At: ') ?></span>
+                    <span><?php echo $block->getPurchaseDate() ?></span><br/>
+                    <span><?php echo __('Status: ') ?></span>
+                    <span><?php echo $block->getPurchaseOrderStatus() ?></span><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>

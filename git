@@ -1,0 +1,37 @@
+in .ssh folder :-
+
+steps: step for create for pub key
+======================================
+
+#cd ~/.ssh/
+
+#ssh-keygen -t rsa -b 4096 -C "bhargavgoti1468@gmail.com"
+
+#enter file name : bhargavgit
+#cat bhargavgit.pub
+
+	save bhargavgit.pub key in git account (Settings -> SSH and GPG keys -> New SSK key)
+
+#eval $(ssh-agent)
+
+#ssh-add bhargavgit
+
+----------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------
+
+in Uploader folder :
+
+
+#eval $(ssh-agent)
+
+#ssh-add ~/.ssh/bhargavgit
+
+#git remote add origin git@github.com:bhargavgoti2/bhargav.git
+
+#git add .
+
+#git status
+
+#git commit -m "My New Project"
+
+#git push -u origin master

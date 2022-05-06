@@ -1,0 +1,75 @@
+<?php
+$product = $block->getProduct();
+$helper = $this->helper('Mageants\CustomStockStatus\Helper\Data');
+$productId = $product->getId();
+$_product = $helper->getLoadProduct($productId);
+$productOptionId = $_product->getMageantsCustomStockStatus();
+$productOptionRule = $_product->getMageantsCustomStockRule();
+$productOptionQtyRule = $_product->getMageantsQtyBaseRuleStatus();
+$displayStBoth = $helper->getVisibleBothStatus();
+$displyIconOnly = $helper->getDisplayIcon();
+$customLable = $helper->getCustomStockLabel($productOptionId, $productOptionRule, $productOptionQtyRule, $productId);
+if ($_product->getTypeId() == 'simple') {
+    if ($productOptionId && $customLable) : ?>
+        <?php if (!$displayStBoth): ?>
+            <div class="stock available">
+                
+            <?php if ($customLable['icon']!="") : ?>
+                <img src="<?php echo $customLable['icon']; ?>" id="custome_stock_icon" class="custom_stock_status_icon" alt="" title="">
+            <?php endif; ?>
+                        
+            <?php if (!$displyIconOnly): ?>
+                 <span class="customst label"><?php /* @noEscape */ echo $customLable['label']; ?></span>
+            <?php endif; ?>
+
+        </div> 
+
+        <?php elseif ($displayStBoth && !$_product->isAvailable()): ?>
+            <div class="stock unavailable">
+                <img src="<?php /* @noEscape */ echo $customLable['icon']; ?>" class="customst_icon" alt="" title="">
+
+                <?php if (!$displyIconOnly): ?>
+                    <span class="customst label"><?php /* @noEscape */ echo $customLable['label']; ?></span>
+                <?php endif; ?>   
+
+             </div>
+        <?php endif; ?>
+    <?php elseif (!$productOptionId && $customLable) : ?>
+            <?php if (!$displayStBoth): ?>
+            <div class="stock available">
+                
+            <?php if ($customLable['icon']!="") : ?>
+                <img src="<?php echo $customLable['icon']; ?>" id="custome_stock_icon" class="custom_stock_status_icon" alt="" title="">
+            <?php endif; ?>
+                        
+            <?php if (!$displyIconOnly): ?>
+                 <span class="customst label"><?php /* @noEscape */ echo $customLable['label']; ?></span>
+            <?php endif; ?>
+
+            </div> 
+
+            <?php elseif ($displayStBoth && !$_product->isAvailable()): ?>
+                <div class="stock unavailable">
+                    <img src="<?php /* @noEscape */ echo $customLable['icon']; ?>" class="customst_icon" alt="" title="">
+
+                    <?php if (!$displyIconOnly): ?>
+                        <span class="customst label"><?php /* @noEscape */ echo $customLable['label']; ?></span>
+                    <?php endif; ?>   
+
+                 </div>
+            <?php endif; ?>
+    <?php endif; ?>
+<?php } else { ?>
+    <?php if ($_product->isAvailable()): ?>
+        <div class="stock available custom_stock_status"></div>
+       
+
+    <?php else: ?>
+        <div class="stock unavailable custom_stock_status"></div>
+        
+        <img src="<?php echo $customLable['icon']; ?>" id="custome_stock_icon" class="custom_stock_status_icon" alt="" title="">
+        <span class="customst label"><?php echo $customLable['label']; ?></span>
+
+        
+    <?php endif; ?>
+<?php } ?>

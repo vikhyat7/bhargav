@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+	    <add id="Mageants_GiftCertificate::giftcertificate" title="Gift Card" module="Mageants_GiftCertificate" sortOrder="10" resource="Mageants_GiftCertificate::giftcertificate"/>
+	    <add id="Mageants_GiftCertificate::giftcard_codes" title="Gift Card Code" module="Mageants_GiftCertificate" sortOrder="10" parent="Mageants_GiftCertificate::giftcertificate" action="giftcertificate/index" resource="Mageants_GiftCertificate::giftcard_codes"/>
+		<add id="Mageants_GiftCertificate::giftcard_accounts" title="Gift Card Accounts" module="Mageants_GiftCertificate" sortOrder="20" parent="Mageants_GiftCertificate::giftcertificate" action="giftcertificate/gcaccount" resource="Mageants_GiftCertificate::giftcard_accounts"/>
+		<add id="Mageants_GiftCertificate::giftcard_images" title="Gift Card Templates" module="Mageants_GiftCertificate" sortOrder="30" parent="Mageants_GiftCertificate::giftcertificate" action="giftcertificate/gcimages" resource="Mageants_GiftCertificate::giftcard_images"/>
+		<add id="Mageants_GiftCertificate::gcconfig" title="Gift Card Setting" module="Mageants_GiftCertificate" sortOrder="30" parent="Mageants_GiftCertificate::giftcertificate" action="adminhtml/system_config/edit/section/giftcertificate" resource="Mageants_GiftCertificate::gcconfig"/>
+	</menu>
+</config>
+

@@ -1,0 +1,16 @@
+<?php $checkDifferencePrice = $block->checkDifferencePrice();
+// @codingStandardsIgnoreFile
+?>
+<?php if ($checkDifferencePrice) : ?>
+    <div id="messages">
+        <div class="messages">
+            <div class="message message-notice notice">
+                <div data-ui-id="message message-notice notice">
+                    <?php
+                        echo __("Some products have different cost compared to the system value. You can filter the price difference to review")
+                    ?>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php endif; ?>

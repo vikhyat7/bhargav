@@ -1,0 +1,31 @@
+
+
+SFTP & SSH
+
+
+Host : 178.62.72.191
+UN : master_ffktysbztu
+PW : VvnNvS2e
+
+Path : /applications/xfznhhckrf/public_html/
+
+ssh master_ffktysbztu@178.62.72.191 -p 22
+
+https://bodyassist.online/admin_wtm
+Admin-user : admin1
+
+Admin-password : !admin123!
+
+Let me know if it works.
+
+
+
+Hello,
+
+	Can you please explain to me why sometimes the button in the product page responds to a mouse click and sometimes not?
+
+	I find that when I open the webpage for the first time sometimes the button responds and other times it goes nowhere.
+
+	--> We have checked your both issue and it's working fine - https://nimb.ws/GVjoeL
+
+Thank You.

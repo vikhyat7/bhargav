@@ -1,0 +1,25 @@
+
+Here is product url: http://natsukashi.netwise.jp/a-test-product.html
+
+Everything is working fine if we disable this module
+
+Admin Login:
+http://natsukashi.netwise.jp/admin_n9g2ie/
+username : mageants
+password : mageants@123
+
+SSH
+
+ssh -i natsukashidev.pem ubuntu@3.113.70.204 -p 1419
+
+Please find attached PEM file to access SSH
+
+path : /var/www/magdemo
+
+adminer 
+
+'host' => 'localhost',
+'dbname' => 'magdemo',
+'username' => 'magdemo',
+'password' => 'natukashi',
+

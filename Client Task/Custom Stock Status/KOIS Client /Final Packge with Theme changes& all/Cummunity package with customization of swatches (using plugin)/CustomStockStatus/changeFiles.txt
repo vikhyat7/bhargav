@@ -1,0 +1,14 @@
+Mageants/CustomStockStatus/Block/Product/Renderer/Configurable.php
+Mageants/CustomStockStatus/Helper/Data.php
+
+Bug fix 
+-----------------------------------------
+Status not working for config product :
+-----------------------------------------
+
+Mageants/CustomStockStatus/view/frontend/templates/customstock/list.phtml
+Mageants/CustomStockStatus/view/frontend/templates/product/list.phtml
+Mageants/CustomStockStatus/view/frontend/templates/product/view/type/default.phtml
+Mageants/CustomStockStatus/etc/di.xml
+Mageants/CustomStockStatus/Plugin/ConfigurableProduct/Helper/Data.php
+

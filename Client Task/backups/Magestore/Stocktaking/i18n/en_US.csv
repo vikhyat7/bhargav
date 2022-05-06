@@ -1,0 +1,24 @@
+Back,Back
+Stock-taking,Stock-taking
+"View Listing","View Listing"
+"View Archive Listing","View Archive Listing"
+"Create New Stock-taking","Create New Stock-taking"
+"Edit Stock-taking","Edit Stock-taking"
+"Prepare Product List","Prepare Product List"
+"Count","Count"
+"Verify","Verify"
+"Cancel","Cancel"
+"Complete","Complete"
+"Adjust stock","Adjust stock"
+"View Archived Stock-taking Details","View Archived Stock-taking Details"
+"Product List","Product List"
+"Add Products","Add Products"
+"Add Selected Products","Add Selected Products"
+"Scan barcode","Scan barcode"
+"Scan/enter barcode","Scan/enter barcode"
+Remove,Remove
+Barcode,Barcode
+"The barcode #%s does not match with any product in stock-taking.","The barcode #%s does not match with any product in stock-taking."
+"The barcode #%s does not match with any product.","The barcode #%s does not match with any product."
+"The product with barcode #%s has been increased.","The product with barcode #%s has been increased."
+"The product with barcode #%s has been added.","The product with barcode #%s has been added."

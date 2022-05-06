@@ -1,0 +1,23 @@
+<input type="button" name="preview_button" id="preview_button" value="Preview"></input>
+
+<script type="text/javascript">  
+(function  () {    
+    require(["jquery"], function($) {
+        var url = "<?= $block->getUrl('barcodegenerator/pdf/printpdf') // @codingStandardsIgnoreLine?>";
+
+        var url1 = new URL(url);
+        url1.searchParams.set("entity_id", 1);
+        url1.searchParams.set("pages", 1);
+        
+        // console.log("url1");
+        //console.log(url1);
+        
+        $(document).ready(function($) {
+            $("#preview_button").on("click", function(e){
+            window.location.href = url1;
+            })
+        }); 
+    });
+})();
+</script>
+

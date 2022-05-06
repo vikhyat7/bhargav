@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="checkout_cart_product_add_after">
+        <observer name="giftcertificate" instance="Mageants\GiftCertificate\Observer\Savegift" />
+    </event>
+	<event name="sales_order_place_after">
+         <observer name="ordercertificate" instance="Mageants\GiftCertificate\Observer\Ordergift" />
+    </event>
+    <event name="checkout_cart_update_item_complete">
+         <observer name="ordercertificateUpdate" instance="Mageants\GiftCertificate\Observer\Updategift" />
+    </event>    
+     <event name="controller_action_postdispatch">
+        <observer name="giftcertificate_avialaibility" instance="Mageants\GiftCertificate\Observer\CheckStatus" />
+    </event>
+    <event name="sales_quote_remove_item">
+        <observer name="remove_giftcertificate" instance="Mageants\GiftCertificate\Observer\Removegift" />
+    </event>
+    <event name="sales_order_invoice_pay">
+        <observer name="send_giftcertificate_mail" instance="Mageants\GiftCertificate\Observer\SendGiftcertificateMali" />
+    </event>
+    <event name="controller_action_predispatch_checkout_index_index">
+            <observer name="checkcout_page" instance="Mageants\GiftCertificate\Observer\CheckShoppingCartObserver" />
+    </event>
+    <event name="layout_generate_blocks_after">
+        <observer name="giftCategory" instance="Mageants\GiftCertificate\Observer\GiftCategory" />
+    </event>    
+    <event name="checkout_cart_update_items_before">
+        <observer name="mageants_giftCard_update_items_before" instance="Mageants\GiftCertificate\Observer\UpdateQuoteItemObserver" />
+    </event>
+    
+</config>

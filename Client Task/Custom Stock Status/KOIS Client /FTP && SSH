@@ -1,0 +1,48 @@
+
+Admin
+https://kois-optics.gr/koadmin/
+mageants
+JmDwFfqqXW83kWQj
+
+ 
+SSH + FTP
+You can login here: 
+
+https://accounts.cloudclusters.io/login/
+ibaritakis@gmail.com
+Jbarkiss@2
+ 
+
+
+
+
+php -dmemory_limit=8G bin/magento s:up
+php -dmemory_limit=8G bin/magento s:d:c
+php -dmemory_limit=8G bin/magento s:s:d -f el_GR
+php -dmemory_limit=8G bin/magento c:f
+
+
+Php -dmemory_limit=8G bin/magento catalog:images:resize
+
+
+Διαθέσιμο μόνο στα φυσικά μας καταστήματα
+Available only in our physical stores
+
+
+
+
+
+Admin
+https://kois-optics.gr/koadmin/
+mageants
+JmDwFfqqXW83kWQj
+
+
+tested product
+
+simple :- https://kois-optics.gr/extracare-all-in-one-360ml.html
+config all out of stock :- https://kois-optics.gr/eyeglasses/face-a-face-bocca-lemon-3.html
+config in and out stock :- https://kois-optics.gr/monokol-mk-175.html
+
+
+

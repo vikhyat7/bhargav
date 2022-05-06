@@ -1,0 +1,36 @@
+<?php
+/**
+ * @category Mageants GiftCertificate
+ * @package Mageants_GiftCertificate
+ * @copyright Copyright (c) 2016 Mageants
+ * @author Mageants Team <support@mageants.com>
+ */	
+	if(!$this->isCartEmpty()):
+?>	
+		<a href="javascript:void(0)" id="gift-code"><?php echo __('Apply Gift Certificate  '); ?><i class="fa fa-angle-down" id="gift-code-arrow"></i></a>
+		<input type="hidden" id="base-gift-url" value="<?php echo $this->getUrl(); ?>"/>
+		<div class="gift-code-block">
+			<form id="gift-certificate-form" method="post">				
+				<?php if ($block->getGiftCertificateCode() != "") { ?>					
+					<input class="input-text gift-certificate-code" id="gift-certificate-code" name="gift_certificate_code" placeholder="Enter Gift Certificate Code" type="text" value="<?php echo $block->getGiftCertificateCode(); ?>" readonly>
+					<button class="action apply-certificate primary" id="applyCode" type="submit" ><span>Cancel</span></button>
+				<?php	} else{ ?>
+					<input class="input-text gift-certificate-code" id="gift-certificate-code" name="gift_certificate_code" value="" placeholder="Enter Gift Certificate Code" type="text" required>
+					<button class="action apply-certificate primary" id="applyCode" type="submit" ><span>Apply</span></button>
+				<?php } ?>				
+				<button class="action apply-certificate primary" type="button" id="check_status"><span>Check Status</span></button>
+				<div class="loading"></div>
+			</form>	
+			<div id="message"> <span class="error-msg"><?php echo __("Enter Gift Certificate"); ?></span></div>
+			<?php if ($block->getGiftCertificateCode() != "") { ?>					
+			<div class="apply-certificate"> <span style="color:#006400"><?php echo __("Gift Certificate Accepted"); ?></span></div>
+			<?php } ?>
+			<div > <span style="color:#f00"><?php echo __("Note: Gift Ceritificate cannot be used to buy  gift certificate"); ?></span></div>
+		</div>
+
+		<script type="text/javascript">
+			require(['jquery','giftcertificate'],function($){
+			});
+		</script>
+<?php
+	endif;

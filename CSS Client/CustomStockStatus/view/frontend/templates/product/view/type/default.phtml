@@ -1,0 +1,207 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+?>
+<?php /* @var $block \Magento\Catalog\Block\Product\View\AbstractView */?>
+<?php
+$_product = $block->getProduct();
+
+
+// $childProducts1 = $childProducts->getChilds();
+
+$helper = $this->helper('Mageants\CustomStockStatus\Helper\Data');
+
+$productOptionId = $_product->getMageantsCustomStockStatus();
+
+$productOptionRule = $_product->getMageantsCustomStockRule(); 
+
+$productOptionQtyRule = $_product->getMageantsQtyBaseRuleStatus();
+
+$productId = $_product->getId();
+
+
+$displayStBoth = $helper->getVisibleBothStatus();
+
+$hideDefaultSt = $helper->getHideStockStatus();
+
+$displyIconOnly = $helper->getDisplayIcon();
+
+$customLable = $helper->getCustomStockLabel($productOptionId,$productOptionRule,$productOptionQtyRule,$productId);
+
+if ($_product->getTypeId() == 'simple') {
+    if ($productOptionId && $customLable): ?>
+        <?php if (!$displayStBoth): ?>
+
+        <div class="stock available">
+            <?php if (!$hideDefaultSt): ?>
+                <?php if ($_product->isAvailable()): ?>
+                    <span> <?php echo __('In stock'); ?> </span><br>
+                <?php else: ?>
+                    <span> <?php echo __('Out of stock'); ?> </span><br>
+                <?php endif; ?>
+            <?php endif; ?>
+            <?php if ($customLable['icon']!="") : ?>
+                <img src="<?php echo $customLable['icon']; ?>" id="custome_stock_icon" class="custom_stock_status_icon" alt="" title="">
+            <?php endif; ?>
+                
+            <?php if (!$displyIconOnly): ?>
+                <span class="customstockstatus status_"><?php echo $customLable['label']; ?></span>
+            <?php endif; ?>
+
+        </div>
+        <?php elseif ($displayStBoth && !$_product->isAvailable()): ?>
+            <div class="stock unavailable">
+                <?php if (!$hideDefaultSt): ?>
+                   <span><?php echo __('Out of stock'); ?> </span><br>
+                <?php endif; ?>
+
+                <?php if ($customLable['icon']!="") : ?>
+                    <img src="<?php echo $customLable['icon']; ?>" id="custome_stock_icon" class="custom_stock_status_icon xyz" alt="" title="">
+                <?php endif; ?>
+
+                <?php if (!$displyIconOnly): ?>
+                    <span class="customst label"><?php echo $customLable['label']; ?></span>
+                <?php endif; ?>
+            </div>
+        <?php else: ?>
+            <?php if (!$hideDefaultSt): ?>
+                <?php if ($_product->isAvailable()): ?>
+                    <div class="stock available" title="<?= /* @escapeNotVerified */ __('Availability') ?>">
+                        <span><?= /* @escapeNotVerified */ __('In stock') ?></span><br>
+                    </div>
+                <?php else: ?>
+                    <div class="stock unavailable" title="<?= /* @escapeNotVerified */ __('Availability') ?>">
+                        <span><?= /* @escapeNotVerified */ __('Out of stock ') ?></span><br>
+                    </div>
+                <?php endif; ?>
+            <?php endif; ?>
+        <?php endif; ?>
+    <?php elseif (!$productOptionId && $customLable) : ?>
+        <?php if (!$displayStBoth): ?>
+        <div class="stock available">
+            <?php if (!$hideDefaultSt): ?>
+                <?php if ($_product->isAvailable()): ?>
+                    <span> <?php echo __('In stock'); ?> </span><br>
+                <?php else: ?>
+                    <span> <?php echo __('Out of stock'); ?> </span><br>
+                <?php endif; ?>
+            <?php endif; ?>
+            <?php if ($customLable['icon']!="") : ?>
+                <img src="<?php echo $customLable['icon']; ?>" id="custome_stock_icon" class="custom_stock_status_icon" alt="" title="">
+            <?php endif; ?>
+                
+            <?php if (!$displyIconOnly): ?>
+                <span class="customstockstatus status_"><?php echo $customLable['label']; ?></span>
+            <?php endif; ?>
+
+        </div>
+        <?php elseif ($displayStBoth && !$_product->isAvailable()): ?>
+            <div class="stock unavailable">
+                <?php if (!$hideDefaultSt): ?>
+                   <span><?php echo __('Out of stock'); ?> </span><br>
+                <?php endif; ?>
+
+                <?php if ($customLable['icon']!="") : ?>
+                    <img src="<?php echo $customLable['icon']; ?>" id="custome_stock_icon" class="custom_stock_status_icon" alt="" title="">
+                <?php endif; ?>
+
+                <?php if (!$displyIconOnly): ?>
+                    <span class="customst label"><?php echo $customLable['label']; ?></span>
+                <?php endif; ?>
+            </div>
+        <?php else: ?>
+            <?php if (!$hideDefaultSt): ?>
+                <?php if ($_product->isAvailable()): ?>
+                    <div class="stock available" title="<?= /* @escapeNotVerified */ __('Availability') ?>">
+                        <span><?= /* @escapeNotVerified */ __('In stock') ?></span><br>
+                    </div>
+                <?php else: ?>
+                    <div class="stock unavailable" title="<?= /* @escapeNotVerified */ __('Availability') ?>">
+                        <span><?= /* @escapeNotVerified */ __('Out of stock ') ?></span><br>
+                    </div>
+                <?php endif; ?>
+            <?php endif; ?>
+        <?php endif; ?>
+    <?php else: ?>
+        <?php if ($block->displayProductStockStatus()): ?>
+            <?php if (!$hideDefaultSt): ?>
+                <?php if ($_product->isAvailable()): ?>
+                    <div class="stock available" title="<?= /* @escapeNotVerified */ __('Availability') ?>">
+                        <span><?= /* @escapeNotVerified */ __('In stock') ?></span><br>
+                    </div>
+                <?php else: ?>
+                    <div class="stock unavailable" title="<?= /* @escapeNotVerified */ __('Availability') ?>">
+                        <span><?= /* @escapeNotVerified */ __('Out of stock ') ?></span><br>
+                    </div>
+                <?php endif; ?>
+            <?php endif; ?>
+        <?php endif; ?>
+    <?php endif; ?>
+ <?php } else { ?>
+
+        <?php if ($block->displayProductStockStatus()): ?>
+        <?php if (!$hideDefaultSt): ?>
+            <?php if ($_product->isAvailable()): ?>
+                <div class="stock available" title="<?= /* @escapeNotVerified */ __('Availability') ?>">
+                    <span><?= /* @escapeNotVerified */ __('In stock') ?></span><br>
+                </div>
+            <?php else: ?>
+                <div class="stock unavailable" title="<?= /* @escapeNotVerified */ __('Availability') ?>">
+                    
+                    <img src="<?php echo $customLable['icon']; ?>" class="custom_stock_status_icon" alt="" title="">
+
+                <?php if (!$displyIconOnly) : ?>
+                    <!-- <span class="customstockstatus status_"></span> -->
+                    <span class="customst label"><?php echo $customLable['label']; ?></span>
+
+                <?php endif; ?>
+
+                </div>
+            <?php endif; ?>
+        <?php else: ?>
+            <?php if ($_product->isAvailable()): ?>
+                <div class="stock available" title="<?= /* @escapeNotVerified */ __('Availability') ?>">
+                     <?php if (isset($customLable['icon'])) : ?>
+                    <?php if ($customLable['icon']!="") : ?>
+                    
+                        <img src="<?php echo $customLable['icon']; ?>" id="custome_stock_icon" class="custom_stock_status_icon" alt="" title="">
+                    
+                    <?php endif; ?>
+                <?php endif; ?>
+                    
+                <?php if (!$displyIconOnly) : ?>
+                    <!-- <span class="customstockstatus status_"></span> -->
+                    <span class="customst label"><?php echo $customLable['label']; ?></span>
+
+                <?php endif; ?>
+
+                   
+                </div>
+                
+            <?php else: ?>
+            <div class="stock unavailable">
+                <?php if (isset($customLable['icon'])) : ?>
+                    <?php if ($customLable['icon']!="") : ?>
+                    
+                        <img src="<?php echo $customLable['icon']; ?>" id="custome_stock_icon" class="custom_stock_status_icon" alt="" title="">
+                    
+                    <?php endif; ?>
+                <?php endif; ?>
+                    
+                <?php if (!$displyIconOnly) : ?>
+                    <!-- <span class="customstockstatus status_"></span> -->
+                    <span class="customst label"><?php echo $customLable['label']; ?></span>
+
+                <?php endif; ?>
+
+            </div>
+            <?php endif; ?>
+
+        <?php endif; ?>
+    <?php endif; ?>
+<?php } ?>

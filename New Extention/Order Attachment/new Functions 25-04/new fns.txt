@@ -1,0 +1,8 @@
+1 - Pdf icon. => Done
+2 - When comment added then loading time increase, scroll up and saved message. => Done
+
+3 - After order place customer can add attachment --> Yes / No  => Done
+
+No - Remove add new attachment from frontend. => Done
+
+4. - Add send mail button in frontend 

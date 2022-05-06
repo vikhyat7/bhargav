@@ -1,0 +1,109 @@
+<?php
+/**
+ * @category Mageants MaintenanceMode
+ * @package Mageants_MaintenanceMode
+ * @copyright Copyright (c) 2019 Mageants
+ * @author Mageants Team <support@mageants.com>
+ */
+
+$data = $block->getFormData();
+?>
+
+<!--BACKGROUND-->
+<?= /* @noEscape */ $block->getChildHtml('background') ?>
+
+<!--WRAPPER-->
+<div id="mageants-<?=  /* @noEscape */ $block->getPageLayout('[maintenance_layout]') ?>-column" class="mageants-wrapper mageants-preview-wrapper">
+
+    <!--    Logo-->
+    <div id="mageants-logo">
+        <img src="<?= $block->escapeHtmlAttr($block->getLogo()) ?>"
+             alt="<?= /* @noEscape */ __('Logo') ?>" width="100">
+    </div>
+
+    <!--    Page Title Area-->
+    <div id="mageants-page-title">
+        <h1 class="mageants-text" style="margin-bottom: 0"><?= /* @noEscape */
+            $block->getPageTitle() ?></h1>
+    </div>
+
+    <!--    Page Description Area-->
+    <div id="mageants-page-description">
+        <h3 class="mageants-text"><?= /* @noEscape */
+            $block->getPageDes() ?></h3>
+    </div>
+
+    <!--    Clock area-->
+    <?php if (array_key_exists('[clock_number_color]', $data) && $data['[clock_enabled]']) : ?>
+        <div id="mageants-clock">
+            <?= /* @noEscape */
+            $block->getClockBlock() ?>
+        </div>
+    <?php endif; ?>
+
+    <!--    Subscribe area-->
+    <?php if (array_key_exists('[subscribe_label]', $data) && $block->getSubscribeType() !== 'none') : ?>
+        <?php if ($block->getSubscribeType() === 'email_form') : ?>
+            <div id="mageants-subscribe" class="mageants-subscribe-box">
+                <?php if ($block->getSubscribeDes()) : ?>
+                    <h4 style="color: <?= /* @noEscape */ $block->getSubscribeDesColor() ?>"><?= /* @noEscape */ $block->getSubscribeDes() ?></h4>
+                <?php endif; ?>
+                <?= /* @noEscape */ $block->getChildHtml('subscribe') ?>
+            </div>       
+        <?php endif; ?>
+    <?php endif; ?>
+
+    <!--    Social area-->
+    <?php if ($data['[social_enabled]']) : ?>
+        <div id="mageants-social-contact">
+            <div id="mageants-social-label" style="display: inline-block">
+                <p><?= /* @noEscape */ $block->getSocialLabel() ?></p>
+            </div>
+            <?php foreach ($block->getSocialList() as $value) : ?>
+                <?php if ($value['link'] && $value['link'] !== '1') : ?>
+                    <div class="mageants-social-box" style="display: inline-block; vertical-align: middle">
+                        <a href="<?= $block->escapeHtmlAttr($value['link']) ?>" target="_blank" class="fa fa-<?= substr($value['img'],7) ?>"></a>
+                    </div>
+                <?php endif; ?>
+            <?php endforeach; ?>
+        </div>
+    <?php endif; ?>
+</div>
+
+<style>
+    .mageants-text {
+        color: <?= /* @noEscape */ $block->getLabelColor('[maintenance_color]') ?>;
+    }
+    
+    <?php if (array_key_exists('[clock_number_color]', $data) && $data['[clock_template]'] === 'stack') : ?>
+        <?php $inner = $data['[clock_inner_color]'] ?>
+    .stack-txt1 {
+        background: <?= /* @noEscape */ $inner === '1' ? '#FFFFFF' : $inner ?>;
+    }
+    <?php endif; ?>
+</style>
+
+<?php if (array_key_exists('[subscribe_label]', $data) && $block->getSubscribeType() !== 'none') : ?>
+    <script>
+        require([
+            'jquery'
+        ], function ($) {
+            var subBtn = $('.mageants-subscribe-box .action.primary span');
+            subBtn.text("<?= /* @noEscape */ $block->getSubscribeLabel() ?>")
+                .css("color", "<?= /* @noEscape */ $block->getSubscribeBtnColor() ?>");
+            $('.mageants-subscribe-box .action.primary').css("background", "<?= /* @noEscape */ $block->getSubscribeBtnBgColor() ?>");
+        });
+    </script>
+<?php endif; ?>
+
+<script type="text/x-magento-init">
+    {
+        ".mageants-preview-wrapper": {
+            "Mageants_MaintenanceMode/js/progress/bar": {
+            <?php if (array_key_exists('[maintenance_progress_value]', $data) && $data['[maintenance_progress_enabled]']) : ?>
+                "progressLabel": "<?= /* @noEscape */ $data['[maintenance_progress_label]'] ?>"
+            <?php endif; ?>
+            }
+        }
+    }
+</script>

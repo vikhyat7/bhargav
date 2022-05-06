@@ -1,0 +1,101 @@
+<?php /**
+       * @category Mageants Richsnippets
+       * @package Mageants_Richsnippets
+       * @copyright Copyright (c) 2019 Mageants
+       * @author Mageants Team <support@mageants.com>
+       */
+?>
+<?php
+    $product = $block->getPropductCollection();
+    $brand_name = $product->getResource()->getAttribute($block->getConfigrations()->getBrandName())->getFrontend()->getValue($product);
+    $mpn = $product->getResource()->getAttribute($block->getConfigrations()->getManufacturer())->getFrontend()->getValue($product);
+    $_ratingSummary = $block->getRatingSummary($product);
+    $_reviewCount = $block->getTotalReviews($product);
+    $currencysymbol = $block->getCurrencySymbol();
+    $currencycode = $block->getCurrencyCode();
+    $productdescription = $block->getPropductDescription();
+    $specialprice = $product->getSpecialPrice();
+    $specialtodate = $product->getSpecialToDate();
+?>
+<meta name="keywords" content="<?php echo $product->getName(); ?>" />
+<script type="application/ld+json">
+    {
+      "@context": "https://schema.org/",
+      "@type": "Product",
+      "name": "<?php echo $product->getName(); ?>",
+      "image": [
+        "<?php echo $this->getUrl().$product->getImage(); ?>"
+       ],
+      "description": "<?php echo $productdescription; ?>",
+      "sku": "<?php echo $product->getSku(); ?>",
+      "mpn": "<?php echo $mpn; ?>",
+        <?php if ($block->getConfigrations()->isProductRichDataEnable()) : ?>
+            "brand": {
+               "@type": "Thing",
+               "name": "<?php echo $brand_name; ?>"
+            },
+        <?php endif; ?>
+        <?php if ($_ratingSummary) { ?>
+        <?php if ($block->getConfigrations()->isProductRichDataEnable()) : ?>
+        <?php if ($block->getConfigrations()->getRatingStatus()) : ?> 
+            "review": {
+                "@type": "Review",
+                "reviewRating": {
+                  "@type": "Rating",
+                  "ratingValue": <?php
+                                $rating = number_format((($_ratingSummary * 5)/100), 1);
+                                echo __(floatval($rating)); ?>,
+                  "bestRating": "5"
+                },
+                "author": {
+                  "@type": "Person",
+                  "name": "<?php echo $product->getName(); ?>"
+                }
+              },
+        <?php endif; ?>
+        <?php endif; ?>
+    <?php if ($block->getConfigrations()->isProductRichDataEnable()) : ?>
+        <?php if ($block->getConfigrations()->getRatingStatus()) : ?> 
+              "aggregateRating": {
+                "@type": "AggregateRating",
+                "ratingValue": <?php
+                                $rating = number_format((($_ratingSummary * 5)/100), 1);
+                                echo __(floatval($rating)); ?>,
+                "reviewCount": <?php echo __($_reviewCount); ?>
+              },
+        <?php endif; ?>
+    <?php endif; ?>
+        <?php } ?>
+      "offers": {
+        "@type": "Offer",
+        "url": "<?php echo $this->getUrl(); ?>",
+        "priceCurrency": "<?php echo $currencycode ; ?>",
+        <?php if (!empty($specialprice)) { ?>
+            "price":  <?php echo __(number_format((float)$product->getFinalPrice(), 2, '.', '')); ?>,   
+            "priceValidUntil": "<?php echo $specialtodate ; ?>",
+        <?php } else { ?>
+        "price":  <?php echo __(number_format((float)$product->getFinalPrice(), 2, '.', '')); ?>,
+        <?php } ?>
+    <?php if ($block->getConfigrations()->isProductRichDataEnable()) : ?>
+        <?php if ($block->getConfigrations()->getShowConditionStatus()) : ?> 
+            "itemCondition": "https://schema.org/NewCondition",
+        <?php endif; ?>
+    <?php endif; ?>
+    <?php if ($block->getConfigrations()->isProductRichDataEnable()) : ?>
+        <?php if ($block->getConfigrations()->getProductAvaiblityStatus()) : ?>    
+            <?php if ($block->getProductStatus()) : ?>
+                <?php if ($product->isAvailable()) : ?>
+                    "availability": "https://schema.org/InStock",
+                <?php else : ?>
+                    "availability": "https://schema.org/OutStock",
+                <?php endif; ?>
+            <?php endif; ?>
+        <?php endif; ?>
+    <?php endif; ?>
+        "seller": {
+          "@type": "Organization",
+          "name": "Executive Objects"
+        }
+      }
+    }
+</script>

@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @category Mageants CustomStockStatus
+ * @package Mageants_CustomStockStatus
+ * @copyright Copyright (c) 2018 Mageants
+ * @author Mageants Team <info@mageants.com>
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="checkout.cart.form">
+        <action method="setOverriddenTemplates" ifconfig="CustomStockSt/display_setting/displayonshoppingcart">
+            <argument name="template" xsi:type="array">
+                <!-- list override templates -->
+                <item name="default" xsi:type="string">Mageants_CustomStockStatus::cart/item/default.phtml</item>
+                <item name="simple" xsi:type="string">Mageants_CustomStockStatus::cart/item/default.phtml</item>
+                <item name="virtual" xsi:type="string">Mageants_CustomStockStatus::cart/item/default.phtml</item>
+                <item name="configurable" xsi:type="string">Mageants_CustomStockStatus::cart/item/default.phtml</item>
+                <item name="downloadable" xsi:type="string">Mageants_CustomStockStatus::cart/item/default.phtml</item>
+                <item name="bundle" xsi:type="string">Mageants_CustomStockStatus::cart/item/default.phtml</item>
+                <item name="grouped" xsi:type="string">Mageants_CustomStockStatus::cart/item/default.phtml</item>
+            </argument>
+        </action>
+    </referenceBlock>
+    </body>
+</page>
+
+
+
+
+
+

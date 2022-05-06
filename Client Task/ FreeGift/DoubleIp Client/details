@@ -1,0 +1,72 @@
+
+
+Frontend: https://terradev.doubleip.com/au-kiri.html
+
+Admin area: https://terradev.doubleip.com/admin123
+
+Username: dhiren@mageants.com
+
+Password: zc7-HP(a
+
+path : /bitnami/magento
+
+
+
+For ssh
+
+ssh -i mageants.ppk  bitnami@52.51.57.191
+ssh -i mageants bitnami@52.51.57.191
+
+ 
+
+For ftp
+
+Protocol: SFTP – SSH File Transfer Protocol
+
+Host: 52.51.57.191
+
+Logon Type: Key File
+
+User: bitnami
+
+Key File: load your private key file(mageants.ppk)
+
+ 
+
+
+
+complusory Run this command after changes file
+------------------------------------
+/opt/bitnami/ctlscript.sh restart php-fpm
+
+
+5-03-2022 (File changes)
+------------------------
+app/design/frontend/Magento/theme-frontend-dip/Magento_Catalog/layout/catalog_product_view.xml
+
+8-03-2022 (File changes)
+------------------------
+app/code/Mageants/FreeGift/view/frontend/templates/freegift.phtml
+
+
+
+
+PUB :
+/bitnami/magento/pub/static/frontend/Magento/dip/en_US/js
+
+
+solved : 23-March-2022
+
+-> Added Multi FreeGift Functionality
+
+Hello, 
+	
+	We resolve your issue please check and confirm.
+	
+	Here we added some configuration ( Allow Multiple ) 
+	when it is set to YES then your Multi FreeGift Requirement Works.
+
+	Configuration : https://nimb.ws/FcmORW
+
+Thank You
+

@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!-- 
+ * @category Mageants Richsnippets
+ * @package Mageants_Richsnippets
+ * @copyright Copyright (c) 2019 Mageants
+ * @author Mageants Team <support@mageants.com>
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+	<default>
+	     <richsnippets>
+	     	<breadcrumbs>
+	     		<enable>1</enable>
+	     		<categorypath>1</categorypath>
+	     		<categorytype>1</categorytype>
+	     	</breadcrumbs>
+	     	<includesiteinsearch>
+	     		<enable>1</enable>
+	     		<websitename>example.com</websitename>
+	     	</includesiteinsearch>
+	     	<organizations>
+	     		<enable>1</enable>
+	     		<organization>My Organization</organization>
+	     	</organizations>
+	     	<socialprofile>
+	     		<enable>1</enable>
+	     	</socialprofile>
+	     	<searchbox>
+	     		<enable>1</enable>
+	     	</searchbox>
+	     	<enableoncategorypage>
+	     		<enable>1</enable>
+	     	</enableoncategorypage>
+	     	<productrichdata>
+	     		<enable>1</enable>
+	     		<showavailability>1</showavailability>
+	     		<configproductas>0</configproductas>
+	     		<groupedproductas>1</groupedproductas>
+	     		<description>1</description>
+	     		<showrating>1</showrating>
+	     		<brand>0</brand>
+	     		<manufacturer>0</manufacturer>
+	     	</productrichdata>
+	     </richsnippets>
+	</default>
+</config>

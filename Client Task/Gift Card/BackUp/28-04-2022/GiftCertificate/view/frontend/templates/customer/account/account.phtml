@@ -1,0 +1,49 @@
+<?php
+/**
+ * @category Mageants GiftCertificate
+ * @package Mageants_GiftCertificate
+ * @copyright Copyright (c) 2016 Mageants
+ * @author Mageants Team <support@mageants.com>
+ */
+
+$status=array(0=>'Inactive',1=>'Active');
+?>
+<div class="block block-dashboard-orders">
+<?php $_orders = $block->getGiftOrder(); ?>
+    <div class="block-title order">
+        <strong><?php /* @escapeNotVerified */ echo __('My Orders') ?></strong>
+       
+    </div>
+    <div class="block-content">
+    <?php if (sizeof($_orders->getItems()) > 0): ?>
+        <div class="table-wrapper orders-recent">
+            <table class="data table table-order-items recent" id="my-orders-table">
+                <caption class="table-caption"><?php /* @escapeNotVerified */ echo __('Recent Orders') ?></caption>
+                <thead>
+                    <tr>
+                        <th scope="col" class="col account_id"><?php /* @escapeNotVerified */ echo __('Order #') ?></th>
+                        <th scope="col" class="col initial_code_value"><?php /* @escapeNotVerified */ echo __('Initial Value') ?></th>
+                        <th scope="col" class="col current_balance"><?php /* @escapeNotVerified */ echo __('Current Balance') ?></th>
+                        <th scope="col" class="col gift_code"><?php /* @escapeNotVerified */ echo __('Code') ?></th>
+                        <th scope="col" class="col status"><?php /* @escapeNotVerified */ echo __('Status') ?></th>
+                     </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($_orders as $_order): ?>
+                        <tr>
+                            <td data-th="<?php echo $block->escapeHtml(__('Order #')) ?>" class="col id"><?php /* @escapeNotVerified */ echo $_order->getAccountId() ?></td>
+                            <td data-th="<?php echo $block->escapeHtml(__('Initial Value')) ?>" class="col total"><?php /* @escapeNotVerified */echo $this->helper('Magento\Framework\Pricing\Helper\Data')->currency($_order->getInitialCodeValue(),true,false); ?></td>
+                            <td data-th="<?php echo $block->escapeHtml(__('Current Balance')) ?>" class="col shipping"><?php echo $this->helper('Magento\Framework\Pricing\Helper\Data')->currency( $_order->getCurrentBalance(),true,false);  ?></td>
+                            <td data-th="<?php echo $block->escapeHtml(__('Status')) ?>" class="col status"><?php /* @escapeNotVerified */ echo $_order->getGiftCode() ?></td>
+                            <td data-th="<?php echo $block->escapeHtml(__('Status')) ?>" class="col status"><?php /* @escapeNotVerified */ echo $status[$_order->getStatus()] ?></td>
+
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
+    <?php else: ?>
+        <div class="message info empty"><span><?php /* @escapeNotVerified */ echo __('You have placed no orders.'); ?></span></div>
+    <?php endif; ?>
+    </div>
+</div>

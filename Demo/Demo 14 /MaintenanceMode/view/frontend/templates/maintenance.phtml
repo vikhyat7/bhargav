@@ -1,0 +1,148 @@
+<?php
+/**
+ * @category Mageants MaintenanceMode
+ * @package Mageants_MaintenanceMode
+ * @copyright Copyright (c) 2019 Mageants
+ * @author Mageants Team <support@mageants.com>
+ */
+
+/**
+ * @var \Mageants\MaintenanceMode\Block\Maintenance $block ;
+ * @var $helper \Mageants\Search\Helper\Data
+ */
+
+$helper              = $this->helper(\Mageants\MaintenanceMode\Helper\Data::class);
+$subscribeLabel      = $block->getSubscribeSetting('subscribe_label');
+$subscribeLabelColor = $block->getSubscribeSetting('subscribe_label_color');
+$emailData           = $helper->getCustomerEmail();
+?>
+
+<?=  $block->getChildHtml('background') ?>
+
+<!--WRAPPER-->
+<div id="mageants-<?= /* @noEscape */ $block->getMaintenanceSetting('maintenance_layout') ?>-column" class="mageants-wrapper">
+
+    <!--    Logo-->
+    <div id="mageants-logo">
+        <img src="<?= $block->escapeHtmlAttr($block->getLogo($block->getMaintenanceSetting('maintenance_logo'))) ?>"
+             alt="<?= /* @noEscape */  __('Logo') ?>" width="100">
+    </div>
+
+    <!--    Page Title Area-->
+    <div id="mageants-page-title" class="mageants-text">
+        <h1 style="margin-bottom: 0"><?= /* @noEscape */ $block->getPageTitle('maintenance_title') ?></h1>
+    </div>
+
+    <!--    Page Description Area-->
+    <div id="mageants-page-description" class="mageants-text">
+        <h3><?= /* @noEscape */ $block->getPageDescription('maintenance_description') ?></h3>
+    </div>
+
+    <!--    Clock area-->
+    <?php if ($block->getClockSetting('clock_enabled')) : ?>
+        <div id="mageants-clock">
+            <?= /* @noEscape */ $block->getChildHtml('clock_countdown') ?>
+        </div>
+    <?php endif; ?>
+
+    <!--    Subscribe area-->
+    <?php if ($block->getSubscribeSetting('subscribe_type') === 'email_form') : ?>
+        <div id="mageants-subscribe" class="mageants-subscribe-box" data-mage-init='{"Mageants_MaintenanceMode/js/message/submit":{}}'>
+            <?php if ($subscribeLabel) : ?>
+                <h4 style="color: <?= /* @noEscape */ $subscribeLabelColor ?>"><?= /* @noEscape */ $subscribeLabel ?></h4>
+            <?php endif; ?>
+            <?= /* @noEscape */ $block->getChildHtml('subscribe') ?>
+        </div>
+    <?php endif; ?>
+
+    <!--    Social area-->
+    <?php if ($block->getSocialSetting('social_enabled')) : ?>
+        <div id="mageants-social-contact">
+            <div id="mageants-social-label" style="display: inline-block">
+                <p><?= /* @noEscape */ $block->getSocialLabel() ?></p>
+            </div>
+            <?php foreach ($block->getSocialList() as $value) : ?>
+                <?php if ($value['link']) : ?>
+                    <div class="mageants-social-box" style="display: inline-block; vertical-align: middle">
+                        <a href="<?= $block->escapeHtmlAttr($value['link']) ?>" class="fa fa-<?= $block->escapeHtmlAttr($value['img']) ?>" target="_blank">
+                            <!-- <img src="<?php //echo $block->escapeHtmlAttr($value['img']) ?>" width="20"> -->
+                            <?php //echo $block->escapeHtmlAttr($value['img']); ?>
+                        </a>
+                    </div>
+                <?php endif; ?>
+            <?php endforeach; ?>
+        </div>
+    <?php endif; ?>
+</div>
+
+<style>
+    .mageants-text{
+        color: <?= /* @noEscape */ $block->getMaintenanceSetting('maintenance_color') ?>;
+    }
+
+    .mageants-text h1, h2, h3{
+        color: <?= /* @noEscape */ $block->getMaintenanceSetting('maintenance_color') ?>;
+    }
+
+    @media only screen and (max-width: 764px) {
+        #mageants-progress-bar .progress{
+            width: 90% !important;
+        }
+        #mageants-subscribe{
+            width: 90% !important;
+            margin: auto !important;
+        }
+    }
+
+    <?php if ($block->getClockSetting('clock_template') === 'stack') : ?>
+    <?php $inner = !empty($block->getClockSetting('clock_inner_color')) ? $block->getClockSetting('clock_inner_color') : '#FFFFFF'?>
+    .stack-txt1 {
+        background: <?= /* @noEscape */ $inner ?>;
+    }
+    <?php endif; ?>
+
+    .progress-bar {
+        height: 45px;
+        font-size: 100%;
+        font-weight: bold;
+        border-radius: 50px;
+        line-height: 45px;
+        color: <?= /* @noEscape */ $block->getMaintenanceSetting('maintenance_progress_label_color') ?>;
+        background-color: <?= /* @noEscape */ $block->getMaintenanceSetting('maintenance_progress_bar_color') ?>;
+        width: 0;
+    }
+</style>
+
+<script>
+    require([
+        'jquery'
+    ], function ($) {
+        $("#mageants-single-column").attr('style','height:'+$(document).height()+'px !important;');
+        $('#html-body').attr('style','margin: 0;');
+        $(".sr-only").removeClass("sr-only");
+
+    });
+</script>
+
+<?php if ($block->getSubscribeSetting('subscribe_type') !== 'none') : ?>    
+    <script>
+        require([
+            'jquery'
+        ], function ($) {
+            var subBtn = $('.mageants-subscribe-box .action.primary span');
+            subBtn.text("<?= /* @noEscape */ $block->getSubscribeSetting('button_label') ?>")
+                .css("color", "<?= /* @noEscape */ $block->getSubscribeSetting('button_label_color') ?>");
+            $('.mageants-subscribe-box .action.primary').css("background", "<?= /* @noEscape */ $block->getSubscribeSetting('button_background_color') ?>");
+        });
+    </script>
+<?php endif; ?>
+
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "Mageants_MaintenanceMode/js/progress/bar": {
+                "progressLabel": "<?= /* @noEscape */ $block->getProgressLabel() ?>"
+            }
+        }
+    }
+</script>

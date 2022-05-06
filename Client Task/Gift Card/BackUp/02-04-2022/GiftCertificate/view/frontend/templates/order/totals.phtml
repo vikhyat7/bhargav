@@ -1,0 +1,69 @@
+<?php
+/**
+ * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+/**
+ * @var $block \Magento\Sales\Block\Order\Totals
+ * @see \Magento\Sales\Block\Order\Totals
+ */
+$giftValue=$block->getOrder()->getOrderGift();
+$flag=false;
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance(); // Instance of Object Manager
+ $priceHelper = $objectManager->create('Magento\Framework\Pricing\Helper\Data'); // Instance of Pricing Helper
+$price =  1000; //Your Price
+
+
+?>
+    
+<?php foreach ($block->getTotals() as $_code => $_total): ?>
+    <?php if ($_total->getBlockName()): ?>
+        <?php echo $block->getChildHtml($_total->getBlockName(), false); ?>
+    <?php else:?>
+    <tr class="<?php /* @escapeNotVerified */ echo $_code?>">
+        <th <?php /* @escapeNotVerified */ echo $block->getLabelProperties()?> scope="row">
+            <?php if ($_total->getStrong()):?>
+            <strong><?php echo $block->escapeHtml($_total->getLabel());?></strong>
+            <?php else:?>
+            <?php echo $block->escapeHtml($_total->getLabel());?>
+            <?php endif?>
+         
+        </th>
+        <td <?php /* @escapeNotVerified */ echo $block->getValueProperties()?> data-th="<?php echo $block->escapeHtml($_total->getLabel());?>">
+            <?php if ($_total->getStrong()):?>
+            <strong><?php /* @escapeNotVerified */ echo $block->formatValue($_total) ?></strong>
+            <?php else:?>
+            <?php /* @escapeNotVerified */ echo $block->formatValue($_total) ?>
+            <?php endif?>
+            <?php if($giftValue && !$_total->getLabel()):?>
+                 <?php echo __($giftValue); ?> 
+             <?php endif; ?>   
+        </td>
+        <?php if(!$flag){?>
+            <tr class="">
+             <th> </th>   
+            <th  scope="row">
+             
+                <?php if($giftValue):?>
+                     <?php echo __('Gift Card: '); ?> 
+                 <?php endif; ?>   
+            </th>
+            <td>
+                
+                <?php if($giftValue):?>
+                     <?php echo $priceHelper->currency($giftValue, true, false); ?> 
+                 <?php endif; ?>   
+            </td>
+            </tr>
+            <?php $flag=true; ?>
+        
+    </tr>
+    <?php } ?>
+    <?php endif?>
+
+<?php endforeach?>
+
+    

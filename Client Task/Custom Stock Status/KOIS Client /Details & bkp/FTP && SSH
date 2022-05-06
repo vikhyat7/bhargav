@@ -1,0 +1,28 @@
+
+Admin
+https://kois-optics.gr/koadmin/
+mageants
+JmDwFfqqXW83kWQj
+
+ 
+SSH + FTP
+You can login here: 
+
+https://accounts.cloudclusters.io/login/
+ibaritakis@gmail.com
+Jbarkiss@2
+ 
+
+
+
+
+php -dmemory_limit=8G bin/magento s:up
+php -dmemory_limit=8G bin/magento s:d:c
+php -dmemory_limit=8G bin/magento s:s:d -f el_GR
+php -dmemory_limit=8G bin/magento c:f
+
+
+
+
+Διαθέσιμο μόνο στα φυσικά μας καταστήματα
+Available only in our physical stores

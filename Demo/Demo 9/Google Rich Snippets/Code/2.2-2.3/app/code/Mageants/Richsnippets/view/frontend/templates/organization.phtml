@@ -1,0 +1,94 @@
+<?php /**
+       * @category Mageants Richsnippets
+       * @package Mageants_Richsnippets
+       * @copyright Copyright (c) 2019 Mageants
+       * @author Mageants Team <support@mageants.com>
+       */
+?>
+<?php if ($block->getConfigrations()->isOrganizationEnable()) : ?>
+<script type="application/ld+json">
+ { 
+         "@context": "https://schema.org",
+         "@type": "Organization",
+         "name": "<?php echo $block->getConfigrations()->getOrganizationName(); ?>",
+         "legalName" : "<?php echo $block->getConfigrations()->getOrganizationName(); ?>",
+         "url": "<?php echo $block->getBaseUrl(); ?>",
+         "logo": "<?php echo $block->getConfigrations()->getOrganizationLogoUrl(); ?>",
+ "address": {
+         "@type": "PostalAddress",
+         "streetAddress": "<?php echo $block->getConfigrations()->getOrganizationCity(); ?>",
+         "addressRegion": "<?php echo $block->getConfigrations()->getOrganizationState(); ?>",
+         "postalCode": "<?php echo $block->getConfigrations()->getOrganizationZipCode(); ?>",
+         "addressCountry": "<?php echo $block->getConfigrations()->getOrganizationCountry(); ?>",
+         "description": "<?php echo $block->getConfigrations()->getOrganizationdescription(); ?>"
+ },
+ "contactPoint" : [
+        { 
+          "@type" : "ContactPoint",
+        <?php if (!empty($block->getConfigrations()->getOrganizationCustomerService())) : ?>
+          "telephone" : "<?php echo $block->getConfigrations()->getOrganizationCustomerService(); ?>",
+          "areaServed" : "<?php echo $block->getConfigrations()->getOrganizationCountry(); ?>",
+        <?php else : ?>
+          "telephone" : "+91123456789",  
+        <?php endif; ?>
+          "contactType" : "customer service",
+          "contactOption" : "TollFree"
+        } ,
+         {
+          "@type" : "ContactPoint",
+        <?php if (!empty($block->getConfigrations()->getOrganizationSales())) : ?>
+          "telephone" : "<?php echo $block->getConfigrations()->getOrganizationSales(); ?>",
+        <?php else : ?>
+          "telephone" : "+91123456789",  
+        <?php endif; ?> 
+          "contactType" : "Sales"
+        } , 
+         {
+          "@type" : "ContactPoint",
+            <?php if (!empty($block->getConfigrations()->getOrganizationTechSupport())) : ?>
+          "telephone" : "<?php echo $block->getConfigrations()->getOrganizationTechSupport(); ?>",
+          "areaServed" : "<?php echo $block->getConfigrations()->getOrganizationCountry(); ?>",
+            <?php else : ?>
+          "telephone" : "+91123456789",  
+            <?php endif; ?>
+          "contactOption" : "TollFree",
+          "contactType" : "Technical support"
+        }]
+<?php if ($block->getConfigrations()->isSocialProfileEnable()) : ?>
+ ,
+ "sameAs": [ 
+        <?php if (!empty($block->getConfigrations()->getFacebookLink())) : ?>
+       "<?php echo $block->getConfigrations()->getFacebookLink(); ?>",
+        <?php endif; ?>
+        <?php if (!empty($block->getConfigrations()->getTwitterLink())) : ?>
+       "<?php echo $block->getConfigrations()->getTwitterLink(); ?>",
+        <?php endif; ?>
+        <?php if (!empty($block->getConfigrations()->getGooglePlusLink())) : ?>
+       "<?php echo $block->getConfigrations()->getGooglePlusLink(); ?>",
+        <?php endif; ?>
+        <?php if (!empty($block->getConfigrations()->getInstagramLink())) : ?>
+       "<?php echo $block->getConfigrations()->getInstagramLink(); ?>",
+        <?php endif; ?>
+        <?php if (!empty($block->getConfigrations()->getYouTubeLink())) : ?>
+       "<?php echo $block->getConfigrations()->getYouTubeLink(); ?>",
+        <?php endif; ?>
+        <?php if (!empty($block->getConfigrations()->getLinkedInLink())) : ?>
+       "<?php echo $block->getConfigrations()->getLinkedInLink(); ?>",
+        <?php endif; ?>
+        <?php if (!empty($block->getConfigrations()->getMySpaceLink())) : ?>
+       "<?php echo $block->getConfigrations()->getMySpaceLink(); ?>",
+        <?php endif; ?>
+        <?php if (!empty($block->getConfigrations()->getPinterestLink())) : ?>
+       "<?php echo $block->getConfigrations()->getPinterestLink(); ?>",
+        <?php endif; ?>
+        <?php if (!empty($block->getConfigrations()->getSoundCloudLink())) : ?>
+       "<?php echo $block->getConfigrations()->getSoundCloudLink(); ?>",
+        <?php endif; ?>
+        <?php if (!empty($block->getConfigrations()->getTumblrLink())) : ?>
+       "<?php echo $block->getConfigrations()->getTumblrLink(); ?>"
+        <?php endif; ?>
+    ]
+<?php endif; ?>
+}
+</script>
+<?php endif; ?>

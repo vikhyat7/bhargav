@@ -1,0 +1,207 @@
+SSH
+
+You can login here: https://accounts.cloudclusters.io/login/
+ibaritakis@gmail.com
+Jbarkiss@2
+Then choose Manage (kos-magento) and go to Shell/SSH tab from the left.
+
+FroneEnd Credential:
+dhruvil@rocktechnolabs.com
+admin@123
+
+Admin credentials 
+https://magento-19266-0.cloudclusters.net/koadmin
+
+master
+master123
+
+https://magento-19266-0.cloudclusters.net/gualia-oraseos/gucci-gg1013o.html
+
+https://magento-19266-0.cloudclusters.net/gualia-oraseos?manufacturer=Gucci&p=3
+
+FTPS host server: pd4ftp.cloudclusters.net 
+
+FTPS username: admin 
+
+FTPS port: 61072 
+
+Password: BxZMjzGns95T
+
+memory command:
+
+php -dmemory_limit=8G bin/magento s:up
+php -dmemory_limit=8G bin/magento s:d:c
+php -dmemory_limit=8G bin/magento s:s:d -f el_GR
+php -dmemory_limit=8G bin/magento c:f
+
+chmod -R 0777 var/
+
+php bin/magento module:disable Mageants_CustomStockStatus
+php bin/magento module:enable Mageants_CustomStockStatus
+php bin/magento module:status Mageants_CustomStockStatus
+
+
+create admin new account:
+
+bin/magento admin:user:create --admin-user master --admin-password master123 --admin-email dhruvil.rocktechnolabs@gmail.com --admin-firstname magenats --admin-lastname admin
+
+7-Dec-21 (File Changes)
+-----------------------
+Mageants/CustomStockStatus/Helper/Data.php
+MGS/ExtraGallery/view/frontend/templates/gallery.phtml
+
+7-Dec-21 (New Files Created)
+----------------------------
+Mageants/CustomStockStatus/etc/events.xml
+Mageants/CustomStockStatus/Observer/ReplaceTemplate.php
+
+Hello,
+
+	we have resolved issues which was you given.
+	-> If you click on the color thumbnail the main image doesn't change.
+	-> On the configurable product page the custom stock status isn't visible when you select any of the color options.
+	https://magento-19266-0.cloudclusters.net/gualia-oraseos/gucci-gg1013o.html 
+
+	we have disable our module and checked, configurable product's options are not display so please check and confirm it.
+
+	-> The same happens on the category grid page where the custom stock status isn't visible on the configurable product
+
+Thanks
+
+
+
+Hello,
+
+	regarding 4rth point : we have disable our module and checked, configurable product's options are not display so please check and confirm it.
+
+	regarding 1 and 2 point (Resolved) : https://magento-19266-0.cloudclusters.net/gualia-oraseos/gucci-gg1013o.html
+
+Thanks
+
+
+Hello,
+
+	because data is comes from the ajax. so after the complete all validation, custom stock status will be change after the fetch response from ajax.
+
+Thanks
+
+
+Eyeglasses by Bottega Veneta with metallic frame. Γυαλιά οράσεως από τη Bottega Veneta με μεταλλικό σκελετό.
+
+13-Dec-21
+---------
+
+1-> In a configurable product page there is no short description displayed: 
+Done - need to set from the backend in main product
+
+2-> In a simple product page the short descriptions is displayed 2 times:
+Done - app/design/frontend/MGS/supro/Magento_Catalog/layout/catalog_product_view.xml
+
+3-> The simple products that have 2 or more images display strangely.
+Done - MGS/ExtraGallery/view/frontend/templates/gallery.phtml
+
+
+4-> When on category grid display, if a product had 2 or more images and you hover on it the image would change. No it is not.
+please provide a video for the above issue so we can confirm  is that not working because of our module.
+
+
+5-> With your module enabled, the color selection is slow.
+When it is disabled the color selection is super fast.
+because data is comes from the ajax. so after the complete all validation, custom stock status will be change after the fetch response from ajax.
+
+
+14-Dec-21
+---------
+
+Hello,
+
+    4 When on category grid display, if a product had 2 or more images and you hover on it the image would change. No it is not.
+    -> We have disable our module and checked still it's not working.
+    https://www.loom.com/share/5b50aabd7e7a49508c1f23335cdd02e6
+
+    5 With your module enabled, the color selection is slow.
+       When it is disabled the color selection is super fast.
+    -> No, can't possible because it's take some seconds for validation from the script, then custom stock status will set there.
+
+	A. If you change the language to english there is no short description displayed.
+	-> Resolved
+
+	B. If you click on More Information tab, the Description field (Details) is displayed again underneath.
+	-> it's working properly. 
+	https://www.loom.com/share/826fece69fe0413b80a3ecbbfb12e4e4
+
+Thanks
+
+
+14-Dec-21
+========
+change attribute setting from backend 
+
+Hello,
+
+	If you click on More Information tab, the Description field (Details) is displayed again underneath. - Resolved
+	
+	-> https://magento-19266-0.cloudclusters.net/seira-orofografia/kois-optics-orophographia-211-ks01-c1-green-lenses.html
+
+Thanks
+
+17-Dec-21
+---------
+
+Hello,
+
+    it's custom page (brand's list page), there's no any category : https://nimb.ws/G5yrmh
+    and we are provide in those pages which we have described in configuration : https://nimb.ws/O60rtB
+
+    so, it will be customization for display custom stock status on custom page.
+
+Thanks
+
+22-Dec-21
+---------
+
+Hello,
+
+    we have resolved your issue so please check and confirm.
+
+    we have checked in our module there's created some extraa files by someone which we haven't
+    developed/provide for our module. so please don't add or updated any files of our module.
+    see screenshot : https://nimb.ws/NEkvbG, https://nimb.ws/LYVBrE 
+
+Thanks
+
+
+31-Dec-21
+--------- 
+File Change : Mageants/CustomStockStatus/Plugin/DefaultRendererPlugin.php
+
+Hello,
+
+    we have resolved your issue so please check and confirm. -> https://www.loom.com/share/9c5dde47f8da495bb8fffcbcd0ad0e27
+
+Thanks
+
+3-Jan-22
+--------- 
+
+Hello,
+
+    we have resolved your issue so please check and confirm. -> https://kois-optics.gr/zeus-dione-iokasti.html
+
+Thanks
+
+
+11-March-2022
+---------------
+---------------
+
+	- Custom Stock status not working for out of stock product's (configurable)
+	- status not working for main config product 
+
+	file changes :
+	----------------
+	Mageants/CustomStockStatus/Block/Product/Renderer/Configurable.php
+	Mageants/CustomStockStatus/Helper/Data.php
+	Mageants/CustomStockStatus/view/frontend/templates/product/list.phtml
+	Mageants/CustomStockStatus/view/frontend/templates/product/view/type/default.phtml
+

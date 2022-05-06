@@ -1,0 +1,42 @@
+<?php
+// $helper = $this->helper('Mageants\OutofStockNotification\Helper\Data');
+$products = $block->getProductCollection();
+$minQty = $block->getMinQtyMail();
+
+?>
+
+<table>
+    <thead>
+        <tr>
+            <th><?= $block->escapeHtml('ID'); ?></th>
+            <th><?= $block->escapeHtml('Product Name'); ?></th>
+            <th><?= $block->escapeHtml('Product QTY'); ?></th>
+        </tr>
+    </thead>
+    <tbody>
+<?php
+foreach ($products as $product) {
+            
+            
+    if ($product->getTypeId()!='grouped' || $product->getTypeId()!='bundle' || $product->getTypeId()!='configurable') {
+        $stockItem =  $block->getStock($product->getId());
+                
+        if (((int)$stockItem->getQty() <= (int)$minQty) && ((int)$stockItem->getQty() > 0)) {
+            ?>
+
+                <tr style="text-align: center;">
+                    <td align="center"><?= /* @noEscape */ $product->getId();?></td>
+                    <td align="center"><?= /* @noEscape */ $product->getName();?></td>
+                    <td align="center"><?= /* @noEscape */ $stockItem->getQty();?></td>
+                </tr>
+            <?php
+        }
+    }
+        
+}
+?>
+
+<?php
+?>
+    </tbody>
+</table>

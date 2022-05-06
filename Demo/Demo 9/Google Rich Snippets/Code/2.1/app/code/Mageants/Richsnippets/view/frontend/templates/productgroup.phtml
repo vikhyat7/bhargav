@@ -1,0 +1,311 @@
+<?php /**
+       * @category Mageants Richsnippets
+       * @package Mageants_Richsnippets
+       * @copyright Copyright (c) 2019 Mageants
+       * @author Mageants Team <support@mageants.com>
+       */
+?>
+<?php
+    $product = $block->getPropductCollection();
+    $brand_name = $product->getResource()->getAttribute($block->getConfigrations()->getBrandName())->getFrontend()->getValue($product);
+    $mpn = $product->getResource()->getAttribute($block->getConfigrations()->getManufacturer())->getFrontend()->getValue($product);
+    $_ratingSummary = $block->getRatingSummary($product);
+    $_reviewCount = $block->getTotalReviews($product);
+    $currencysymbol = $block->getCurrencySymbol();
+    $currencycode = $block->getCurrencyCode();
+    $productdescription = $block->getPropductDescription();
+    $productTypeInstance = $product->getTypeInstance();
+    $usedProducts = $productTypeInstance->getAssociatedProducts($product);
+    $getvalues = [];
+    $counter = 0 ;
+?>
+<?php if ($block->getConfigrations()->getGroupedProductAs() == 0) { ?>
+<?php
+$price = 0;
+$productId = null;
+foreach ($usedProducts as $child) {
+    if ($price < $child->getFinalPrice()) {
+        $productId = $child->getId();
+        $price = $child->getFinalPrice();
+    }
+}
+foreach ($usedProducts as $child) {
+    if ($price > $child->getFinalPrice()) {
+        $productId = $child->getId();
+        $price = $child->getFinalPrice();
+    }
+}
+$product->load($productId);
+?>
+<script type="application/ld+json">
+                {
+                  "@context": "https://schema.org/",
+                  "@type": "Product",
+                  "name": "<?php echo $product->getName(); ?>",
+                  "image": [
+                    "<?php echo $this->getUrl().$product->getImage(); ?>"
+                   ],
+                  "description": "<?php echo $productdescription; ?>",
+                  "sku": "<?php echo $product->getSku(); ?>",
+                  "mpn": "<?php echo $mpn; ?>",
+                    <?php if ($block->getConfigrations()->isProductRichDataEnable()) : ?>
+                        "brand": {
+                           "@type": "Thing",
+                           "name": "<?php echo $brand_name; ?>"
+                        },
+                    <?php endif; ?>
+                    <?php if ($_ratingSummary) { ?>
+                    <?php if ($block->getConfigrations()->isProductRichDataEnable()) : ?>
+                    <?php if ($block->getConfigrations()->getRatingStatus()) : ?> 
+                        "review": {
+                            "@type": "Review",
+                            "reviewRating": {
+                              "@type": "Rating",
+                              "ratingValue": <?php
+                                            $rating = number_format((($_ratingSummary * 5)/100), 1);
+                                            echo __(floatval($rating)); ?>,
+                              "bestRating": "5"
+                            },
+                            "author": {
+                              "@type": "Person",
+                              "name": "<?php echo $product->getName(); ?>"
+                            }
+                          },
+                    <?php endif; ?>
+                    <?php endif; ?>
+                <?php if ($block->getConfigrations()->isProductRichDataEnable()) : ?>
+                    <?php if ($block->getConfigrations()->getRatingStatus()) : ?> 
+                          "aggregateRating": {
+                            "@type": "AggregateRating",
+                            "ratingValue": <?php
+                                            $rating = number_format((($_ratingSummary * 5)/100), 1);
+                                            echo __(floatval($rating)); ?>,
+                            "reviewCount": <?php echo __($_reviewCount); ?>
+                          },
+                    <?php endif; ?>
+                <?php endif; ?>
+                    <?php } ?>
+                  "offers": {
+                    "@type": "Offer",
+                    "url": "<?php echo $this->getUrl(); ?>",
+                    "priceCurrency": "<?php echo $currencycode ; ?>",
+                    <?php if (!empty($specialprice)) { ?>
+                        "price":  <?php echo __(number_format((float)$product->getFinalPrice(), 2, '.', '')); ?>,   
+                        "priceValidUntil": "<?php echo $specialtodate ; ?>",
+                    <?php } else { ?>
+                    "price":  <?php echo __(number_format((float)$product->getFinalPrice(), 2, '.', '')); ?>,
+                    <?php } ?>
+                <?php if ($block->getConfigrations()->isProductRichDataEnable()) : ?>
+                    <?php if ($block->getConfigrations()->getShowConditionStatus()) : ?> 
+                        "itemCondition": "https://schema.org/NewCondition",
+                    <?php endif; ?>
+                <?php endif; ?>
+                <?php if ($block->getConfigrations()->isProductRichDataEnable()) : ?>
+                    <?php if ($block->getConfigrations()->getProductAvaiblityStatus()) : ?>    
+                        <?php if ($block->getProductStatus()) : ?>
+                            <?php if ($product->isAvailable()) : ?>
+                                "availability": "https://schema.org/InStock",
+                            <?php else : ?>
+                                "availability": "https://schema.org/OutStock",
+                            <?php endif; ?>
+                        <?php endif; ?>
+                    <?php endif; ?>
+                <?php endif; ?>
+                    "seller": {
+                      "@type": "Organization",
+                      "name": "Executive Objects"
+                    }
+                  }
+                }
+            </script>
+<?php } elseif ($block->getConfigrations()->getGroupedProductAs() == 1) {?>
+<?php
+foreach ($usedProducts as $child) {
+    if ($child->hasSpecialPrice()) {
+        $specialprice = $child->getFinalPrice();
+        $specialtodate = $child->getSpecialToDate();
+?>
+<script type="application/ld+json">
+                {
+                  "@context": "https://schema.org/",
+                  "@type": "Product",
+                  "name": "<?php echo $child->getName(); ?>",
+                  "image": [
+                    "<?php echo $this->getUrl().$child->getImage(); ?>"
+                   ],
+                  "description": "<?php echo $productdescription; ?>",
+                  "sku": "<?php echo $child->getSku(); ?>",
+                  "mpn": "<?php echo $mpn; ?>",
+                    <?php if ($block->getConfigrations()->isProductRichDataEnable()) : ?>
+                        "brand": {
+                           "@type": "Thing",
+                           "name": "<?php echo $brand_name; ?>"
+                        },
+                    <?php endif; ?>
+                    <?php if ($_ratingSummary) { ?>
+                    <?php if ($block->getConfigrations()->isProductRichDataEnable()) : ?>
+                    <?php if ($block->getConfigrations()->getRatingStatus()) : ?>    
+                        "review": {
+                            "@type": "Review",
+                            "reviewRating": {
+                              "@type": "Rating",
+                              "ratingValue": <?php
+                                            $rating = number_format((($_ratingSummary * 5)/100), 1);
+                                            echo __(floatval($rating)); ?>,
+                              "bestRating": "5"
+                            },
+                            "author": {
+                              "@type": "Person",
+                              "name": "<?php echo $child->getName(); ?>"
+                            }
+                          },
+                    <?php endif; ?>
+                    <?php endif; ?>
+                <?php if ($block->getConfigrations()->isProductRichDataEnable()) : ?>
+                    <?php if ($block->getConfigrations()->getRatingStatus()) : ?> 
+                          "aggregateRating": {
+                            "@type": "AggregateRating",
+                            "ratingValue": <?php
+                                            $rating = number_format((($_ratingSummary * 5)/100), 1);
+                                            echo __(floatval($rating)); ?>,
+                            "reviewCount": <?php echo __($_reviewCount); ?>
+                          },
+                    <?php endif; ?>
+                <?php endif; ?>
+                    <?php } ?> 
+                  "offers": {
+                    "@type": "Offer",
+                    "url": "<?php echo $this->getUrl(); ?>",
+                    "priceCurrency": "<?php echo $currencycode ; ?>",
+                    <?php if (!empty($specialprice)) { ?>
+                        "price":  <?php echo __(number_format((float)$child->getFinalPrice(), 2, '.', '')); ?>, 
+                        "priceValidUntil": "<?php echo $specialtodate ; ?>",
+                    <?php } else { ?>
+                    "price":  <?php echo __(number_format((float)$child->getFinalPrice(), 2, '.', '')); ?>,
+                    <?php } ?>
+                <?php if ($block->getConfigrations()->isProductRichDataEnable()) : ?>
+                    <?php if ($block->getConfigrations()->getShowConditionStatus()) : ?> 
+                        "itemCondition": "https://schema.org/NewCondition",
+                    <?php endif; ?>
+                <?php endif; ?>
+                <?php if ($block->getConfigrations()->isProductRichDataEnable()) : ?>
+                    <?php if ($block->getConfigrations()->getProductAvaiblityStatus()) : ?>    
+                        <?php if ($block->getProductStatus()) : ?>
+                            <?php if ($child->isAvailable()) : ?>
+                                "availability": "https://schema.org/InStock",
+                            <?php else : ?>
+                                "availability": "https://schema.org/OutStock",
+                            <?php endif; ?>
+                        <?php endif; ?>
+                    <?php endif; ?>
+                <?php endif; ?>
+                    "seller": {
+                      "@type": "Organization",
+                      "name": "Executive Objects"
+                    }
+                  }
+                }
+            </script>
+    <?php    }
+}?>
+<?php } else {?>
+<?php
+foreach ($usedProducts as $child) {
+    if ($child->hasSpecialPrice()) {
+        $getvalues[$counter]['id'] = $child->getId();
+        $counter++;
+    }
+}
+if ($counter > 0) {
+    $genraterandnumber = rand(1, $counter);
+    $getRandomId = $getvalues[$genraterandnumber-1]['id'];
+    $product->load($getRandomId);
+}
+?>
+<script type="application/ld+json">
+                {
+                  "@context": "https://schema.org/",
+                  "@type": "Product",
+                  "name": "<?php echo $product->getName(); ?>",
+                  "image": [
+                    "<?php echo $this->getUrl().$product->getImage(); ?>"
+                   ],
+                  "description": "<?php echo $productdescription; ?>",
+                  "sku": "<?php echo $product->getSku(); ?>",
+                  "mpn": "<?php echo $mpn; ?>",
+                    <?php if ($block->getConfigrations()->isProductRichDataEnable()) : ?>
+                        "brand": {
+                           "@type": "Thing",
+                           "name": "<?php echo $brand_name; ?>"
+                        },
+                    <?php endif; ?>
+                    <?php if ($_ratingSummary) { ?>
+                    <?php if ($block->getConfigrations()->isProductRichDataEnable()) : ?>
+                    <?php if ($block->getConfigrations()->getRatingStatus()) : ?> 
+                        "review": {
+                            "@type": "Review",
+                            "reviewRating": {
+                              "@type": "Rating",
+                              "ratingValue": <?php
+                                            $rating = number_format((($_ratingSummary * 5)/100), 1);
+                                            echo __(floatval($rating)); ?>,
+                              "bestRating": "5"
+                            },
+                            "author": {
+                              "@type": "Person",
+                              "name": "<?php echo $product->getName(); ?>"
+                            }
+                          },
+                    <?php endif; ?>
+                    <?php endif; ?>
+                <?php if ($block->getConfigrations()->isProductRichDataEnable()) : ?>
+                    <?php if ($block->getConfigrations()->getRatingStatus()) : ?> 
+                          "aggregateRating": {
+                            "@type": "AggregateRating",
+                            "ratingValue": <?php
+                                            $rating = number_format((($_ratingSummary * 5)/100), 1);
+                                            echo __(floatval($rating)); ?>,
+                            "reviewCount": <?php echo __($_reviewCount); ?>
+                          },
+                    <?php endif; ?>
+                <?php endif; ?>
+                    <?php } ?>
+                  "offers": {
+                    "@type": "Offer",
+                    "url": "<?php echo $this->getUrl(); ?>",
+                    "priceCurrency": "<?php echo $currencycode ; ?>",
+                    <?php if (!empty($specialprice)) { ?>
+                        "price":  <?php echo __(number_format((float)$product->getFinalPrice(), 2, '.', '')); ?>,   
+                        "priceValidUntil": "<?php echo $specialtodate ; ?>",
+                    <?php } else { ?>
+                    "price":  <?php echo __(number_format((float)$product->getFinalPrice(), 2, '.', '')); ?>,
+                    <?php } ?>
+                <?php if ($block->getConfigrations()->isProductRichDataEnable()) : ?>
+                    <?php if ($block->getConfigrations()->getShowConditionStatus()) : ?> 
+                        "itemCondition": "https://schema.org/NewCondition",
+                    <?php endif; ?>
+                <?php endif; ?>
+                <?php if ($block->getConfigrations()->isProductRichDataEnable()) : ?>
+                    <?php if ($block->getConfigrations()->getProductAvaiblityStatus()) : ?>    
+                        <?php if ($block->getProductStatus()) : ?>
+                            <?php if ($product->isAvailable()) : ?>
+                                "availability": "https://schema.org/InStock",
+                            <?php else : ?>
+                                "availability": "https://schema.org/OutStock",
+                            <?php endif; ?>
+                        <?php endif; ?>
+                    <?php endif; ?>
+                <?php endif; ?>
+                    "seller": {
+                      "@type": "Organization",
+                      "name": "Executive Objects"
+                    }
+                  }
+                }
+            </script>
+<?php } ?>
+<meta name="keywords" content="<?php echo $product->getName(); ?>" />
+
+
+
+

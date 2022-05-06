@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!-- 
+ * @category Mageants MaintenanceMode
+ * @package Mageants_MaintenanceMode
+ * @copyright Copyright (c) 2019 Mageants
+ * @author Mageants Team <support@mageants.com>
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="empty" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <css src="Mageants_MaintenanceMode::css/style.css"/>
+    </head>
+    <body>
+        <referenceContainer name="page.wrapper">
+            <referenceContainer name="main.content" remove="true"/>
+            <referenceContainer name="copyright" remove="true"/>
+            <referenceContainer name="content" remove="true"/>
+            <!-- <block class="Mageants\MaintenanceMode\Block\Preview\Maintenance" name="maintenancemode.maintenance.preview" template="Mageants_MaintenanceMode::preview/maintenance.phtml">
+                <block class="Mageants\MaintenanceMode\Block\Preview\Background" name="maintenancemode.background.preview" as="background" template="Mageants_MaintenanceMode::preview/background.phtml"/>
+                <block class="Magento\Newsletter\Block\Subscribe" name="form.subscribe" as="subscribe" template="subscribe.phtml"/>
+                <block class="Magento\Customer\Block\Form\Register" name="customer_form_register" as="register" template="form/register.phtml"/>
+            </block> -->
+            <block class="Mageants\MaintenanceMode\Block\Maintenance" name="maintenancemode.maintenance.page" template="Mageants_MaintenanceMode::maintenance.phtml">
+                <block class="Mageants\MaintenanceMode\Block\Clock" name="maintenancemode.clock" as="clock_countdown" template="Mageants_MaintenanceMode::clock/timer.phtml"/>
+                <block class="Magento\Newsletter\Block\Subscribe" name="form.subscribe" as="subscribe" template="subscribe.phtml"/>
+                <block class="Magento\Customer\Block\Form\Register" name="customer_form_register" as="register" template="form/register.phtml"/>
+                <block class="Mageants\MaintenanceMode\Block\Background" name="maintenancemode.background" as="background" template="Mageants_MaintenanceMode::background.phtml"/>
+            </block>
+        </referenceContainer>
+    </body>
+</page>

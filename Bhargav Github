@@ -1,0 +1,186 @@
+Git Pull Push Config Setup
+
+#git init
+
+#git status
+
+#git add .
+
+#git status
+
+#git commit -m "My New Project"
+
+#git config --global user.email "bhargavgoti1468@gmail.com"
+
+#git config --global user.name "bhargav"
+
+#git commit -m "My New Project"
+
+#git pull origin bhargav
+
+#git remote add origin https://github.com/vikhyat/vikhyat.git
+
+------fatal: remote origin already exists.
+
+#git pull origin master
+
+And After run command if you got this error remote: Not Found ---- fatal: repository 'https://github.com/repo.git/' not found
+
+(solved use this command)  --- git credential-manager uninstall
+
+#git remote set-url origin https://github.com/vikhyat/vikhyat.git
+
+#git pull origin master
+
+#git branch
+
+#git add .
+
+#git commit -m "My New Project"
+
+#git push -u origin master
+
+#git pull origin master
+
+#git push origin master
+
+
+* check pub key connect or not *
+ssh -T git@github.com
+
+* connetct with pub key *
+ssh-add ~/.ssh/id_rsa
+
+my token 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
+
+git remote add origin git@github.com:vikhyat7/project.git
+
+==================================================================================================================================
+
+
+Git Pull Push Config Setup
+
+steps: step for create for pub key
+======================================
+
+#cd ~/.ssh/
+
+#ssh-keygen -t rsa -b 4096 -C "bhargavgoti1468@gmail.com"
+
+#enter file name : bhargavgit
+#cat bhargavgit.pub
+
+	save bhargavgit.pub key in git account (Settings -> SSH and GPG keys -> New SSK key)
+
+#eval $(ssh-agent)
+
+#ssh-add bhargavgit
+
+#git checkout -b <branchName>
+
+#git init
+
+#git status
+
+#git add .
+
+#git status
+
+#git commit -m "My New Project"
+
+#git remote add origin git@github.com:bhargavgoti2/Bhargav-work.git
+
+#git commit -M "My New Project"
+
+#git push -u origin master
+
+
+
+#git config --global user.email "bhargavgoti1468@gmail.com"
+
+#git config --global user.name "bhargavgoti2"
+
+#git pull origin master
+
+#git remote add origin https://github.com/vikhyat/vikhyat.git
+
+#git remote add origin https://github.com/BhargavRock/Rock.git
+
+#git remote add origin https://github.com/BhargavRock/Test.git
+
+
+	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
+
+------fatal: remote origin already exists.
+
+#git pull origin master
+
+And After run command if you got this error remote: Not Found ---- fatal: repository 'https://github.com/repo.git/' not found
+
+(solved use this command)  --- git credential-manager uninstall
+
+#git remote set-url origin https://github.com/vikhyat/vikhyat.git
+
+#git remote set-url origin https://github.com/BhargavRock/Rock.git
+
+#git pull origin master
+
+#git branch
+
+#git add .
+
+#git commit -m "My New Project"
+
+#git push -u origin master
+
+#git pull origin master
+
+#git push origin master
+
+
+
+https://nimb.ws/feRA1k
+
+
+===================================================================================================================================
+
+mailto:git@github.com:dhruvilrock/rock_demo.git
+
+
+Git Pull Push Config Setup
+
+#git init
+
+#git status
+
+#git add .
+
+#git status
+
+#git commit -m "My New Project"
+
+#git config --global user.email "mailto:dhruvil@rocktechnolabs.com"
+
+#git config --global user.name "dhruvil"
+
+#git commit -m "My New Project"
+
+#git pull origin master
+
+#git remote add origin git@github.com:dhruvilrock/rock_demo.git
+
+#git remote set-url origin git@github.com:dhruvilrock/rock_demo.git
+
+#git pull origin master
+
+#git branch
+
+#git add .
+
+#git commit -m "My New Project"
+
+#git push -u origin master
+
+#git pull origin master
+
+#git push origin master

@@ -1,0 +1,14 @@
+<?php
+// @codingStandardsIgnoreFile
+?>
+<div id="purchase_sumary_total_block" class="import-product"
+     data-modal-info="<?php /* @escapeNotVerified */ echo $block->getWidgetOptions();?>">
+    <div class="admin__page-section-item order-totals">
+        <table class="data-table admin__table-secondary order-subtotal-table">
+            <tr>
+                <td><strong><?php echo __('Returned Total') ?></strong></td>
+                <td><?php echo $block->convertPrice($block->getReturnedTotal()) ?></td>
+            </tr>
+        </table>
+    </div>
+</div>

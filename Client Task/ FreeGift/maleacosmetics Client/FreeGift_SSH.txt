@@ -1,0 +1,14 @@
+
+
+Ip: 45.35.62.223
+
+Access URL: https://45.35.62.223:2087
+user: root
+pass: 0XWk@GtRjCZ3
+ssh port: 22
+
+Directory path: /home/maleacos/public_html/
+
+
+frontend : http://maleacosmetics.com/
+backend  : https://maleacosmetics.com/admin_op6zlp

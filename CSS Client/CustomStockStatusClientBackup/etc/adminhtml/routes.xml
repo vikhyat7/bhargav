@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @category Mageants CustomStockStatus
+ * @package Mageants_CustomStockStatus
+ * @copyright Copyright (c) 2018 Mageants
+ * @author Mageants Team <info@mageants.com>
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:App/etc/routes.xsd">
+    <router id="admin">
+        <route id="customstockstatus" frontName="customstockstatus">
+            <module name="Mageants_CustomStockStatus" before="Magento_Backend" />
+        </route>
+    </router>
+</config>

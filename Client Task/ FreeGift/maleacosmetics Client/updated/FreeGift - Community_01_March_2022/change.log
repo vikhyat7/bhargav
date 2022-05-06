@@ -1,0 +1,38 @@
+# Free gift
+
+	Current Free gift version number: 2.0.8
+
+	Date :- 01/03/2022
+	************************************************************
+    Bug fixed
+	************************************************************
+	-> Free Product not working as cart price rule on cart page.
+
+	************************************************************
+    File changes
+	************************************************************
+	Mageants/FreeGift/Observer/QuoteRemoveItemObserver.php
+
+
+	Date :- 11/02/2022
+	************************************************************
+    Bug fixed
+	************************************************************
+	-> when add coupon code for freegift, it's not working properly.
+	-> when free gift product is configurable, getting an error and in minicart it's not display.
+	-> excl. subtotal and incl. subtotal cart price rule free gift product not added 
+
+	************************************************************
+    File changes
+	************************************************************
+	Mageants/FreeGift/etc/module.xml
+	Mageants/FreeGift/composer.json
+	Mageants/FreeGift/Observer/Addcoupon.php
+	Mageants/FreeGift/etc/webapi_rest/events.xml
+	Mageants/FreeGift/Controller/Index/AddCoupon.php
+	Mageants/FreeGift/Observer/addToCartObserver.php
+	Mageants/FreeGift/Observer/QuoteRemoveItemObserver.php
+	Mageants/FreeGift/view/frontend/web/js/set-coupon-code.js
+	Mageants/FreeGift/Helper/Data.php
+	Mageants/FreeGift/Observer/CartPageLoadObserver.php
+	Mageants/FreeGift/Observer/Qtyupdate.php

@@ -1,0 +1,93 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+// @codingStandardsIgnoreFile
+//"swatchRenderer": {
+?>
+<?php /** @var $block \Magento\Swatches\Block\Product\Renderer\Configurable */ 
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+
+$classExist = class_exists('Mageants\SimpleConfigurable\Block\Product\Renderer\Configurable');
+if($classExist){
+    $blockconf = $objectManager->create('Mageants\SimpleConfigurable\Block\Product\Renderer\Configurable');
+    $isEnable = $blockconf->isEnable();
+}else{
+    $isEnable = false;
+}
+?>
+<div class="swatch-opt" data-role="swatch-options"></div>
+<?php if($isEnable && $blockconf->getcustomAttributes()) {?>
+    <script type="text/x-magento-init">
+        {
+            "[data-role=swatch-options]": {
+                "Magento_Swatches/js/swatch-renderer": {
+                    "jsonConfig": <?= /* @escapeNotVerified */ $swatchOptions = $block->getJsonConfig() ?>,
+                    "jsonSwatchConfig": <?php /* @escapeNotVerified */
+                        echo $swatchOptions = $block->getJsonSwatchConfig(); ?>,
+                    "mediaCallback": "<?= /* @escapeNotVerified */ $block->getMediaCallback() ?>",
+                    "gallerySwitchStrategy": "<?php /* @escapeNotVerified */ echo $block->getVar('gallery_switch_strategy',
+                        'Magento_ConfigurableProduct') ?: 'replace'; ?>",
+                    "customAttributes": <?php echo $blockconf->getcustomAttributes() ?>,
+                    "isSimpleConfigurable":<?php echo $isEnable?>,
+                    <?php if($blockconf->getPreselectOptionId()) {?>
+                    "preSelectedOption": <?php echo $blockconf->getPreselectOptionId() ?>,
+                    <?php } ?>
+                    <?php if($blockconf->getProductUrls()) {?>
+                    "productUrls": <?php echo $blockconf->getProductUrls() ?>,
+                    <?php } ?>
+                    "replaceUrl" : <?php echo $blockconf->replaceUrl() ?>,
+                    "jsonSwatchImageSizeConfig": <?= /* @noEscape */ $block->getJsonSwatchSizeConfig() ?>
+                }
+            },
+            "*" : {
+                "Magento_Swatches/js/catalog-add-to-cart": {}
+            }
+        }
+    </script>
+<?php } else{  ?>
+    <script type="text/x-magento-init">
+        {
+            "[data-role=swatch-options]": {
+                "Magento_Swatches/js/swatch-renderer": {
+                    "jsonConfig": <?= /* @noEscape */ $swatchOptions = $block->getJsonConfig() ?>,
+                    "jsonSwatchConfig": <?= /* @noEscape */ $swatchOptions = $block->getJsonSwatchConfig() ?>,
+                    "mediaCallback": "<?= $block->escapeJs($block->escapeUrl($block->getMediaCallback())) ?>",
+                    "gallerySwitchStrategy": "<?= $block->escapeJs($block->getVar('gallery_switch_strategy', 'Magento_ConfigurableProduct')) ?: 'replace'; ?>",
+                    "jsonSwatchImageSizeConfig": <?= /* @noEscape */ $block->getJsonSwatchSizeConfig() ?>
+                }
+            },
+            "*" : {
+                "Magento_Swatches/js/catalog-add-to-cart": {}
+            }
+        }
+    </script>
+<?php }?>
+
+
+<?php 
+$helper = $this->helper('Mageants\CustomStockStatus\Helper\Data');
+$isEnabled = $helper->getChangeConfigProduct();
+
+if($isEnabled):
+
+    $jsonHelper = $this->helper('Magento\Framework\Json\Helper\Data');
+    $attributesData = $jsonHelper->jsonDecode($block->getJsonConfig());
+    $configurableData = $helper->getConfigurableAttribute($attributesData);
+    $configAttributeData = $jsonHelper->jsonEncode($configurableData);
+
+    ?>
+    <script>
+
+    require(["jquery", "jquery/ui", "mageants_stockstatus"],
+                        
+       function ($, ui, stockstatusconfigRenderer) {
+
+         stockstatusconfigRenderer.init(<?php echo $configAttributeData;?>);
+
+    });
+    
+    </script>
+
+<?php endif; ?>

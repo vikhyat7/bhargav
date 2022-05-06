@@ -1,0 +1,54 @@
+Hello Team,
+
+One of the my client is using your module https://www.mageants.com/multi-store-view-pricing-for-magento-2.html
+Its working fine for simple products but its not working for configurable products(Ref. Url: http://natsukashi.netwise.jp/a-test-product.html)
+
+Attached video for describing the issue
+
+
+can you please advice here ?
+
+
+Here is product url: http://natsukashi.netwise.jp/a-test-product.html
+
+Everything is working fine if we disable this module
+
+Admin Login:
+http://natsukashi.netwise.jp/admin_n9g2ie/
+username : mageants
+password : mageants@123
+
+SSH
+
+ssh -i natsukashidev.pem ubuntu@3.113.70.204 -p 1419
+
+Please find attached PEM file to access SSH
+
+path : /var/www/magdemo
+
+adminer 
+
+'host' => 'localhost',
+'dbname' => 'magdemo',
+'username' => 'magdemo',
+'password' => 'natukashi',
+
+
+Hello,
+	We have checked your issue, To solve this issue you have to set product price storewise using csv file. for reference please check below video link. 
+	video link : https://www.loom.com/share/e1b2af69099244e591b0ed7f879fa159
+Thank You
+
+Hello, 
+
+	We have resolved your issue, Please check below video link and confirm with us.
+	video link : https://www.loom.com/share/37c1f2da3ff34ef98ec35b0adfeef520
+
+Thank You
+
+
+Hello, 
+
+	We have resolved your issue, Please check and confirm with us.
+
+Thank You

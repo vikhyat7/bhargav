@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @category Mageants CustomStockStatus
+ * @package Mageants_CustomStockStatus
+ * @copyright Copyright (c) 2018 Mageants
+ * @author Mageants Team <info@mageants.com>
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Mageants_CustomStockStatus::custom_stock_content" title="Custom Stock Status" module="Mageants_CustomStockStatus" sortOrder="50" resource="Mageants_CustomStockStatus::custom_stock_content"  />   
+		<add id="Mageants_CustomStockStatus::configuration" title="Configuration" module="Mageants_CustomStockStatus" sortOrder="50" parent="Mageants_CustomStockStatus::custom_stock_content" action="adminhtml/system_config/edit/section/CustomStockSt/" resource="Mageants_CustomStockStatus::configuration" />
+	</menu>
+</config>

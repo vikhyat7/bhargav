@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store: etc/config.xsd">
+    <default>
+        <CustomStockSt>
+            <general>
+                <useqtyrange>1</useqtyrange>
+                <ruleqtyrange>1</ruleqtyrange>
+                <changeconfigproductst>1</changeconfigproductst>
+                <outofstockconfigattribute>1</outofstockconfigattribute>
+            </general>
+        </CustomStockSt>
+    </default>
+</config>

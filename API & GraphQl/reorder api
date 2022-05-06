@@ -1,0 +1,4 @@
+Reorder whole Order :- Api 
+
+POST  :- http://127.0.0.1/magento242/rest/V1/reorder/( IncrementId )
+parameters :- customer_id

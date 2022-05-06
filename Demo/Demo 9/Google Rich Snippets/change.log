@@ -1,0 +1,19 @@
+	Current version number: 2.0.1
+	Date:- 10/02/2022
+	****************************************************************
+	Bug fixed
+	****************************************************************
+	--> make compatible with 2.4 version
+
+	****************************************************************
+	File Changes
+	****************************************************************
+
+	2.1, 2.2, 2.3, 2.4
+
+	- Mageants/Richsnippets/composer.json
+	- Mageants/Richsnippets/etc/module.xml
+
+	2.4
+
+	- Mageants/Richsnippets/Block/Richsnippets.php

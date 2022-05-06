@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @category Mageants CustomStockStatus
+ * @package Mageants_CustomStockStatus
+ * @copyright Copyright (c) 2018 Mageants
+ * @author Mageants Team <info@mageants.com>
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="view_block_abstract_to_html_before">
+        <observer name="mageants_customstock_block_html_before" instance="Mageants\CustomStockStatus\Observer\Admin\AddCustomIconSection"/>
+    </event>
+</config>

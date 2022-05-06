@@ -1,0 +1,25 @@
+PHP - 7.0
+sudo apt install php7.0 libapache2-mod-php7.0 php7.0-common php7.0-gmp php7.0-curl php7.0-soap php7.0-bcmath php7.0-intl php7.0-mbstring php7.0-xmlrpc php7.0-mysql php7.0-gd php7.0-xml php7.0-cli php7.0-zip php7.0-dom
+
+sudo apt-get install mcrypt php7.0-mcrypt
+
+
+PHP - 7.1
+sudo apt install php7.1 libapache2-mod-php7.1 php7.1-common php7.1-gmp php7.1-curl php7.1-soap php7.1-bcmath php7.1-intl php7.1-mbstring php7.1-xmlrpc php7.1-mysql php7.1-gd php7.1-xml php7.1-cli php7.1-zip php7.1-dom
+
+
+
+
+
+sudo apt-get install mcrypt php7.1-mcrypt
+
+
+sudo a2dismod php7.1
+sudo a2enmod php7.4
+sudo service apache2 restart
+sudo update-alternatives --set php /usr/bin/php7.4
+
+
+COMPOSER KEY 
+USER : 9e2541db03cc63aae2bad2cbc322600e
+PASS : 33247db2038699d549defff063e5700c

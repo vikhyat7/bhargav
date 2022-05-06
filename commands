@@ -1,0 +1,494 @@
+Magento Download Id & Pass
+
+id : bhargav@rocktechnolabs.com
+pass : Magento@1234
+
+==================================================================================================================
+
+File Upload issue in Order Attachment :
+
+Magento218  file :- https://nimb.ws/olLhZO
+Magento226 file :-  https://nimb.ws/Bl4FZU
+Magento237p2 file :- https://nimb.ws/rm9qHN
+Magento243 file :- https://nimb.ws/VbJRSK
+
+==================================================================================================================
+ktsixit@artrabout.gr
+
+==================================================================================================================
+Import Db 
+
+mysql -u root -p magento243p1
+
+==================================================================================================================
+Chnage Administrator password :
+
+    sudo passwd (user_name)
+
+
+============================================================================================================================
+
+Increase upload size in php :
+------------------------------
+
+Just update php.ini settings:
+
+    memory_limit =  128M
+    upload_max_filesize =  128M
+    post_max_size =  128M
+
+
+Save & run below commands :
+
+    sudo systemctl restart apache2
+    php bin/magento cache:flush
+    php bin/magento cache:clean
+    sudo chmod -R 0777 *
+
+
+
+
+============================================================================================================================
+
+Enable Edit Button in Shutter :
+-------------------------------
+
+https://itsfoss.com/shutter-edit-button-disabled/
+
+============================================================================================================================
+
+INSTALL COMPOSER  USING COMMAND :
+-------------------------------
+
+curl -sS https://getcomposer.org/installer -o composer-setup.php
+# sudo php composer-setup.php --install-dir=/usr/local/bin --filename=composer --version=1.10.13
+
+Or
+
+# composer -V
+# sudo apt remove composer
+# cd /tmp
+# wget http://getcomposer.org/download/1.10.5/composer.phar
+
+
+
+# php composer.phar -V
+# sudo mv composer.phar /usr/bin/composer
+# sudo chmod 777 /usr/bin/composer
+# composer -V
+
+
+============================================================================================================================
+
+Marketplace Composer-key :
+
+Public Key (username): d624be444b864246b31e7aee2d1bfab1 
+Private Key (password): 11b58e3b46ca25ac25654ec6e8b98b79 
+
+============================================================================================================================
+
+var_dump($this->_collection->setOrder('price','desc')->getData());
+
+============================================================================================================================
+
+Test G-mail  Credentials :
+----------------------------
+test.rock654321@gmail.com
+123456@rocktest
+
+============================================================================================================================
+
+Mageplaza SMTP: ( Activation ) 
+
+Name : rakesh
+email : rakesh.rocktechnolabs@gmail.com
+
+Mageplaza SMTP: ( Authentication ) 
+===============
+nikunj.qarock@gmail.com 
+RRock@321
+
+SMTP Configuration  ( Magepal ):
+--------------------------------
+
+    Email address : rakesh.rocktechnolabs@gmail.com
+    Password : Mageants321!@#
+
+============================================================================================================================
+
+create user : ( Admin )
+---------------
+
+sudo php bin/magento admin:user:create --admin-user="master" --admin-password="master123" --admin-email="bhargav1@rocktechnolabs.com" --admin-firstname="Bhargav" --admin-lastname="Rock"
+
+
+create user : ( Customer )
+
+
+php bin/magento customer:user:create --customer-firstname="John" --customer-lastname="Doe" --customer-email="test.rock654321@gmail.com" --customer-password="123456@rocktest" --website="1"
+
+============================================================================================================================
+
+Cmposer Update :
+---------------
+
+
+    composer self-update 1.10.13
+    composer self-update 1.10.13
+
+============================================================================================================================
+
+Export DataBase => mysqldump -u root -p magento235 > magento235.sql
+
+============================================================================================================================
+
+Make Zip :
+---------------
+
+Make zip => sudo zip -r 7.4.zip 7.4/
+Make file unzip => sudo unzip 7.4.zip
+
+
+============================================================================================================================
+
+Install Magento Via CMD :
+-----------------------
+
+php bin/magento setup:install --base-url=http://127.0.0.1/magento234/ \
+--db-host=localhost --db-name=m2118 --db-user=root --db-password=admin \
+--admin-firstname=m --admin-lastname=2118 --admin-email=vishalsevani8420@gmail.com \
+--admin-user=master --admin-password=master123 --language=en_US \
+--currency=USD --timezone=America/Chicago --use-rewrites=1 \
+--backend-frontname="admin" --elasticsearch-host=127.0.0.1
+
+
+
+INSERT INTO `core_config_data`(`path`, `value`) VALUES ('web/unsecure/base_media_url','http://127.0.0.1/m2118/pub/media/');
+INSERT INTO `core_config_data`(`path`, `value`) VALUES ('web/secure/base_static_url','http://127.0.0.1/m2118/pub/static/');
+INSERT INTO `core_config_data`(`path`, `value`) VALUES ('web/unsecure/base_static_url','http://127.0.0.1/m2118/pub/static/');
+INSERT INTO `core_config_data`(`path`, `value`) VALUES ('web/secure/base_media_url','http://127.0.0.1/m2118/pub/media/');
+INSERT INTO core_config_data (path, value) VALUES ('dev/static/sign', 0) ON DUPLICATE KEY UPDATE value = 0;
+
+bin/magento module:disable Magento_TwoFactorAuth
+bin/magento cache:flush
+
+============================================================================================================================
+
+check magento version : - bin/magento --version
+
+============================================================================================================================
+
+sudo a2dismod php7.1
+sudo a2enmod php7.4
+sudo service apache2 restart
+sudo update-alternatives --set php /usr/bin/php7.4
+
+============================================================================================================================
+
+For Changing Magento Modes : -
+------------------------------
+
+
+	php bin/magento deploy:mode:show
+	php bin/magento deploy:mode:set developer
+	php bin/magento deploy:mode:set production
+	php bin/magento deploy:mode:set default
+    sudo service varnish restart
+
+============================================================================================================================
+
+256MB = 262144
+
+sudo chmod -R 0777 *
+php bin/magento setup:upgrade
+php bin/magento setup:di:compile
+php bin/magento setup:static-content:deploy -f
+php bin/magento cache:flush
+php bin/magento cache:clean
+sudo chmod -R 0777 *
+
+php bin/magento indexer:reindex
+
+
+
+php -dmemory_limit=8G bin/magento s:up
+php -dmemory_limit=8G bin/magento s:d:c
+php -dmemory_limit=8G bin/magento s:s:d -f en_US
+php -dmemory_limit=8G bin/magento c:f
+php -dmemory_limit=8G bin/magento indexer:reindex
+
+============================================================================================================================
+
+For Cluster Error : - 
+------------------
+
+    sudo systemctl status elasticsearch
+    sudo systemctl start elasticsearch
+    sudo systemctl restart elasticsearch
+    sudo systemctl enable elasticsearch
+
+For apache2 Error : - 
+------------------
+
+    sudo systemctl status apache2
+    sudo systemctl start apache2
+    sudo systemctl restart apache2
+    sudo systemctl enable apache2
+
+
+============================================================================================================================
+
+For EQP :
+---------------
+
+cd magento-coding-standard
+vendor/bin/phpcs --standard=Magento2 /var/www/html/mage237p2/app/code/Mageants/Orderattachment/
+vendor/bin/phpcbf --standard=Magento2 /var/www/html/mage237p2/app/code/Mageants/Orderattachment
+
+
+
+
+============================================================================================================================
+
+Event List:
+---------------
+
+https://www.rakeshjesadiya.com/list-of-all-events-in-magento-2/
+
+============================================================================================================================
+
+Product Atribute : 
+
+https://www.mageplaza.com/magento-2-module-development/magento-2-add-product-attribute-programmatically.html
+
+============================================================================================================================
+
+For Magento version update :
+-------------------------------
+
+1. Preparing Your Site for Upgrade
+        Make sure your server is configured to work with PHP 7.4. Magento 2.4.0 officially support only PHP 7.4. Though you can install Magento 2.4.0 with PHP 7.3 but it is not tested. So it is recommended to use PHP 7.4 with Magento 2.4.0. You can check your PHP version by running below command
+
+    php -v
+
+2. Make sure your composer is pointing to correct PHP version 7.4. You can check your composer’s PHP version by running below command
+
+    composer -vvv about
+
+3.  Make sure your server has installed and configured Elasticsearch 7.6.x. Magento 2.4.0 does not support MySQL as a catalog search engine. You can check your Elasticsearch version by running below command
+
+    curl -XGET ‘http://localhost:9200’
+
+OR
+
+    curl -XGET ‘http://YOURDOMAIN:9200’
+
+4.  Take a code and database backup. Many developers are already managing their code in git. For them, an only database backup is important as they can revert the code from git if the upgrade goes wrong.
+
+Upgrade Magento Version from 2.3.X to 2.4.0
+
+Step 1: If you are directly performing the upgrade on your live site then first put your site into maintenance mode by running below command.
+
+    php bin/magento maintenance:enable
+
+Step 2: If you are performing the upgrade on your local system then you can skip step 1 and start with step 2.
+Take a backup of the composer.json
+
+    cp composer.json composer.json.bak
+
+Step 3: Install the Composer update plugin
+
+    composer require magento/composer-root-update-plugin=~1.0 --no-update
+ 
+    composer update
+
+Step 4: Update composer.json file with latest version. In our case, it is Magento Version 2.4.0. Navigate to your Magento 2 installation root path and run below command
+
+    composer require magento/product-community-edition=2.4.0 --no-update
+
+Step 5: Run below command
+
+    composer update
+
+This command will take some time to finish. This command will actually download all the required packages and upgrade your Magento version from 2.3.x to 2.4.0. After this command finish, run below commands
+
+Step 6: Clear cache and regenerate code.
+
+php bin/magento cache:clean
+ 
+rm -rf var/cache/*
+ 
+rm -rf var/page_cache/*
+ 
+rm -rf generated/code/*
+ 
+php bin/magento setup:upgrade
+  
+php bin/magento setup:di:compile
+  
+php bin/magento setup:static-content:deploy -f
+
+Step 7: Disable maintenance mode
+
+php bin/magento maintenance:disable
+
+Note: Remove update directory from your root folder as update directory is not a part of Magento 2.4
+
+============================================================================================================================
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+============================================================================================================================
+
+https://magento.stackexchange.com/questions/96095/magento-2-how-to-add-custom-sort-by-option
+
+https://webkul.com/blog/how-to-clean-and-flush-cache-programmatically-in-magento2/
+
+https://www.rakeshjesadiya.com/get-serialize-value-in-array-format-using-magento-2/
+
+https://www.rakeshjesadiya.com/convert-array-data-into-serialize-format-magento-2/
+
+https://devdocs.magento.com/guides/v2.4/extension-dev-guide/cache/page-caching/public-content.html
+
+https://medium.com/@Inviqa/how-the-full-page-cache-works-in-magento-2-9b14739e1d7a
+
+https://devdocs.magento.com/cloud/reference/ece-tools-error-reference.html#critical-errors
+
+https://www.codextblog.com/code-snippet/get-order-information-from-order-id-in-magento-2/
+
+https://exceptionshub.com/warning-do-not-access-superglobal-_post-array-directly-on-netbeans-7-4-for-php.html
+
+https://devdocs.magento.com/cloud/reference/ece-tools-error-reference.html
+
+============================================================================================================================
+
+For Extra Fees Blog : - 
+-----------------------
+
+1) https://webkul.com/blog/add-custom-pricefee-order-total-magento2/
+
+2) https://firebearstudio.com/blog/how-to-add-fees-to-order-totals-in-magento-2.html
+
+3) https://magento.stackexchange.com/questions/124665/custom-fee-order-totals-issue
+
+4) https://store.magenest.com/blog/how-to-modify-quote-order-totals-in-magento-2/
+
+5) https://magento.stackexchange.com/questions/92774/how-to-add-fee-to-order-totals-in-magento-2
+
+Gift Card File Changes : 
+Observer/Savegift.php
+Observer/ProductSaveAfter.php
+Setup/InstallData.php
+
+mysqldump -u root -p mage242ee > magento242ee.sql
+
+https://www.w3docs.com/tools/code-diff/
+
+https://www.sejda.com/pdf-editor
+https://online2pdf.com/convert-odt-to-pdf#
+https://online2pdf.com/convert-pdf-to-odt#
+
+
+https://github.com/magento/magento2/issues
+
+Magento 2 load customer by id
+
+https://blog.qaisarsatti.com/magento_2/magento2-load-customer-by-id/
+https://magento.stackexchange.com/questions/132577/magento2-best-way-to-load-customer-by-customer-id	
+https://www.fmeextensions.com/blog/magento-2-load-customer-by-id-2/
+
+
+https://www.rakeshjesadiya.com/get-customer-id-by-email-magento-2/
+https://www.rakeshjesadiya.com/how-to-get-customer-data-by-customer-id-magento-2/
+
+Customer Attribute : 
+https://www.mageplaza.com/magento-2-module-development/magento-2-add-customer-attribute-programmatically.html
+https://magecomp.com/blog/fix-issue-saving-custom-customer-attribute-value-programmatically-magento-2/
+https://magecomp.com/blog/magento-2-save-custom-attribute-value-customer-register/
+https://magento.stackexchange.com/questions/113201/magento2-custom-customer-attribute-save-data
+https://magentodeveloper.in/add-custom-attribute-to-customer-magento2.html
+
+https://www.rakeshjesadiya.com/issue-customer-attribute-not-saving-value-in-admin-panel-magento-2/
+
+foreach ($items as $key => $value) {
+                            $values = $value->getOptionByCode('info_buyRequest')->getValue();
+                            $grp_productId = $this->grouped->getParentIdsByChild($value->getProduct()->getId()); 
+                            $grp_productType = $this->product->getTypeID();
+                            $product_id=$grp_productId;
+                            $producttype=$grp_productType;
+                            echo $producttype;exit;
+                        }
+                    }
+
+    // $serializerClass = $this->_objectManager->get(Json::class);
+                    // foreach ($items as $key => $value) {
+                    //         $values = $value->getOptionByCode('info_buyRequest')->getValue();
+                    //         $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+                    //         $GroupedProduct_data = $objectManager->create(\Magento\GroupedProduct\Model\Product\Type\Grouped::class);
+                    //         $grp_productId = $GroupedProduct_data->getParentIdsByChild($value->getProduct()->getId()); 
+                    //         $simple_product = $objectManager->get(\Magento\Catalog\Model\Product::class)->load($grp_productId);
+                    //         $grp_productType = $simple_product->getTypeID();
+                    //         // echo $grp_productId;exit;
+                    //         $product_id=$grp_productId;
+                    //         $producttype=$grp_productType;
+                    //         // var_dump($producttype);
+                    //         // var_dump($product_id);
+                    //         // exit;
+                    //     }
+                    // }
+
+https://www.rakeshjesadiya.com/get-product-type-by-product-id-magento-2/
+
+https://www.google.com/search?q=file+upload+validation+in+magento+2+using+model+&ei=dZkUYqyVMbrk2roPucO0sA4&ved=0ahUKEwjso_eU7ZL2AhU6slYBHbkhDeYQ4dUDCA4&uact=5&oq=file+upload+validation+in+magento+2+using+model+&gs_lcp=Cgdnd3Mtd2l6EAMyBQghEKABMgUIIRCgAToICAAQsAMQogQ6CgghEBYQChAdEB46BQgAEKIEOggIIRAWEB0QHjoHCCEQChCgAToECCEQFUoECEEYAUoFCEASATFKBAhGGABQihBY6TRgoEJoAXAAeACAAc4BiAHqFZIBBjAuMTYuMZgBAKABAcgBAcABAQ&sclient=gws-wiz
+
+https://magento.stackexchange.com/questions/225226/magento-2-image-validation-is-not-working-in-back-end-form
+
+https://www.magentoexpertise.in/magento-2-create-multiple-fields-in-the-system-configuration-programmatically/
+
+https://www.mageplaza.com/review/search/
+============================================================================================================================
+
+

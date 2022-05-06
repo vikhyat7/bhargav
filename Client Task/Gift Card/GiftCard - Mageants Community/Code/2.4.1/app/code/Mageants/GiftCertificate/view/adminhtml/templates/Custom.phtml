@@ -1,0 +1,79 @@
+<?php
+/**
+ * @category Mageants GiftCertificate
+ * @package Mageants_GiftCertificate
+ * @copyright Copyright (c) 2016 Mageants
+ * @author Mageants Team <support@mageants.com>
+ */
+ 
+$giftValue=$block->getOrder()->getOrderGift();
+
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$attribute_val = "";
+
+	$orderId = $this->getRequest()->getParam('order_id');
+
+	$orderCollection = $objectManager->create('\Magento\Sales\Api\OrderRepositoryInterface')->get($orderId);
+
+	$orderItems = $orderCollection->getAllVisibleItems();
+	
+	foreach ($orderItems as $values) {
+		if (method_exists($values->getProduct(), 'getId')) {
+    		$productId = $values->getProduct()->getId();
+    		$product = $objectManager->get('Magento\Catalog\Model\Product')->load($productId);
+	    
+    		if ($product->getTypeId() == 'giftcertificate') {
+	    		if ($product->getAttributeText('gifttype') == 'Virtual') {
+    				$attribute_val = "Virtual Product";
+	    		}elseif ($product->getAttributeText('gifttype') == 'Printed'){
+	    			$attribute_val = "Printed Product";
+	    		}else{
+	    			$gift_data = $objectManager->create('\Mageants\GiftCertificate\Model\Customer');
+					
+	    			$gift_type_data= $gift_data->getCollection()->addFieldToFilter('order_id', $orderCollection->getIncrementId())->getData();
+	    			
+	    			if($gift_type_data[0]['card_type'] == 0)
+	    			{
+	    				$attribute_val = "Virtual Product";	
+	    			}
+	    			else if ($gift_type_data[0]['card_type'] == 1) {
+	    				$attribute_val = "Printed Product";	
+	    			}
+	    			else
+	    			{
+		    			$attribute_val = "Both Virtual & Printed";
+	    			}
+	    		}
+	    	}	
+    	}
+    }
+    
+if(empty($giftValue))
+{
+	$giftValue="0.00";
+}
+?>
+<div class="admin__page-section-content">
+	<div class="admin__page-section-item order-payment-method">
+		<div class="admin__page-section-item-title">
+			<span class="title">Gift Certificate</span>
+		</div>
+		<div class="admin__page-section-item-content">
+			<div class="order-payment-currency">The order was placed using Gift Certificate Code.</div>
+			
+			<div class="admin__page-section-item-content" style="padding-top: 20px;">
+				<strong>Gift Type - </strong>
+				<span class="type"><?php echo $attribute_val; ?></span>
+			</div>
+		</div>
+	</div>
+	<div class="admin__page-section-item order-shipping-method">
+		<div class="admin__page-section-item-title">
+			<span class="title">Gift Price Information</span>
+		</div>
+		<div class="admin__page-section-item-content">
+			<strong>Gift Amount - </strong>
+			<span class="price"><?php echo $this->helper('Mageants\GiftCertificate\Helper\Data')->getCurrencySymbol()."".$giftValue; ?></span>
+		</div>
+	</div>
+</div>

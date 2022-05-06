@@ -1,0 +1,94 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @category Mageants CustomStockStatus
+ * @package Mageants_CustomStockStatus
+ * @copyright Copyright (c) 2018 Mageants
+ * @author Mageants Team <info@mageants.com>
+ */
+-->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="mageants" translate="label" sortOrder="70">
+            <label>Mageants</label>
+        </tab>
+        <section id="CustomStockSt" translate="label" type="text" sortOrder="300" showInDefault="1" showInWebsite="1" showInStore="1" >
+            <tab>mageants</tab>
+            <label>Custom Stock Status</label>
+            <resource>Mageants_CustomStockStatus::configuration</resource>
+            <group id="display_setting"  showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Custom Status Display Settings</label>
+                
+                <field id="displayonproductlist" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Display Custom Stock Status in Product List Page</label>
+                    <source_model>Magento\Config\Model\Config\Source\Enabledisable</source_model>
+                </field>
+
+                <field id="displayonproductdetail" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Display Custom Stock Status in Product Detail Page</label>
+                    <source_model>Magento\Config\Model\Config\Source\Enabledisable</source_model>
+                </field>
+
+                <field id="displayonsearchresult" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Display Custom Stock Status in Catalog Search List Page</label>
+                    <source_model>Magento\Config\Model\Config\Source\Enabledisable</source_model>
+                </field>
+                <field id="displayonshoppingcart" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Display Custom Stock Status in Shopping Cart Page</label>
+                    <source_model>Magento\Config\Model\Config\Source\Enabledisable</source_model>
+                </field>
+                <field id="displayonorderemail" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Show Custom Status In Order Email</label>
+                    <source_model>Magento\Config\Model\Config\Source\Enabledisable</source_model>
+                </field>
+                <field id="displayoncustomeraccount" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Display Custom Stock Status in Customer account section on frotnend</label>
+                    <source_model>Magento\Config\Model\Config\Source\Enabledisable</source_model>
+                </field>
+                <field id="displayoncustomeraccountadmin" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Display Custom Stock Status in Order item section on admin</label>
+                    <source_model>Magento\Config\Model\Config\Source\Enabledisable</source_model>
+                </field>
+            </group>
+            <group id="general"  showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Custom Stock Status Settings</label>
+                <field id="hidestockst" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Hide Default Stock Status</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="displayicon" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Display Only Custom Stock Status Icon</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>Display only custom status icon on the product view and product list pages.</comment>
+                </field>
+                <field id="useqtyrange" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Display Quantity Ranges Based Statuses</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                 <field id="ruleqtyrange" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Use Activate rules for Quantity Range Status</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="outofstockitem" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Display Custom Stock Status Only 'Out Of Stock' Product</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>If set to 'No', custom stock status display in both status 'in stock' and 'out of stock' product.</comment>
+                </field>
+                <field id="changeconfigproductst" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Change Default Configurable Product Status</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="outofstockconfigattribute" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Dispaly Out of Stock Configurable Product Attributes</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>If set to 'Yes', out of stock configurations product display in the drop-downs of configurable products with no possibility to purchase.</comment>
+                </field>
+                <field id="backinstockconfig" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enable `Back In Stock` Product Alert for Out of Stock Configurable</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>			    
+			</group>			
+		</section>
+    </system>
+</config>

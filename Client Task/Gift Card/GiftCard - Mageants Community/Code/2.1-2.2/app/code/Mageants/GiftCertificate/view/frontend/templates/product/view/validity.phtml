@@ -1,0 +1,19 @@
+<?php
+/**
+ * @category Mageants GiftCertificate
+ * @package Mageants_GiftCertificate
+ * @copyright Copyright (c) 2016 Mageants
+ * @author Mageants Team <support@mageants.com>
+ */
+ ?>
+<?php
+$productGiftCertificateValidity = $block->getGiftCertificateValidityByProduct();
+?>
+<?php if($productGiftCertificateValidity):?>
+<div class="product-info-stock-validity" style="float: inline-end;">
+    <div class="product attribute validity" style="margin-left: 15px;">
+        <strong class="type"><?= /* @escapeNotVerified */ __('Expires') ?></strong>
+        <div class="value" itemprop="validity"><?php echo $productGiftCertificateValidity;?> <?= /* @escapeNotVerified */ __('day(s)') ?></div>
+    </div>
+</div>
+<?php endif;?>    

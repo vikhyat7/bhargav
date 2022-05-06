@@ -1,0 +1,49 @@
+<?php
+/**
+ * @category Mageants MaintenanceMode
+ * @package Mageants_MaintenanceMode
+ * @copyright Copyright (c) 2019 Mageants
+ * @author Mageants Team <support@mageants.com>
+ */
+
+$blockId = $block->getHtmlId();
+
+if ($blockId === 'maintenancemode_maintenance_setting_maintenance_preview') {
+    $dataUrl = 'maintenancemode/preview/maintenance';
+} else {
+    $dataUrl = 'maintenancemode/preview/comingsoon';
+}
+?>
+<div class="actions actions-maintenance-preview">
+    <button class="button-maintenance-preview primary" data-url="<?= $block->escapeHtml($block->getDataUrl($dataUrl)) ?>"
+            type="button"
+            id="<?= $block->escapeHtmlAttr($blockId) ?>">
+        <span><?= /* @noEscape */ $block->getButtonLabel() ?></span>
+    </button>
+</div>
+
+<script type="text/javascript">
+    require(['jquery'], function ($) {
+        $('#<?= /* @noEscape */ $block->getHtmlId() ?>').on('click', function () {
+            var form  = $('<form/>', {
+                action: $(this).data('url'),
+                target: '_blank',
+                method: 'POST'
+            });
+            var data  = $('#config-edit-form').serialize();
+            var formKey = $("<input>").attr("type", "hidden").attr("name", "form_key").val('<?= $block->escapeJs($block->getFormKey()) ?>');
+            var input = $("<input>").attr("type", "hidden").attr("name", "formData").val(data);
+            form.append(formKey);
+            form.append(input);
+            $('body').append(form);
+            form.submit();
+            form.remove();
+        })
+    });
+</script>
+
+<style>
+    .jscolor{hash:true}:disabled{
+        pointer-events: none;
+    }
+</style>

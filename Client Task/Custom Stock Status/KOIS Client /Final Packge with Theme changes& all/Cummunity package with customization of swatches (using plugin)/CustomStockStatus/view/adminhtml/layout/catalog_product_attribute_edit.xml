@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @category Mageants CustomStockStatus
+ * @package Mageants_CustomStockStatus
+ * @copyright Copyright (c) 2018 Mageants
+ * @author Mageants Team <info@mageants.com>
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="admin-2columns-left" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+       <referenceBlock name="attribute_edit_tabs"> 
+          <block class="Mageants\CustomStockStatus\Block\Adminhtml\Product\Attribute\Edit\Tab\CustomOptionIcon"  as="customoptionicon"/>
+          <block class="Mageants\CustomStockStatus\Block\Adminhtml\Product\Attribute\Edit\Tab\QuantityRange"  as="quantityrange"/>
+       </referenceBlock>
+    </body>
+</page>
+

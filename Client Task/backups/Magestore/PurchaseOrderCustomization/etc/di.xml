@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Magestore\PurchaseOrderSuccess\Model\ResourceModel\PurchaseOrder\Item\Collection"
+                type="Magestore\PurchaseOrderCustomization\Rewrite\PurchaseOrder\Item\Collection"/>
+
+    <preference for="Magestore\PurchaseOrderSuccess\Block\Adminhtml\PurchaseOrder\Edit\Fieldset\PurchaseSumary\Item"
+                type="Magestore\PurchaseOrderCustomization\Rewrite\PurchaseOrder\Edit\Fieldset\PurchaseSumary\Item"/>
+
+    <preference for="Magestore\PurchaseOrderSuccess\Model\ResourceModel\PurchaseOrder\Item\Grid\Collection"
+                type="Magestore\PurchaseOrderCustomization\Rewrite\PurchaseOrder\Item\Grid\Collection"/>
+
+    <type name="Magestore\SupplierSuccess\Ui\DataProvider\Supplier\DataForm\Modifier\Information">
+        <plugin name="payment_term_supplier"
+                type="Magestore\PurchaseOrderCustomization\Plugin\SupplierInformation" sortOrder="1"/>
+    </type>
+
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="os_supplier_transaction_listing_data_source" xsi:type="string">
+                    Magestore\PurchaseOrderCustomization\Model\ResourceModel\Supplier\Transaction\Grid\Collection
+            </item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magestore\PurchaseOrderSuccess\Ui\DataProvider\PurchaseOrder\Form\Modifier\PurchaseSumary">
+        <plugin name="remove_back_order_product_button"
+                type="Magestore\PurchaseOrderCustomization\Plugin\PurchaseOrder\Form\Modifier\PurchaseSumary"
+                sortOrder="1"/>
+    </type>
+    <preference for="Magestore\PurchaseOrderSuccess\Block\Adminhtml\Email\EmailToSupplier\Total"
+                type="Magestore\PurchaseOrderCustomization\Rewrite\Block\Adminhtml\Email\EmailToSupplier\Total"/>
+    <preference for="Magestore\PurchaseOrderSuccess\Block\Adminhtml\Email\EmailToSupplier\Header"
+                type="Magestore\PurchaseOrderCustomization\Rewrite\Block\Adminhtml\Email\EmailToSupplier\Header"/>
+</config>

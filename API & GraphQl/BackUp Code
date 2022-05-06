@@ -1,0 +1,1487 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+declare(strict_types=1);
+
+namespace Mageants\Reorder\Model\Resolver;
+
+use Magento\Framework\GraphQl\Config\Element\Field;
+use Magento\Framework\GraphQl\Exception\GraphQlInputException;
+use Magento\Framework\GraphQl\Query\ResolverInterface;
+use Magento\Framework\GraphQl\Schema\Type\ResolveInfo;
+use Magento\GraphQl\Model\Query\ContextInterface;
+use Magento\Quote\Model\Cart\AddProductsToCart as AddProductsToCartService;
+use Magento\Quote\Model\Cart\Data\AddProductsToCartOutput;
+use Magento\Quote\Model\Cart\Data\CartItemFactory;
+use Magento\QuoteGraphQl\Model\Cart\GetCartForUser;
+use Magento\Quote\Model\Cart\Data\Error;
+use Magento\QuoteGraphQl\Model\CartItem\DataProvider\Processor\ItemDataProcessorInterface;
+
+/**
+ * Resolver for addProductsToCart mutation
+ *
+ * @inheritdoc
+ */
+class AddProductsToCart implements ResolverInterface
+{
+    /**
+     * @var GetCartForUser
+     */
+    private $getCartForUser;
+
+    /**
+     * @var AddProductsToCartService
+     */
+    private $addProductsToCartService;
+
+    /**
+     * @var ItemDataProcessorInterface
+     */
+    private $itemDataProcessor;
+
+    /**
+     * @param GetCartForUser $getCartForUser
+     * @param AddProductsToCartService $addProductsToCart
+     * @param  ItemDataProcessorInterface $itemDataProcessor
+     */
+    public function __construct(
+        GetCartForUser $getCartForUser,
+        AddProductsToCartService $addProductsToCart,
+        ItemDataProcessorInterface $itemDataProcessor
+    ) {
+        $this->getCartForUser = $getCartForUser;
+        $this->addProductsToCartService = $addProductsToCart;
+        $this->itemDataProcessor = $itemDataProcessor;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function resolve(Field $field, $context, ResolveInfo $info, array $value = null, array $args = null)
+    {
+        if (empty($args['cartId'])) {
+            throw new GraphQlInputException(__('Required parameter "cartId" is missing'));
+        }
+        if (empty($args['cartItems']) || !is_array($args['cartItems'])
+        ) {
+            throw new GraphQlInputException(__('Required parameter "cartItems" is missing'));
+        }
+
+        $maskedCartId = $args['cartId'];
+        $cartItemsData = $args['cartItems'];
+        $storeId = (int)$context->getExtensionAttributes()->getStore()->getId();
+
+        // Shopping Cart validation
+        // $this->getCartForUser->execute($maskedCartId, $context->getUserId(), $storeId);
+
+        $cartItems = [];
+        foreach ($cartItemsData as $cartItemData) {
+            if (!$this->itemIsAllowedToCart($cartItemData, $context)) {
+                continue;
+            }
+            $cartItems[] = (new CartItemFactory())->create($cartItemData);
+        }
+
+        /** @var AddProductsToCartOutput $addProductsToCartOutput */
+        $addProductsToCartOutput = $this->addProductsToCartService->execute($maskedCartId, $cartItems);
+
+        return [
+            'cart' => [
+                'model' => $addProductsToCartOutput->getCart(),
+            ],
+            'user_errors' => array_map(
+                function (Error $error) {
+                    return [
+                        'code' => $error->getCode(),
+                        'message' => $error->getMessage(),
+                        'path' => [$error->getCartItemPosition()]
+                    ];
+                },
+                $addProductsToCartOutput->getErrors()
+            )
+        ];
+    }
+
+    /**
+     * Check if the item can be added to cart
+     *
+     * @param array $cartItemData
+     * @param ContextInterface $context
+     * @return bool
+     */
+    private function itemIsAllowedToCart(array $cartItemData, ContextInterface $context): bool
+    {
+        $cartItemData = $this->itemDataProcessor->process($cartItemData, $context);
+        if (isset($cartItemData['grant_checkout']) && $cartItemData['grant_checkout'] === false) {
+            return false;
+        }
+
+        return true;
+    }
+}
+
+
+**********************************************
+
+
+<?php
+namespace Mageants\Reorder\Model\Resolver;
+
+use Magento\Framework\GraphQl\Config\Element\Field;
+use Magento\Framework\GraphQl\Exception\GraphQlInputException;
+use Magento\Framework\GraphQl\Query\ResolverInterface;
+use Magento\Framework\GraphQl\Schema\Type\ResolveInfo;
+use Magento\QuoteGraphQl\Model\Cart\AddProductsToCart;
+use Magento\QuoteGraphQl\Model\Cart\GetCartForUser;
+use Magento\QuoteGraphQl\Model\Resolver\maskedCartId;
+use Magento\Sales\Model\ResourceModel\Order\CollectionFactory;
+use Magento\Sales\Model\OrderFactory;
+
+
+
+/**
+ * Add simple products to cart GraphQl resolver
+ * {@inheritdoc}
+ */
+class AddToCart implements ResolverInterface
+{
+
+    /**
+     * @var OrderFactory1
+     */
+
+    private $orderFactory1;
+   
+    /**
+     * @var GetCartForUser
+     */
+    private $getCartForUser;
+
+    /**
+     * @var maskedCartId
+     */
+    private $maskedCartId;
+    /**
+     * @var collectionFactory
+     */
+    private $collectionFactory;
+
+    /**
+     * @var AddProductsToCart
+     */
+    private $addProductsToCart;
+
+    /**
+     * @param GetCartForUser $getCartForUser
+     * @param OrderFactory1 $orderFactory1
+     * @param maskedCartId $maskedCartId
+     * @param AddProductsToCart $addProductsToCart
+     */
+    public function __construct(
+        GetCartForUser $getCartForUser,
+        maskedCartId $maskedCartId,
+        AddProductsToCart $addProductsToCart,
+        CollectionFactory $collectionFactory,
+        OrderFactory $orderFactory1
+
+    ) {
+        $this->getCartForUser = $getCartForUser;
+        $this->addProductsToCart = $addProductsToCart;
+        $this->orderFactory1 = $orderFactory1;
+        $this->collectionFactory = $collectionFactory;
+
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function resolve(Field $field, $context, ResolveInfo $info, array $value = null, array $args = null)
+    {
+        if (empty($args['input']['customer_id'])) {
+            throw new GraphQlInputException(__('Required parameter "cart_id" is missing'));
+        }
+
+        $customerOrder = $this->collectionFactory->create()
+            ->addFieldToFilter('customer_id', $args['input']['customer_id']);
+
+          
+        $order = $this->orderFactory1->create()->loadByIncrementId($args['input']['increment_id']);
+         
+        
+        $QuoteId = $order->getQuoteId();
+        
+        // (int) $cartId = $args['input']['customer_id'];
+        $maskedCartId = $this->getQuoteMaskId($QuoteId);
+
+        if (empty($args['input']['cart_items'])
+            || !is_array($args['input']['cart_items'])
+        ) {
+            throw new GraphQlInputException(__('Required parameter "cart_items" is missing'));
+        }
+        $cartItems = $args['input']['cart_items'];
+
+        $storeId = (int)$context->getExtensionAttributes()->getStore()->getId();
+        $cart = $this->getCartForUser->execute($maskedCartId, $context->getUserId(), $storeId);
+        $this->addProductsToCart->execute($cart, $cartItems);
+
+        return [
+            'cart' => [
+                'model' => $cart,
+            ],
+        ];
+    }
+}
+
+
+
+********************************************************************************************
+<?php
+namespace Mageants\Reorder\Model;
+
+use Mageants\Reorder\Api\AllOrderInterface;
+use Magento\Sales\Model\ResourceModel\Order\CollectionFactory;
+use Magento\Catalog\Api\ProductRepositoryInterface;
+use Magento\Catalog\Model\Product;
+use Magento\Checkout\Model\Cart\CartInterface;
+use Magento\Framework\DataObject;
+use Magento\Framework\Exception\NoSuchEntityException;
+use Magento\Framework\Api\SearchCriteriaBuilder;
+use Magento\Checkout\Model\Session;
+use Magento\Sales\Model\OrderFactory;
+
+
+/**
+ * Class OrderService
+ *
+ * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
+ */
+class AllOrderRepository extends DataObject implements AllOrderInterface
+{
+    protected $orderRepository;
+    protected $orderItemRepository;
+    protected $cart;
+    protected $_checkoutSession;
+    protected $_productIds;
+    protected $productRepository;
+    
+    protected $_resourceCart;
+    protected $_customerSession;
+    protected $messageManager;
+    protected $stockRegistry;
+    protected $stockState;
+    protected $quoteRepository;
+    private $requestInfoFilter;
+    protected $orderFactory;
+     /**
+     * @var OrderFactory1
+     */
+
+    private $orderFactory1;
+    /**
+     * @var \Magento\Customer\Api\CustomerRepositoryInterface
+     */
+    protected $customerRepository;
+
+        /**
+     * @var QuoteFactory
+     */
+    protected $quoteFactory;
+
+    protected $customerId;
+     /**
+     * @var SearchCriteriaBuilder
+     */
+    protected $SearchCriteriaBuilder;
+     /**
+     * @var collectionFactory
+     */
+    private $collectionFactory;
+     /**
+     * @var \Magento\Sales\Model\Reorder\Reorder
+     */
+    private $reorder;
+
+    /**
+     * @param \Magento\Sales\Model\Reorder\Reorder $reorder
+     * @param SearchCriteriaBuilder $SearchCriteriaBuilder
+     * @param OrderFactory1 $orderFactory1
+    */
+
+
+    public function __construct(
+        \Magento\Sales\Model\Reorder\Reorder $reorder,
+        \Magento\Sales\Api\OrderRepositoryInterface $orderRepository,
+        \magento\sales\Api\OrderItemRepositoryInterface $orderItemRepository,
+        SearchCriteriaBuilder $SearchCriteriaBuilder,
+        \Magento\Checkout\Model\Cart $cart,
+        CollectionFactory $collectionFactory,
+        \Magento\Framework\Event\ManagerInterface $eventManager,
+        \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
+        \Magento\Store\Model\StoreManagerInterface $storeManager,
+        \Magento\Checkout\Model\ResourceModel\Cart $resourceCart,
+        Session $checkoutSession,
+        \Magento\Customer\Model\Session $customerSession,
+        \Magento\Framework\Message\ManagerInterface $messageManager,
+        \Magento\CatalogInventory\Api\StockRegistryInterface $stockRegistry,
+        \Magento\CatalogInventory\Api\StockStateInterface $stockState,
+        \Magento\Quote\Api\CartRepositoryInterface $quoteRepository,
+        ProductRepositoryInterface $productRepository,
+        \Magento\Sales\Api\Data\OrderInterfaceFactory $orderFactory,
+        \Magento\Customer\Api\CustomerRepositoryInterface $customerRepository,
+        \Magento\Quote\Model\QuoteFactory $quoteFactory,
+        OrderFactory $orderFactory1
+
+    ){
+        $this->reorder = $reorder;
+        $this->orderRepository = $orderRepository;
+        $this->orderItemRepository = $orderItemRepository;
+        $this->cart = $cart;
+        $this->SearchCriteriaBuilder = $SearchCriteriaBuilder;
+        $this->_eventManager = $eventManager;
+        $this->_scopeConfig = $scopeConfig;
+        $this->_storeManager = $storeManager;
+        $this->_resourceCart = $resourceCart;
+        $this->_checkoutSession = $checkoutSession;
+        $this->_customerSession = $customerSession;
+        $this->messageManager = $messageManager;
+        $this->stockRegistry = $stockRegistry;
+        $this->stockState = $stockState;
+        $this->quoteRepository = $quoteRepository;
+        $this->productRepository = $productRepository;
+        $this->orderFactory = $orderFactory;
+        $this->customerRepository = $customerRepository;
+        $this->quoteFactory = $quoteFactory;
+        $this->collectionFactory = $collectionFactory;
+        $this->orderFactory1 = $orderFactory1;
+
+     
+    }
+
+
+
+   
+
+
+
+
+
+    /**
+     * Add order item for the customer
+     * @param int $customerId
+     * @return array|bool
+     * @throws \Magento\Framework\Exception\LocalizedException
+     */
+    public function reorderItem($customerId)
+    {   
+        $customerOrder = $this->collectionFactory->create()
+            ->addFieldToFilter('customer_id', $customerId);
+        // return $customerOrder->getData();
+        $customerId = $this->customerId;
+        
+        foreach($customerOrder as $user) 
+            {
+                $ids[] = $user['increment_id'];
+            }
+            
+          $entity1 = $ids;
+        // return $entity1;
+        foreach($entity1 as $order1)
+        {
+            $order = $this->orderFactory1->create()->loadByIncrementId($order1);
+            $storeId = $order->getStoreId();
+            $reorderOutput = $this->reorder->execute($order1,$storeId);
+        }
+
+        
+        return "saved";
+
+
+        // $customerOrder = $this->collectionFactory->create()
+        //     ->addFieldToFilter('customer_id', $customerId);
+        // // return $customerOrder->getData();
+        
+        // foreach($customerOrder as $user) 
+        //     {
+        //         $ids[] = $user['increment_id'];
+        //     }
+            
+        //     $entity1 = $ids;
+
+
+
+     // // return $entity1;
+
+
+        
+     //    $this->customerId = $customerId;
+            
+
+     //    foreach($entity1 as $order1)
+     //    {
+     //        echo " hello ";
+     //        $order = $this->orderRepository->get($order1);
+     //        // return $order;
+     //        $cus = $order->getCustomerId();
+     //        $abc = (int)$cus;
+     //        print_r($abc);
+
+
+     //        if($abc === $customerId)
+     //        {
+
+     //            $cart = $this->cart;
+     //            $items = $order->getItemsCollection();
+     //            // return $items;
+     //            foreach ($items as $item)
+     //            {
+     //                $cart = $this->addOrderItem($item); 
+     //            }
+     //            $cart = $this->save();
+     //           echo "  data saved  ";
+     //        }
+     //        else
+     //        {
+     //          echo "Customer Not Found";
+     //    // return "Requested Order-Id doesn't match with your previous Orders!!!!!!";   
+     //        }
+     //       continue;    
+     //    }
+
+    }
+
+    /**
+     * Convert order item to quote item
+     *
+     * @param \Magento\Sales\Model\Order\Item $orderItem
+     * @param true|null $qtyFlag if is null set product qty like in order
+     * @return $this
+     */
+    public function addOrderItem($orderItem, $qtyFlag = null)
+    {
+        
+        /* @var $orderItem \Magento\Sales\Model\Order\Item */
+        if ($orderItem->getParentItem() === null) {
+            $storeId = $this->_storeManager->getStore()->getId();
+            try {
+                /**
+                 * We need to reload product in this place, because products
+                 * with the same id may have different sets of order attributes.
+                 */
+                $product = $this->productRepository->getById($orderItem->getProductId(), false, $storeId, true);
+            } catch (NoSuchEntityException $e) {
+                return $this;
+            }
+            $info = $orderItem->getProductOptionByCode('info_buyRequest');
+            $info = new \Magento\Framework\DataObject($info);
+            if ($qtyFlag === null) {
+                // $info->setQty(1);
+                
+                $info->setQty($orderItem->getQtyOrdered());
+            } 
+            // else {
+            //     $info->setQty(1);
+            // }
+
+            $this->addProduct($product, $info);
+        }
+        return $this;
+    }
+
+    /**
+     * Add product to shopping cart (quote)
+     *
+     * @param int|Product $productInfo
+     * @param \Magento\Framework\DataObject|int|array $requestInfo
+     * @return $this
+     * @throws \Magento\Framework\Exception\LocalizedException
+     * @SuppressWarnings(PHPMD.CyclomaticComplexity)
+     */
+    public function addProduct($productInfo, $requestInfo = null)
+    {
+        $product = $this->_getProduct($productInfo);
+        $request = $this->_getProductRequest($requestInfo);
+        $productId = $product->getId();
+
+        if ($productId) {
+            $stockItem = $this->stockRegistry->getStockItem($productId, $product->getStore()->getWebsiteId());
+            $minimumQty = $stockItem->getMinSaleQty();
+            //If product quantity is not specified in request and there is set minimal qty for it
+            if ($minimumQty
+                && $minimumQty > 0
+                && !$request->getQty()
+            ) {
+                $request->setQty($minimumQty);
+            }
+
+            try {
+                $result = $this->getQuote()->addProduct($product, $request);
+            } catch (\Magento\Framework\Exception\LocalizedException $e) {
+                $this->_checkoutSession->setUseNotice(false);
+                $result = $e->getMessage();
+            }
+            
+        
+        }
+
+         else {
+            throw new \Magento\Framework\Exception\LocalizedException(__('The product does not exist.'));
+        }
+
+        $this->_checkoutSession->setLastAddedProductId($productId);
+        return $this;
+    }
+
+     /**
+     * Get quote object associated with cart. By default it is current customer session quote
+     *
+     * @return \Magento\Quote\Model\Quote
+     */
+    public function getQuote()
+    {
+        $storeId = $this->_storeManager->getStore()->getStoreId();
+        $quote = $this->createCustomerCart($this->customerId, $storeId);
+
+        if (!$this->hasData('quote')) {
+            $this->setData('quote', $quote);
+        }
+        return $this->_getData('quote');
+    }
+
+     protected function createCustomerCart($customerId, $storeId)
+    {
+        try {
+            $quote = $this->quoteRepository->getActiveForCustomer($customerId);
+        } catch (\Magento\Framework\Exception\NoSuchEntityException $e) {
+            $customer = $this->customerRepository->getById($customerId);
+            /** @var \Magento\Quote\Model\Quote $quote */
+            $quote = $this->quoteFactory->create();
+            $quote->setStoreId($storeId);
+            $quote->setCustomer($customer);
+            // $quote->setCustomerIsGuest(0);
+        }
+        return $quote;
+    }
+
+    /**
+     * Set quote object associated with the cart
+     *
+     * @param \Magento\Quote\Model\Quote $quote
+     * @return $this
+     * @codeCoverageIgnore
+     */
+    public function setQuote(\Magento\Quote\Model\Quote $quote)
+    {
+        $this->setData('quote', $quote);
+        return $this;
+    }
+
+    /**
+     * Get product object based on requested product information
+     *
+     * @param   Product|int|string $productInfo
+     * @return  Product
+     * @throws \Magento\Framework\Exception\LocalizedException
+     */
+    protected function _getProduct($productInfo)
+    {
+        $product = null;
+        if ($productInfo instanceof Product) {
+            $product = $productInfo;
+            if (!$product->getId()) {
+                throw new \Magento\Framework\Exception\LocalizedException(
+                    __("The product wasn't found. Verify the product and try again.")
+                );
+            }
+        } elseif (is_int($productInfo) || is_string($productInfo)) {
+            $storeId = $this->_storeManager->getStore()->getId();
+            try {
+                $product = $this->productRepository->getById($productInfo, false, $storeId);
+            } catch (NoSuchEntityException $e) {
+                throw new \Magento\Framework\Exception\LocalizedException(
+                    __("The product wasn't found. Verify the product and try again."),
+                    $e
+                );
+            }
+        } else {
+            throw new \Magento\Framework\Exception\LocalizedException(
+                __("The product wasn't found. Verify the product and try again.")
+            );
+        }
+        $currentWebsiteId = $this->_storeManager->getStore()->getWebsiteId();
+        if (!is_array($product->getWebsiteIds()) || !in_array($currentWebsiteId, $product->getWebsiteIds())) {
+            throw new \Magento\Framework\Exception\LocalizedException(
+                __("The product wasn't found. Verify the product and try again.")
+            );
+        }
+        return $product;
+    }
+
+    /**
+     * Get request for product add to cart procedure
+     *
+     * @param   \Magento\Framework\DataObject|int|array $requestInfo
+     * @return  \Magento\Framework\DataObject
+     * @throws \Magento\Framework\Exception\LocalizedException
+     */
+    protected function _getProductRequest($requestInfo)
+    {
+        if ($requestInfo instanceof \Magento\Framework\DataObject) {
+            $request = $requestInfo;
+        } elseif (is_numeric($requestInfo)) {
+            $request = new \Magento\Framework\DataObject(['qty' => $requestInfo]);
+        } elseif (is_array($requestInfo)) {
+            $request = new \Magento\Framework\DataObject($requestInfo);
+        } else {
+            throw new \Magento\Framework\Exception\LocalizedException(
+                __('We found an invalid request for adding product to quote.')
+            );
+        }
+        $this->getRequestInfoFilter()->filter($request);
+
+        return $request;
+    }
+
+    /**
+     * Getter for RequestInfoFilter
+     *
+     * @deprecated 100.1.2
+     * @return \Magento\Checkout\Model\Cart\RequestInfoFilterInterface
+     */
+    private function getRequestInfoFilter()
+    {
+        if ($this->requestInfoFilter === null) {
+            $this->requestInfoFilter = \Magento\Framework\App\ObjectManager::getInstance()
+                ->get(\Magento\Checkout\Model\Cart\RequestInfoFilterInterface::class);
+        }
+        return $this->requestInfoFilter;
+    }
+
+    /**
+     * Save cart
+     *
+     * @return $this
+     */
+    public function save()
+    {
+        $this->_eventManager->dispatch('checkout_cart_save_before', ['cart' => $this]);
+
+        $this->getQuote()->getBillingAddress();
+        $this->getQuote()->getShippingAddress()->setCollectShippingRates(true);
+        $this->getQuote()->collectTotals();
+        $this->quoteRepository->save($this->getQuote());
+        $this->_checkoutSession->setQuoteId($this->getQuote()->getId());
+        /**
+         * Cart save usually called after changes with cart items.
+         */
+        $this->_eventManager->dispatch('checkout_cart_save_after', ['cart' => $this]);
+        
+        return $this;
+    }
+
+    
+
+    /**
+     * Save cart (implement interface method)
+     *
+     * @return void
+     * @codeCoverageIgnore
+     */
+    public function saveQuote()
+    {
+        $this->save();
+    }
+
+
+    
+
+
+
+
+   
+}
+
+******************************************************************************************************
+
+
+<?php
+namespace Mageants\Reorder\Api;
+
+interface SingleItemReorderRepositoryInterface
+{
+
+    /**
+     * Add/update the specified cart item.
+     *
+     * @param \Magento\Quote\Api\Data\CartItemInterface $OrderItem The item.
+     * @param int $customerId
+     * @param string $orderId
+     * @return \Magento\Quote\Api\Data\CartItemInterface Item.
+     * @throws \Magento\Framework\Exception\NoSuchEntityException The specified cart does not exist.
+     * @throws \Magento\Framework\Exception\CouldNotSaveException The specified item could not be saved to the cart.
+     * @throws \Magento\Framework\Exception\InputException The specified item or cart is not valid.
+     */
+    public function save(\Magento\Quote\Api\Data\CartItemInterface $OrderItem, $customerId, $orderId);
+
+}
+
+
+
+************************************************************************************************************************
+
+<?php
+
+namespace Mageants\Reorder\Model;
+
+use Mageants\Reorder\Api\SingleItemReorderRepositoryInterface;
+use Magento\Quote\Api\CartRepositoryInterface;
+use Magento\Framework\Api\SearchCriteriaBuilder;
+
+
+class SingleItemReorderRepository implements SingleItemReorderRepositoryInterface
+
+{
+    /**
+     * Quote repository.
+     *
+     * @var CartRepositoryInterface
+     */
+    protected $quoteRepository;/**
+     
+    /**
+     *  Order repository.
+     *
+     * @var OrderRepositoryInterface
+     */
+    protected $orderRepository;
+    
+    /**
+     * @var SearchCriteriaBuilder
+     */
+    protected $SearchCriteriaBuilder;
+    
+    /**
+     * @param SearchCriteriaBuilder $SearchCriteriaBuilder
+    */
+  
+
+    /**
+     * @param CartRepositoryInterface $quoteRepository
+     
+     */
+    public function __construct(
+        \Magento\Sales\Api\OrderRepositoryInterface $orderRepository,
+        SearchCriteriaBuilder $SearchCriteriaBuilder,
+        CartRepositoryInterface $quoteRepository
+    ) {
+        $this->orderRepository = $orderRepository;
+        $this->SearchCriteriaBuilder = $SearchCriteriaBuilder;
+        $this->quoteRepository = $quoteRepository;
+        
+    }
+
+    
+
+    /**
+     * @inheritdoc
+     * @param int $customerId
+     * @param string $orderId
+     */
+    public function save(\Magento\Quote\Api\Data\CartItemInterface $OrderItem, $customerId, $orderId)
+    {
+        /** @var \Magento\Quote\Model\Quote $quote */
+       
+
+         $items1 = array();
+        $this->customerId = $customerId;
+        $searchCriteria1 = $this->SearchCriteriaBuilder
+                ->addFilter('increment_id', $orderId )->create();
+    
+    
+
+     $Oid = $this->orderRepository->getList($searchCriteria1);
+
+            foreach($Oid as $orderData)
+                {
+
+                $items1['entity_id'] =  $orderData->getId();
+                // $items1['increment_id'] =  $orderData->getIncrementId();
+                $items1['quote_id'] =  $orderData->getQuoteId();
+                
+                }
+            $order1 = $items1['entity_id'];
+            $orderQuote = $items1['quote_id'];
+
+            // return $order1;
+
+            $order = $this->orderRepository->get($order1);
+            $cus = $order->getCustomerId();
+            
+        $sku1 = $OrderItem->getSku();
+        $qty1 = $OrderItem->getQty();
+        $cartId = $orderQuote;
+        if (!$sku1) {
+             return "Sku is required. Enter and try again.";
+        }
+
+    if($cus == $customerId)
+    {
+
+        
+       $items = $order->getItemsCollection()->addFieldToFilter("sku",$sku1)->getData();
+      if($items){
+       foreach ($items as $item)
+       {    
+    
+        $quote = $this->quoteRepository->getActiveForCustomer($customerId);
+        $quoteItems = $quote->getItems();
+        $quoteItems[] = $OrderItem;
+        $quote->setItems($quoteItems);
+        $this->quoteRepository->save($quote);
+        $quote->collectTotals();
+        return $quote->getLastAddedItem();
+       }
+   }else
+   {
+        return "Requested product is not in your Order!!!!!!";
+   }
+
+    }
+    else
+    {
+        
+        return "Requested Order-Id doesn't match with your previous Orders!!!!!!";   
+    }
+            
+       
+    }
+
+   
+}
+
+==============================================================================================================
+
+
+
+<?php
+namespace Mageants\Reorder\Model;
+
+use Mageants\Reorder\Api\ReorderRepositoryInterface;
+use Magento\Sales\Model\ResourceModel\Order\CollectionFactory;
+use Magento\Catalog\Api\ProductRepositoryInterface;
+use Magento\Catalog\Model\Product;
+use Magento\Checkout\Model\Cart\CartInterface;
+use Magento\Framework\DataObject;
+use Magento\Framework\Exception\NoSuchEntityException;
+use Magento\Framework\Api\SearchCriteriaBuilder;
+use Magento\Checkout\Model\Session;
+
+/**
+ * Class OrderService
+ *
+ * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
+ */
+class ReorderRepository extends DataObject implements ReorderRepositoryInterface
+{
+    protected $orderRepository;
+    protected $cart;
+    protected $_checkoutSession;
+    protected $_productIds;
+    protected $productRepository;
+    protected $_orderCollectionFactory;
+    protected $_resourceCart;
+    protected $_customerSession;
+    protected $messageManager;
+    protected $stockRegistry;
+    protected $stockState;
+    protected $quoteRepository;
+    private $requestInfoFilter;
+    protected $orderFactory;
+    /**
+     * @var \Magento\Customer\Api\CustomerRepositoryInterface
+     */
+    protected $customerRepository;
+
+        /**
+     * @var QuoteFactory
+     */
+    protected $quoteFactory;
+
+    protected $customerId;
+     /**
+     * @var SearchCriteriaBuilder
+     */
+    protected $SearchCriteriaBuilder;
+    
+    /**
+     * @param SearchCriteriaBuilder $SearchCriteriaBuilder
+    */
+
+    public function __construct(
+        \Magento\Sales\Api\OrderRepositoryInterface $orderRepository,
+        SearchCriteriaBuilder $SearchCriteriaBuilder,
+        \Magento\Checkout\Model\Cart $cart,
+        CollectionFactory $collectionFactory,
+        \Magento\Framework\Event\ManagerInterface $eventManager,
+        \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
+        \Magento\Store\Model\StoreManagerInterface $storeManager,
+        \Magento\Checkout\Model\ResourceModel\Cart $resourceCart,
+        Session $checkoutSession,
+        \Magento\Customer\Model\Session $customerSession,
+        \Magento\Framework\Message\ManagerInterface $messageManager,
+        \Magento\CatalogInventory\Api\StockRegistryInterface $stockRegistry,
+        \Magento\CatalogInventory\Api\StockStateInterface $stockState,
+        \Magento\Quote\Api\CartRepositoryInterface $quoteRepository,
+        ProductRepositoryInterface $productRepository,
+        \Magento\Sales\Api\Data\OrderInterfaceFactory $orderFactory,
+        \Magento\Customer\Api\CustomerRepositoryInterface $customerRepository,
+        \Magento\Quote\Model\QuoteFactory $quoteFactory
+    ){
+        $this->orderRepository = $orderRepository;
+        $this->cart = $cart;
+        $this->SearchCriteriaBuilder = $SearchCriteriaBuilder;
+        $this->_eventManager = $eventManager;
+        $this->_scopeConfig = $scopeConfig;
+        $this->_storeManager = $storeManager;
+        $this->_resourceCart = $resourceCart;
+        $this->_checkoutSession = $checkoutSession;
+        $this->_customerSession = $customerSession;
+        $this->messageManager = $messageManager;
+        $this->stockRegistry = $stockRegistry;
+        $this->stockState = $stockState;
+        $this->quoteRepository = $quoteRepository;
+        $this->productRepository = $productRepository;
+        $this->orderFactory = $orderFactory;
+        $this->customerRepository = $customerRepository;
+        $this->quoteFactory = $quoteFactory;
+        $this->_orderCollectionFactory = $collectionFactory;
+    }
+
+    /**
+     * Add order item for the customer
+     * @param int $customerId
+     * @param string $sku
+     * @param string $orderId
+     * @return array|bool
+     * @throws \Magento\Framework\Exception\LocalizedException
+     */
+    public function reorderItem($customerId, $orderId, $sku)
+    {   $items1 = array();
+        $this->customerId = $customerId;
+        $this->sku = $sku;
+        $searchCriteria1 = $this->SearchCriteriaBuilder
+                ->addFilter('increment_id', $orderId )->create();
+    
+    
+
+     $Oid = $this->orderRepository->getList($searchCriteria1);
+     
+
+     
+
+
+            foreach($Oid as $orderData)
+                {
+
+                $items1['entity_id'] =  $orderData->getId();
+                
+                }
+            $order1 = $items1['entity_id'];
+
+            $order = $this->orderRepository->get($order1);
+            $cus = $order->getCustomerId();
+            
+
+     if($cus == $customerId){
+
+        $cart = $this->cart;
+        $items = $order->getItemsCollection();
+
+        // $sku = "WS03-XS-Red";
+        // $d =  $order->getItemsCollection()->getData();
+        // return $d;
+        $d = $items->addFieldToFilter("sku",$sku);
+        return $d;
+                
+    if($d){
+
+
+
+
+
+
+        // $items = $d->getData();
+
+
+
+
+       foreach ($d as $item) {
+        //echo '<pre>';print_r($item->getData());
+            try {
+                $cart = $this->addOrderItem($item);
+            } catch (\Magento\Framework\Exception\LocalizedException $e) {
+                if ($cart->getUseNotice(true)) {
+                    return $e->getMessage();
+                } else {
+                    return $e->getMessage();
+                }
+            } catch (\Exception $e) {
+                echo $e->getMessage();
+                return "We can't add this item to your shopping cart right now";
+            }
+        }
+
+        
+    
+
+        $cart = $this->save();
+        return "Product added to your Cart ";}
+
+        else
+        {
+            return "Sku doesn't match with order id";
+        }
+
+    }
+    else
+    {
+        
+        return "Requested Order-Id doesn't match with your previous Orders!!!!!!";   
+    }
+
+    }
+
+    /**
+     * Convert order item to quote item
+     *
+     * @param \Magento\Sales\Model\Order\Item $orderItem
+     * @param true|null $qtyFlag if is null set product qty like in order
+     * @return $this
+     */
+    public function addOrderItem($orderItem, $qtyFlag = null)
+    {
+        $this->qty=$qty;
+        /* @var $orderItem \Magento\Sales\Model\Order\Item */
+        if ($orderItem->getParentItem() === null) {
+            $storeId = $this->_storeManager->getStore()->getId();
+            try {
+                /**
+                 * We need to reload product in this place, because products
+                 * with the same id may have different sets of order attributes.
+                 */
+                $product = $this->productRepository->getById($orderItem->getProductId(), false, $storeId, true);
+            } catch (NoSuchEntityException $e) {
+                return $this;
+            }
+            $info = $orderItem->getProductOptionByCode('info_buyRequest');
+            $info = new \Magento\Framework\DataObject($info);
+            if ($qtyFlag === null) {
+                $info->setQty($qty);
+                
+                // $info->setQty($orderItem->getQtyOrdered());
+            } 
+            // else {
+            //     $info->setQty(1);
+            // }
+
+            $this->addProduct($product, $info);
+        }
+        return $this;
+    }
+
+    /**
+     * Add product to shopping cart (quote)
+     *
+     * @param int|Product $productInfo
+     * @param \Magento\Framework\DataObject|int|array $requestInfo
+     * @return $this
+     * @throws \Magento\Framework\Exception\LocalizedException
+     * @SuppressWarnings(PHPMD.CyclomaticComplexity)
+     */
+    public function addProduct($productInfo, $requestInfo = null)
+    {
+        $product = $this->_getProduct($productInfo);
+        $request = $this->_getProductRequest($requestInfo);
+        $productId = $product->getId();
+
+        if ($productId) {
+            $stockItem = $this->stockRegistry->getStockItem($productId, $product->getStore()->getWebsiteId());
+            $minimumQty = $stockItem->getMinSaleQty();
+            //If product quantity is not specified in request and there is set minimal qty for it
+            if ($minimumQty
+                && $minimumQty > 0
+                && !$request->getQty()
+            ) {
+                $request->setQty($minimumQty);
+            }
+
+            try {
+                $result = $this->getQuote()->addProduct($product, $request);
+            } catch (\Magento\Framework\Exception\LocalizedException $e) {
+                $this->_checkoutSession->setUseNotice(false);
+                $result = $e->getMessage();
+            }
+            
+        
+        }
+
+         else {
+            throw new \Magento\Framework\Exception\LocalizedException(__('The product does not exist.'));
+        }
+
+        $this->_checkoutSession->setLastAddedProductId($productId);
+        return $this;
+    }
+
+     /**
+     * Get quote object associated with cart. By default it is current customer session quote
+     *
+     * @return \Magento\Quote\Model\Quote
+     */
+    public function getQuote()
+    {
+        $storeId = $this->_storeManager->getStore()->getStoreId();
+        $quote = $this->createCustomerCart($this->customerId, $storeId);
+
+        if (!$this->hasData('quote')) {
+            $this->setData('quote', $quote);
+        }
+        return $this->_getData('quote');
+    }
+
+     protected function createCustomerCart($customerId, $storeId)
+    {
+        try {
+            $quote = $this->quoteRepository->getActiveForCustomer($customerId);
+        } catch (\Magento\Framework\Exception\NoSuchEntityException $e) {
+            $customer = $this->customerRepository->getById($customerId);
+            /** @var \Magento\Quote\Model\Quote $quote */
+            $quote = $this->quoteFactory->create();
+            $quote->setStoreId($storeId);
+            $quote->setCustomer($customer);
+            // $quote->setCustomerIsGuest(0);
+        }
+        return $quote;
+    }
+
+    /**
+     * Set quote object associated with the cart
+     *
+     * @param \Magento\Quote\Model\Quote $quote
+     * @return $this
+     * @codeCoverageIgnore
+     */
+    public function setQuote(\Magento\Quote\Model\Quote $quote)
+    {
+        $this->setData('quote', $quote);
+        return $this;
+    }
+
+    /**
+     * Get product object based on requested product information
+     *
+     * @param   Product|int|string $productInfo
+     * @return  Product
+     * @throws \Magento\Framework\Exception\LocalizedException
+     */
+    protected function _getProduct($productInfo)
+    {
+        $product = null;
+        if ($productInfo instanceof Product) {
+            $product = $productInfo;
+            if (!$product->getId()) {
+                throw new \Magento\Framework\Exception\LocalizedException(
+                    __("The product wasn't found. Verify the product and try again.")
+                );
+            }
+        } elseif (is_int($productInfo) || is_string($productInfo)) {
+            $storeId = $this->_storeManager->getStore()->getId();
+            try {
+                $product = $this->productRepository->getById($productInfo, false, $storeId);
+            } catch (NoSuchEntityException $e) {
+                throw new \Magento\Framework\Exception\LocalizedException(
+                    __("The product wasn't found. Verify the product and try again."),
+                    $e
+                );
+            }
+        } else {
+            throw new \Magento\Framework\Exception\LocalizedException(
+                __("The product wasn't found. Verify the product and try again.")
+            );
+        }
+        $currentWebsiteId = $this->_storeManager->getStore()->getWebsiteId();
+        if (!is_array($product->getWebsiteIds()) || !in_array($currentWebsiteId, $product->getWebsiteIds())) {
+            throw new \Magento\Framework\Exception\LocalizedException(
+                __("The product wasn't found. Verify the product and try again.")
+            );
+        }
+        return $product;
+    }
+
+    /**
+     * Get request for product add to cart procedure
+     *
+     * @param   \Magento\Framework\DataObject|int|array $requestInfo
+     * @return  \Magento\Framework\DataObject
+     * @throws \Magento\Framework\Exception\LocalizedException
+     */
+    protected function _getProductRequest($requestInfo)
+    {
+        if ($requestInfo instanceof \Magento\Framework\DataObject) {
+            $request = $requestInfo;
+        } elseif (is_numeric($requestInfo)) {
+            $request = new \Magento\Framework\DataObject(['qty' => $requestInfo]);
+        } elseif (is_array($requestInfo)) {
+            $request = new \Magento\Framework\DataObject($requestInfo);
+        } else {
+            throw new \Magento\Framework\Exception\LocalizedException(
+                __('We found an invalid request for adding product to quote.')
+            );
+        }
+        $this->getRequestInfoFilter()->filter($request);
+
+        return $request;
+    }
+
+    /**
+     * Getter for RequestInfoFilter
+     *
+     * @deprecated 100.1.2
+     * @return \Magento\Checkout\Model\Cart\RequestInfoFilterInterface
+     */
+    private function getRequestInfoFilter()
+    {
+        if ($this->requestInfoFilter === null) {
+            $this->requestInfoFilter = \Magento\Framework\App\ObjectManager::getInstance()
+                ->get(\Magento\Checkout\Model\Cart\RequestInfoFilterInterface::class);
+        }
+        return $this->requestInfoFilter;
+    }
+
+    /**
+     * Save cart
+     *
+     * @return $this
+     */
+    public function save()
+    {
+        $this->_eventManager->dispatch('checkout_cart_save_before', ['cart' => $this]);
+
+        $this->getQuote()->getBillingAddress();
+        $this->getQuote()->getShippingAddress()->setCollectShippingRates(true);
+        $this->getQuote()->collectTotals();
+        $this->quoteRepository->save($this->getQuote());
+        $this->_checkoutSession->setQuoteId($this->getQuote()->getId());
+        /**
+         * Cart save usually called after changes with cart items.
+         */
+        $this->_eventManager->dispatch('checkout_cart_save_after', ['cart' => $this]);
+        
+        return $this;
+    }
+
+    
+
+    /**
+     * Save cart (implement interface method)
+     *
+     * @return void
+     * @codeCoverageIgnore
+     */
+    public function saveQuote()
+    {
+        $this->save();
+    }
+
+
+    
+
+
+
+
+   
+}
+
+=========================================================================================================
+<?php
+
+namespace Mageants\Reorder\Api;
+
+use Magento\Quote\Model\Quote;
+
+interface ReorderRepositoryInterface
+{
+    /**
+    * Return Create reorder.
+    *
+    * @param int $customerId
+    * @param string $orderId
+    * @param string $sku
+    * @return Mageants\Reorder\Api\ReorderRepositoryInterface
+    */
+
+   public function reorderItem($customerId, $orderId, $sku);
+
+   /**
+     * Add product to shopping cart (quote)
+     *
+     * @param int|\Magento\Catalog\Model\Product $productInfo
+     * @param array|float|int|\Magento\Framework\DataObject|null $requestInfo
+     * @return $this
+     */
+    public function addProduct($productInfo, $requestInfo = null);
+
+    /**
+     * Save cart
+     *
+     * @return $this
+     * @abstract
+     */
+    public function saveQuote();
+
+    /**
+     * Associate quote with the cart
+     *
+     * @param Quote $quote
+     * @return $this
+     * @abstract
+     */
+
+    public function setQuote(Quote $quote);
+
+    /**
+     * Get quote object associated with cart
+     *
+     * @return Quote
+     * @abstract
+     */
+    public function getQuote();
+}
+
+
+*******************************************************************************************
+<?php
+
+namespace Mageants\Reorder\Model;
+
+use Mageants\Reorder\Api\AllOrderInterface;
+use Magento\Quote\Api\CartRepositoryInterface;
+use Magento\Framework\Api\SearchCriteriaBuilder;
+use Magento\Sales\Model\ResourceModel\Order\CollectionFactory;
+
+
+
+class AllOrderRepository implements AllOrderInterface
+
+{
+    /**
+     * Quote repository.
+     *
+     * @var CartRepositoryInterface
+     */
+    protected $quoteRepository;/**
+     
+    /**
+     *  Order repository.
+     *
+     * @var OrderRepositoryInterface
+     */
+    protected $orderRepository;
+     /**
+     * @var CollectionFactory
+     */
+    private $orderCollectionFactory;
+    /**
+     * @var SearchCriteriaBuilder
+     */
+    protected $SearchCriteriaBuilder;
+    
+    /**
+     * @param SearchCriteriaBuilder $SearchCriteriaBuilder
+    */
+  
+
+    /**
+     * @param CartRepositoryInterface $quoteRepository
+     
+     */
+    public function __construct(
+        \Magento\Sales\Api\OrderRepositoryInterface $orderRepository,
+        CollectionFactory $orderCollectionFactory,
+        SearchCriteriaBuilder $SearchCriteriaBuilder,
+        CartRepositoryInterface $quoteRepository
+    ) {
+        $this->orderRepository = $orderRepository;
+        $this->orderCollectionFactory = $orderCollectionFactory;
+        $this->SearchCriteriaBuilder = $SearchCriteriaBuilder;
+        $this->quoteRepository = $quoteRepository;
+        
+    }
+
+    
+
+    /**
+     * @inheritdoc
+     * @param int $customerId
+     * @return array
+     */
+    public function reorderItem( $customerId)
+    {
+        /** @var \Magento\Quote\Model\Quote $quote */
+       
+        $items1 = array();
+
+        $customerOrder = $this->orderCollectionFactory->create()
+            ->addFieldToFilter('customer_id', $customerId);
+
+        // $customerOrder = $this->orderCollectionFactory->create()
+        //     ->addFieldToFilter('customer_id', $customerId)->getData();
+        // return $customerOrder;
+
+        
+            foreach($customerOrder as $user) 
+            {
+                $ids[] = $user['entity_id'];
+            }
+            
+            $entity1 = $ids;
+
+            foreach($entity1 as $entity)
+            {
+            
+            $order1 = $entity;
+            
+
+            $order = $this->orderRepository->getItemsCollection()->getData();
+            return $order;
+            
+            }
+    
+       $items = $order->getItemsCollection();
+      if($items){
+       foreach ($items as $item)
+       {    
+    
+        $quote = $this->quoteRepository->getActiveForCustomer($customerId);
+        $quoteItems = $quote->getItems();
+        
+        $quote->setItems($quoteItems);
+        $this->quoteRepository->save($quote);
+        $quote->collectTotals();
+        return "save";
+       }
+      }else
+      {
+        return "Requested product is not in your order!!!!!!";
+      }
+
+    
+
+          
+     
+       
+    }
+
+   
+}

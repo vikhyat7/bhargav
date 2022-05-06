@@ -1,0 +1,21 @@
+<?php /**
+       * @category Mageants Richsnippets
+       * @package Mageants_Richsnippets
+       * @copyright Copyright (c) 2019 Mageants
+       * @author Mageants Team <support@mageants.com>
+       */
+?>
+<?php if ($block->getConfigrations()->isSearchBoxEnable()) : ?>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "url": "<?php echo $block->getBaseUrl(); ?>",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": "<?php echo $block->getBaseUrl(); ?>search?q={search_term_string}",
+    "query-input": "required name=search_term_string"
+  }
+}
+</script>
+<?php endif; ?>

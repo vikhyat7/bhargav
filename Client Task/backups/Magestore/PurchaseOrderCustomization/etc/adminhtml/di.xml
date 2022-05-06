@@ -1,0 +1,77 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright © Magestore. All rights reserved.
+  ~ See COPYING.txt for license details.
+  -->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <virtualType name="Magestore\SupplierSuccess\Ui\DataProvider\Supplier\DataForm\Modifier\Pool">
+        <arguments>
+            <argument name="modifiers" xsi:type="array">
+                <item name="transaction_list" xsi:type="array">
+                    <item name="class" xsi:type="string">
+                        Magestore\PurchaseOrderCustomization\Ui\DataProvider\Supplier\Form\Modifier\TransactionList
+                    </item>
+                    <item name="sortOrder" xsi:type="number">50</item>
+                </item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="supplierTransactionModifierPool" type="Magento\Ui\DataProvider\Modifier\Pool">
+        <arguments>
+            <argument name="modifiers" xsi:type="array">
+                <item name="general" xsi:type="array">
+                    <item name="class" xsi:type="string">
+                        Magestore\PurchaseOrderCustomization\Ui\DataProvider\Supplier\Transaction\Form\Modifier\GeneralForm
+                    </item>
+                    <item name="sortOrder" xsi:type="number">10</item>
+                </item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <type name="Magestore\PurchaseOrderCustomization\Ui\DataProvider\Supplier\Transaction\Form\Transaction">
+        <arguments>
+            <argument name="pool" xsi:type="object">supplierTransactionModifierPool</argument>
+        </arguments>
+    </type>
+
+    <virtualType name="supplierTransactionPrintModifierPool" type="Magento\Ui\DataProvider\Modifier\Pool">
+        <arguments>
+            <argument name="modifiers" xsi:type="array">
+                <item name="period" xsi:type="array">
+                    <item name="class" xsi:type="string">
+                        Magestore\PurchaseOrderCustomization\Ui\DataProvider\Supplier\TransactionPrint\Form\Modifier\Period
+                    </item>
+                    <item name="sortOrder" xsi:type="number">10</item>
+                </item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <type name="Magestore\PurchaseOrderCustomization\Ui\DataProvider\Supplier\Transaction\Form\TransactionPrint">
+        <arguments>
+            <argument name="pool" xsi:type="object">supplierTransactionPrintModifierPool</argument>
+        </arguments>
+    </type>
+    <preference
+            for="Magestore\PurchaseOrderSuccess\Block\Adminhtml\ReturnOrder\Edit\Fieldset\ReturnSumary\Item"
+            type="Magestore\PurchaseOrderCustomization\Rewrite\PurchaseOrder\Block\Adminhtml\Edit\Fieldset\ReturnSumary\Item"/>
+    <preference
+            for="Magestore\PurchaseOrderSuccess\Ui\DataProvider\PurchaseOrder\ReturnedProduct\Form\Modifier\ProductList"
+            type="Magestore\PurchaseOrderCustomization\Rewrite\PurchaseOrder\Ui\DataProvider\ReturnedProduct\Form\Modifier\ProductListRewrite"/>
+    <type name="Magestore\PurchaseOrderSuccess\Service\ReturnOrder\Item\ItemService">
+        <plugin name="add_cost_to_return_order_item"
+                type="Magestore\PurchaseOrderCustomization\Plugin\ReturnOrder\Item\ItemService" sortOrder="1"/>
+    </type>
+    <preference
+            for="Magestore\PurchaseOrderSuccess\Model\ResourceModel\ReturnOrder\Item\Collection"
+            type="Magestore\PurchaseOrderCustomization\Rewrite\PurchaseOrder\Model\ReturnOrder\Item\Collection"/>
+    <type name="Magestore\PurchaseOrderSuccess\Ui\DataProvider\ReturnOrder\Form\Modifier\ReturnSumary">
+        <plugin name="add_summary_return_request"
+                type="Magestore\PurchaseOrderCustomization\Plugin\ReturnOrder\Form\Modifier\ReturnSumary" sortOrder="1"/>
+    </type>
+    <preference
+            for="Magestore\PurchaseOrderSuccess\Model\ResourceModel\ReturnOrder\Grid\ReturnOrder"
+            type="Magestore\PurchaseOrderCustomization\Rewrite\PurchaseOrder\Model\ResourceModel\ReturnOrder\Grid\ReturnOrder"/>
+</config>

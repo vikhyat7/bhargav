@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!-- 
+ * @category Mageants Richsnippets
+ * @package Mageants_Richsnippets
+ * @copyright Copyright (c) 2019 Mageants
+ * @author Mageants Team <support@mageants.com>
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:App/etc/routes.xsd">
+    <router id="admin">
+        <route id="richsnippets" frontName="google-richsnippets">
+            <module name="Mageants_Richsnippets"/>
+        </route>
+    </router>
+</config>

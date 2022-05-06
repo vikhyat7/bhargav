@@ -1,0 +1,18 @@
+<?php /**
+       * @category Mageants Richsnippets
+       * @package Mageants_Richsnippets
+       * @copyright Copyright (c) 2019 Mageants
+       * @author Mageants Team <support@mageants.com>
+       */
+?>
+<?php echo $this->getLayout()->createBlock("Mageants\Richsnippets\Block\Richsnippets")->setTemplate("Mageants_Richsnippets::breadcrumbs.phtml")->toHtml();?>
+<?php
+if ($this->getLayout()->createBlock("Mageants\Richsnippets\Block\Richsnippets")->getPropductCollection()->getTypeId() == \Magento\ConfigurableProduct\Model\Product\Type\Configurable::TYPE_CODE) { ?>
+    <?php echo $this->getLayout()->createBlock("Mageants\Richsnippets\Block\Richsnippets")->setTemplate("Mageants_Richsnippets::productconfig.phtml")->toHtml();?>
+<?php } elseif ($this->getLayout()->createBlock("Mageants\Richsnippets\Block\Richsnippets")->getPropductCollection()->getTypeId() == "grouped") { ?>
+    <?php echo $this->getLayout()->createBlock("Mageants\Richsnippets\Block\Richsnippets")->setTemplate("Mageants_Richsnippets::productgroup.phtml")->toHtml();?>
+<?php } else { ?>
+    <?php echo $this->getLayout()->createBlock("Mageants\Richsnippets\Block\Richsnippets")->setTemplate("Mageants_Richsnippets::review.phtml")->toHtml();?>
+<?php } ?>
+<?php echo $this->getLayout()->createBlock("Mageants\Richsnippets\Block\Richsnippets")->setTemplate("Mageants_Richsnippets::organization.phtml")->toHtml();?>
+<?php echo $this->getLayout()->createBlock("Mageants\Richsnippets\Block\Richsnippets")->setTemplate("Mageants_Richsnippets::searchbox.phtml")->toHtml();?>

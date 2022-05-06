@@ -1,0 +1,57 @@
+<?php
+// $helper = $this->helper('Mageants\OutofStockNotification\Helper\Data');
+$sendtime = $block->getSendTime();
+$sendtime = str_replace(',', ':', $sendtime);
+//$sendtime =  strtotime($sendtime);
+$yesterday = $block->getYesterday();
+$subscribers = $block->getSubscribersForAdmin()->getCollection();
+$datetoemail = $block->getSendTimedate($sendtime);
+$subscribers->addFieldToFilter('subscribe_date', ['from' => $yesterday]);
+?>
+<?php
+if ((int)$subscribers->count() > 0) {
+    ?>
+<table>
+    
+    <tbody>
+    <tr>
+        <td><?= $block->escapeHtml('#Id');?></td>
+        <td><?= $block->escapeHtml('Customer Name');?></td>
+        <td><?= $block->escapeHtml('Email');?></td>
+        <td><?= $block->escapeHtml('Sku');?></td>
+        <td><?= $block->escapeHtml('Product Name');?></td>
+        <td><?= $block->escapeHtml('Subscribed on');?></td>
+    </tr>
+    <?php
+    foreach ($subscribers as $subscriber) {
+        try {
+        
+            ?>
+                <tr>
+                    <td><?= $block->escapeHtml($subscriber->getId());?></td>
+                    <td><?= $block->escapeHtml($subscriber->getCustomerName());?></td>
+                    <td><?= $block->escapeHtml($subscriber->getEmail());?></td>
+                    <td><?= $block->escapeHtml($subscriber->getProductSku());?></td>
+                    <td><?= $block->escapeHtml($subscriber->getProductName());?></td>
+                    <td><?= $block->escapeHtml($subscriber->getSubscribeDate());?></td>
+                </tr>
+            
+            <?php
+    
+        } catch (Exception $e) {
+                
+                $writer = new \Zend\Log\Writer\Stream(BP . '/var/log/stock_alert.log');
+                $logger = new \Zend\Log\Logger();
+                $logger->addWriter($writer);
+                $logger->info('Something is wrong...'.$e->getMessage());
+        }
+    }
+} else {
+    ?>
+    <h2> <?= $block->escapeHtml('There are no subscription...'); ?></h2>
+    <?php
+
+}
+?>
+    </tbody>
+</table>

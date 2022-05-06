@@ -1,0 +1,48 @@
+<?php
+$alloptions = $block->getAttributeOptionCollection();
+$iconImagePath = $block->getMediaImagePath();
+?>
+<fieldset class="fieldset">
+    <legend class="legend"><span><?php /* @noEscape */ echo __('Manage Icons');?></span></legend>
+    <div id="manage-options-icon">
+        <table id="manage_icon" class="admin__control-table" cellspacing="8" cellpadding="5">
+            <tbody><tr>
+                <th width="200"><?php /* @noEscape */ echo __('Status Label');?></th>
+                <th width="10"></th>
+                <th><?php /* @noEscape */ echo __('Upload icon image');?></th>
+                <th width="10"></th>
+                <th><?php /* @noEscape */ echo __('Preview');?></th>
+                <th width="10"></th>
+                <th><?php /* @noEscape */ echo __('Delete');?></th>
+            </tr>
+            <?php  foreach ($alloptions as $option) {
+                if (!$option['value']) {
+                    continue;
+                }
+
+                $imageName = $block->getIconImage($option['value']);
+                ?>
+                <tr>
+                    <td><?php /* @noEscape */ echo $option['label']; ?></td>
+                    <td></td>
+                    <td><input name="manage_icon[<?php /* @noEscape */ echo $option['value'];?>]" type="file"></td>
+                    <td></td>
+                    <td align="center">
+                        <?php
+                        if ($imageName) {
+                            ?>
+                            <img src="<?php /* @noEscape */ echo $iconImagePath.$imageName;?>" alt="">
+                            <?php
+                        } else {
+                            /* @noEscape */ echo __('[none]');
+                        }
+                        ?>
+                    </td>
+                    <td></td>
+                    <td align="center"><input value="1" name="manage_icon_delete[<?php /* @noEscape */ echo $option['value'];?>]" type="checkbox"></td>
+            <?php } ?>        
+                </tr>
+                                    
+        </tbody></table>
+    </div>
+</fieldset>

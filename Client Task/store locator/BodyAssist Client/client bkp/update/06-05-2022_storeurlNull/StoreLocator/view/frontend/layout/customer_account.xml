@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="customer_account_navigation">
+            <block class="Mageants\StoreLocator\Block\Link" name="Mageants-dealer-link" ifconfig="StoreLocator/module/storelocator">
+                <arguments>
+                    <argument name="path" xsi:type="string">storelocator/index/dealer/</argument>
+                    <argument name="label" xsi:type="string" translate="true">Manage Store</argument>
+                </arguments>
+            </block>
+        </referenceBlock>
+    </body>
+</page>

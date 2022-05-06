@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<!-- 
+ * @category Mageants MaintenanceMode
+ * @package Mageants_MaintenanceMode
+ * @copyright Copyright (c) 2019 Mageants
+ * @author Mageants Team <support@mageants.com>
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <module>
+            <type>1</type>
+        </module>
+        <maintenancemode>
+            <general>
+                <enabled>1</enabled>
+                <redirect_to>maintenance_page</redirect_to>
+                <auto_switch>1</auto_switch>
+            </general>
+            <display_setting>
+                <clock_setting>
+                    <clock_enabled>1</clock_enabled>
+                    <clock_template>modern</clock_template>
+                    <clock_background_color>#ffffff00</clock_background_color>
+                    <clock_number_color>#000000</clock_number_color>
+                </clock_setting>
+                <subscribe_setting>
+                    <subscribe_type>email_form</subscribe_type>
+                    <subscribe_label_color>#000000</subscribe_label_color>
+                    <button_label>Subscribe</button_label>
+                    <button_label_color>#FFFFFF</button_label_color>
+                    <button_background_color>#0E9AFC</button_background_color>
+                </subscribe_setting>               
+                <social_contact>
+                    <social_enabled>1</social_enabled>                    
+                </social_contact>
+            </display_setting>
+            <maintenance_setting>
+                <maintenance_layout>single</maintenance_layout>
+                <maintenance_title>We're Under Maintenance</maintenance_title>
+                <maintenance_description>Our website is under temporary maintenance, we will be back soon :)</maintenance_description>
+                <maintenance_color>#FFFFFF</maintenance_color>
+                <maintenance_background>image</maintenance_background>
+                <maintenance_progress_value>50</maintenance_progress_value>
+                <maintenance_progress_label_color>#FFFFFF</maintenance_progress_label_color>
+                <maintenance_progress_bar_color>#000000</maintenance_progress_bar_color>
+            </maintenance_setting>          
+        </maintenancemode>
+    </default>
+</config>

@@ -1,0 +1,27 @@
+<?php $_items = $block->getItems(); ?>
+<table>
+    <?php foreach ($_items as $_item) { ?>
+        <tr>
+            <td colspan="2">
+                <a href="<?= /* @noEscape */ $_item['url']; ?>">
+                    <img src="<?= /* @noEscape */ $_item['image']; ?>" alt="<?= /* @noEscape */ $_item['name']; ?>">
+                </a>
+            </td>
+            <td colspan="3">
+                <table>
+                    <tr>
+                        <td colspan="3">
+                            <span class="product-name"><?= /* @noEscape */ $_item['name']; ?></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3">
+                            <span class="product-price"><?= /* @noEscape */ $_item['price']; ?></span>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <?php
+    } ?>
+</table>

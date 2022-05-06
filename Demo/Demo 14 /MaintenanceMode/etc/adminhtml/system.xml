@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+ * @category Mageants MaintenanceMode
+ * @package Mageants_MaintenanceMode
+ * @copyright Copyright (c) 2019 Mageants
+ * @author Mageants Team <support@mageants.com>
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+   <system>
+      <tab id="mageants" translate="label" sortOrder="10">
+         <label>Mageants</label>
+      </tab>
+      <section id="maintenancemode" translate="label" type="text" sortOrder="350" showInDefault="1" showInWebsite="1" showInStore="1">
+         <class>separator-top</class>
+         <label>Maintenance Mode</label>
+         <tab>mageants</tab>
+         <resource>Mageants_MaintenanceMode::configuration</resource>
+         <group id="general" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>General</label>
+            <field id="enabled" translate="label comment" type="select" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+               <label>Enable</label>
+               <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+            </field>
+            <field id="real_time" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+               <label>Real Time of Website</label>
+               <frontend_model>Mageants\MaintenanceMode\Block\Adminhtml\System\RealTime</frontend_model>
+            </field>
+            <field id="start_time" translate="label" sortOrder="50" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+               <label>Start Date Time</label>
+               <frontend_model>Mageants\MaintenanceMode\Block\Adminhtml\System\DatePicker</frontend_model>
+               <validate>required-entry</validate>
+               <depends>
+                     <field id="enabled">1</field>
+               </depends>
+            </field>
+            <field id="end_time" translate="label" sortOrder="60" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+               <label>End Date Time</label>
+               <frontend_model>Mageants\MaintenanceMode\Block\Adminhtml\System\DatePicker</frontend_model>
+               <validate>required-entry</validate>
+               <depends>
+                     <field id="enabled">1</field>
+               </depends>
+            </field>
+            <field id="redirect_to" translate="label" type="select" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="1">
+               <label>Redirect To Page</label>
+               <source_model>Mageants\MaintenanceMode\Model\Config\Source\System\RedirectTo</source_model>
+            </field>
+            <field id="auto_switch" translate="label comment" type="select" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="1">
+               <label>Auto Switch to Live Site Mode</label>
+               <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+               <comment>Your website will automatically switch back to Live Site Mode when configured time ends.</comment>
+            </field>
+            <field id="whitelist_ip" translate="label comment" type="textarea" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="1">
+               <label>Whitelist IP(s)</label>
+               <backend_model>Mageants\MaintenanceMode\Model\Config\Backend\Validate</backend_model>
+               <comment>Separated by comma(s).</comment>
+            </field>
+            <field id="whitelist_page" translate="label comment" type="textarea" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
+               <label>Whitelist Page Link(s)</label>
+               <comment>Separated by break line(s).</comment>
+            </field>
+         </group>
+         <group id="display_setting" translate="label" type="text" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Display Setting</label>
+            <group id="clock_setting" translate="label" type="text" sortOrder="120" showInDefault="1" showInWebsite="1" showInStore="1">
+               <label>Clock Setting</label>
+               <field id="clock_enabled" translate="label" type="select" sortOrder="130" showInDefault="1" showInWebsite="1" showInStore="1">
+                  <label>Enable</label>
+                  <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+               </field>
+               <field id="clock_template" translate="label" type="select" sortOrder="140" showInDefault="1" showInWebsite="1" showInStore="1">
+                  <label>Countdown Clock Style</label>
+                  <source_model>Mageants\MaintenanceMode\Model\Config\Source\System\ClockTemplate</source_model>
+                  <depends>
+                     <field id="clock_enabled">1</field>
+                  </depends>
+               </field>
+               <field id="clock_background_color" translate="label" sortOrder="150" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+                  <label>Clock Background Color</label>
+                  <frontend_model>Mageants\MaintenanceMode\Block\Color</frontend_model>
+                  <depends>
+                     <field id="clock_enabled">1</field>
+                     <field id="clock_template" separator=",">circle,square,stack,modern</field>
+                  </depends>
+               </field>
+               <field id="clock_inner_color" translate="label" sortOrder="160" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+                  <label>Clock Inner Background Color</label>
+                  <frontend_model>Mageants\MaintenanceMode\Block\Color</frontend_model>
+                  <depends>
+                     <field id="clock_enabled">1</field>
+                     <field id="clock_template">stack</field>
+                  </depends>
+               </field>
+               <field id="clock_number_color" translate="label" sortOrder="170" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+                  <label>Clock Number Color</label>
+                  <frontend_model>Mageants\MaintenanceMode\Block\Color</frontend_model>
+                  <depends>
+                     <field id="clock_enabled">1</field>
+                  </depends>
+               </field>
+            </group>
+            <group id="subscribe_setting" translate="label" type="text" sortOrder="180" showInDefault="1" showInWebsite="1" showInStore="1">
+               <label>Subscribe Setting</label>
+               <field id="subscribe_type" translate="label" type="select" sortOrder="190" showInDefault="1" showInWebsite="1" showInStore="1">
+                  <label>Subscription Type</label>
+                  <source_model>Mageants\MaintenanceMode\Model\Config\Source\System\SubscribeType</source_model>
+               </field>
+               <field id="subscribe_label" translate="label" type="text" sortOrder="200" showInDefault="1" showInWebsite="1" showInStore="1">
+                  <label>Subscription Description</label>
+                  <depends>
+                     <field id="subscribe_type" separator=",">email_form</field>
+                  </depends>
+               </field>
+               <field id="subscribe_label_color" translate="label" sortOrder="210" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+                  <label>Description Text Color</label>
+                  <frontend_model>Mageants\MaintenanceMode\Block\Color</frontend_model>
+                  <depends>
+                     <field id="subscribe_type" separator=",">email_form</field>
+                  </depends>
+               </field>
+               <field id="button_label" translate="label comment" type="text" sortOrder="220" showInDefault="1" showInWebsite="1" showInStore="1">
+                  <label>Button Label</label>
+                  <comment>Better less than 15 characters.</comment>
+                  <depends>
+                     <field id="subscribe_type" separator=",">email_form</field>
+                  </depends>
+               </field>
+               <field id="button_label_color" translate="label" sortOrder="230" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+                  <label>Button Text Color</label>
+                  <frontend_model>Mageants\MaintenanceMode\Block\Color</frontend_model>
+                  <depends>
+                     <field id="subscribe_type" separator=",">email_form</field>
+                  </depends>
+               </field>
+               <field id="button_background_color" translate="label" sortOrder="240" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+                  <label>Button Background Color</label>
+                  <frontend_model>Mageants\MaintenanceMode\Block\Color</frontend_model>
+                  <depends>
+                     <field id="subscribe_type" separator=",">email_form</field>
+                  </depends>
+               </field>
+            </group>
+            <group id="social_contact" translate="label" type="text" sortOrder="250" showInDefault="1" showInWebsite="1" showInStore="1">
+               <label>Social Contact</label>
+               <field id="social_enabled" translate="label" type="select" sortOrder="260" showInDefault="1" showInWebsite="1" showInStore="1">
+                  <label>Enable</label>
+                  <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+               </field>
+               <field id="social_facebook" translate="label" type="text" sortOrder="270" showInDefault="1" showInWebsite="1" showInStore="1">
+                  <label>Facebook Page Link</label>
+                  <validate>validate-url</validate>
+                  <depends>
+                     <field id="social_enabled">1</field>
+                  </depends>
+               </field>
+               <field id="social_twitter" translate="label" type="text" sortOrder="280" showInDefault="1" showInWebsite="1" showInStore="1">
+                  <label>Twitter Page Link</label>
+                  <validate>validate-url</validate>
+                  <depends>
+                     <field id="social_enabled">1</field>
+                  </depends>
+               </field>
+               <field id="social_instagram" translate="label" type="text" sortOrder="290" showInDefault="1" showInWebsite="1" showInStore="1">
+                  <label>Instagram Page Link</label>
+                  <validate>validate-url</validate>
+                  <depends>
+                     <field id="social_enabled">1</field>
+                  </depends>
+               </field>
+               <field id="social_google" translate="label" type="text" sortOrder="300" showInDefault="1" showInWebsite="1" showInStore="1">
+                  <label>Google+ Page Link</label>
+                  <validate>validate-url</validate>
+                  <depends>
+                     <field id="social_enabled">1</field>
+                  </depends>
+               </field>
+               <field id="social_skype" translate="label" type="text" sortOrder="320" showInDefault="1" showInWebsite="1" showInStore="1">
+                  <label>Skype Page Link</label>
+                  <validate>validate-url</validate>
+                  <depends>
+                     <field id="social_enabled">1</field>
+                  </depends>
+               </field>
+               <field id="social_linkedin" translate="label" type="text" sortOrder="320" showInDefault="1" showInWebsite="1" showInStore="1">
+                  <label>Linkedin Page Link</label>
+                  <validate>validate-url</validate>
+                  <depends>
+                     <field id="social_enabled">1</field>
+                  </depends>
+               </field>
+               <field id="social_youtube" translate="label" type="text" sortOrder="310" showInDefault="1" showInWebsite="1" showInStore="1">
+                  <label>Youtube Page Link</label>
+                  <validate>validate-url</validate>
+                  <depends>
+                     <field id="social_enabled">1</field>
+                  </depends>
+               </field>
+               <field id="social_pinterest" translate="label" type="text" sortOrder="320" showInDefault="1" showInWebsite="1" showInStore="1">
+                  <label>Pinterest Page Link</label>
+                  <validate>validate-url</validate>
+                  <depends>
+                     <field id="social_enabled">1</field>
+                  </depends>
+               </field>
+            </group>
+         </group>
+         <group id="maintenance_setting" translate="label" type="text" sortOrder="330" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Maintenance Page Setting</label>
+            <field id="maintenance_layout" translate="label" type="select" sortOrder="350" showInDefault="1" showInWebsite="1" showInStore="1">
+               <label>Select Layout</label>
+               <source_model>Mageants\MaintenanceMode\Model\Config\Source\System\LayoutOptions</source_model>
+            </field>
+            <field id="maintenance_title" translate="label" type="text" sortOrder="360" showInDefault="1" showInWebsite="1" showInStore="1">
+               <label>Page Title</label>
+            </field>
+            <field id="maintenance_description" translate="label" type="text" sortOrder="370" showInDefault="1" showInWebsite="1" showInStore="1">
+               <label>Page Description</label>
+            </field>
+            <field id="maintenance_color" translate="label" sortOrder="380" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+               <label>Text Color</label>
+               <frontend_model>Mageants\MaintenanceMode\Block\Color</frontend_model>
+            </field>
+            <field id="maintenance_logo" translate="label comment" type="image" sortOrder="390" showInDefault="1" showInWebsite="1" showInStore="1">
+               <label>Logo</label>
+               <backend_model>Mageants\MaintenanceMode\Model\Config\Backend\LogoImage</backend_model>
+               <comment><![CDATA[Supported image formats: gif, jpg, jpeg, png.<br>Recommended size: less than 2MB.]]></comment>
+               <upload_dir config="system/filesystem/media" scope_info="1">mageants/maintenancemode/logo</upload_dir>
+               <base_url type="media" scope_info="1">mageants/maintenancemode/logo</base_url>
+            </field>
+            <field id="maintenance_background" translate="label comment" type="select" sortOrder="400" showInDefault="1" showInWebsite="1" showInStore="1">
+               <label>Background Type</label>
+               <source_model>Mageants\MaintenanceMode\Model\Config\Source\System\BackgroundType</source_model>
+               <comment><![CDATA[For Video type, please check your <b>php.ini</b> value. If the size of uploaded video is greater than this value, the video will not be uploaded.<br><b>upload_max_size=YOUR_REQUIREMENT</b><br><b>max_input_vars=10000</b><br><b>post_max_size=35M</b>]]></comment>
+            </field>
+            <field id="maintenance_background_video" translate="label comment" type="file" sortOrder="410" showInDefault="1" showInWebsite="1" showInStore="1">
+               <label>Upload Background Video</label>
+               <backend_model>Mageants\MaintenanceMode\Model\Config\Backend\Video</backend_model>
+               <upload_dir config="system/filesystem/media" scope_info="1">mageants/maintenancemode/video</upload_dir>
+               <base_url type="media" scope_info="1">mageants/maintenancemode/video</base_url>
+               <comment><![CDATA[Supported video formats: mp4]]></comment>
+               <depends>
+                  <field id="maintenance_background">video</field>
+               </depends>
+            </field>
+            <field id="maintenance_background_image" translate="label comment" type="image" sortOrder="420" showInDefault="1" showInWebsite="1" showInStore="1">
+               <label>Upload Background Image</label>
+               <backend_model>Mageants\MaintenanceMode\Model\Config\Backend\BackgroundImage</backend_model>
+               <upload_dir config="system/filesystem/media" scope_info="1">mageants/maintenancemode/image</upload_dir>
+               <base_url type="media" scope_info="1">mageants/maintenancemode/image</base_url>
+               <comment><![CDATA[Supported image formats: gif, jpg, jpeg, png.<br>Recommended size: less than 2MB.]]></comment>
+               <depends>
+                  <field id="maintenance_background">image</field>
+               </depends>
+            </field>
+            <field id="maintenance_background_multi_image" translate="label comment" sortOrder="430" showInDefault="1" showInWebsite="1" showInStore="1">
+               <label>Upload Background Images</label>
+               <frontend_model>Mageants\MaintenanceMode\Block\Adminhtml\System\MaintenanceMultipleImages</frontend_model>
+               <backend_model>Mageants\MaintenanceMode\Model\Config\Backend\MultipleImages</backend_model>
+               <upload_dir config="system/filesystem/media" scope_info="1">mageants/maintenancemode/tmp</upload_dir>
+               <base_url type="media" scope_info="1">mageants/maintenancemode/tmp</base_url>
+               <comment><![CDATA[Supported image formats: gif, jpg, jpeg, png.<br>Recommended size: less than 2MB.]]></comment>
+               <depends>
+                  <field id="maintenance_background">multiple_images</field>
+               </depends>
+            </field>
+            <field id="maintenance_preview" translate="label comment" sortOrder="650" showInDefault="1" showInWebsite="1" showInStore="1">
+               <button_label>Preview</button_label>
+               <comment>If uploading files, please save configuration before preview.</comment>
+               <frontend_model>Mageants\MaintenanceMode\Block\Adminhtml\System\PreviewButton</frontend_model>
+            </field>
+         </group>
+      </section>
+   </system>
+</config>

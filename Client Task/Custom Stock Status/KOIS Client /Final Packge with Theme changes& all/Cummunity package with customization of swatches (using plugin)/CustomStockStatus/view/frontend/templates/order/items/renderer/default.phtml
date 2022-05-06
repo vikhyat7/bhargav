@@ -1,0 +1,130 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+/** @var  $block \Magento\Sales\Block\Order\Item\Renderer\DefaultRenderer */
+$_item = $block->getItem();
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$sku = $_item->getSku();
+$likeField = 'sku';
+$likeArray = array('like' => $sku.'%');
+$helper = $objectManager->create('\Magento\Catalog\Model\Product');
+$skuData = $helper->getCollection()->addFieldToFilter($likeField, $likeArray)->getData();
+// print_r($skuData['0']['entity_id']);
+
+$stockHelper = $this->helper('Mageants\CustomStockStatus\Helper\Data');
+?>
+<tr id="order-item-row-<?= /* @escapeNotVerified */ $_item->getId() ?>">
+    <td class="col name" data-th="<?= $block->escapeHtml(__('Product Name')) ?>">
+        <strong class="product name product-item-name"><?= $block->escapeHtml($_item->getName()) ?></strong>
+        <?php if ($_options = $block->getItemOptions()): ?>
+        <dl class="item-options">
+        <?php foreach ($_options as $_option) : ?>
+            <dt><?= $block->escapeHtml($_option['label']) ?></dt>
+            <?php if (!$block->getPrintStatus()): ?>
+                <?php $_formatedOptionValue = $block->getFormatedOptionValue($_option) ?>
+                <dd>
+                    <?php if (isset($_formatedOptionValue['full_view'])): ?>
+                        <?= $block->escapeHtml($_formatedOptionValue['full_view'], ['a']) ?>
+                    <?php else: ?>
+                        <?=$block->escapeHtml($_formatedOptionValue['value'], ['a']) ?>
+                    <?php endif; ?>
+                </dd>
+            <?php else: ?>
+                <dd>
+                    <?= nl2br($block->escapeHtml((isset($_option['print_value']) ? $_option['print_value'] : $_option['value']))) ?>
+                </dd>
+            <?php endif; ?>
+        <?php endforeach; ?>
+        </dl>
+        <?php endif; ?>
+        <?php $addtInfoBlock = $block->getProductAdditionalInformationBlock(); ?>
+        <?php if ($addtInfoBlock) :?>
+            <?= $addtInfoBlock->setItem($_item)->toHtml() ?>
+        <?php endif; ?>
+        <?= $block->escapeHtml($_item->getDescription()) ?>
+    </td>
+    <td class="col sku" data-th="<?= $block->escapeHtml(__('SKU')) ?>"><?= /* @escapeNotVerified */ $block->prepareSku($block->getSku()) ?></td>
+    <td class="col price" data-th="<?= $block->escapeHtml(__('Price')) ?>">
+        <?= $block->getItemPriceHtml() ?>
+    </td>
+    <td class="col qty" data-th="<?= $block->escapeHtml(__('Qty')) ?>">
+        <ul class="items-qty">
+        <?php if ($block->getItem()->getQtyOrdered() > 0): ?>
+            <li class="item">
+                <span class="title"><?= /* @escapeNotVerified */ __('Ordered') ?></span>
+                <span class="content"><?= /* @escapeNotVerified */ $block->getItem()->getQtyOrdered()*1 ?></span>
+            </li>
+        <?php endif; ?>
+        <?php if ($block->getItem()->getQtyShipped() > 0): ?>
+            <li class="item">
+                <span class="title"><?= /* @escapeNotVerified */ __('Shipped') ?></span>
+                <span class="content"><?= /* @escapeNotVerified */ $block->getItem()->getQtyShipped()*1 ?></span>
+            </li>
+        <?php endif; ?>
+        <?php if ($block->getItem()->getQtyCanceled() > 0): ?>
+            <li class="item">
+                <span class="title"><?= /* @escapeNotVerified */ __('Canceled') ?></span>
+                <span class="content"><?= /* @escapeNotVerified */ $block->getItem()->getQtyCanceled()*1 ?></span>
+            </li>
+        <?php endif; ?>
+        <?php if ($block->getItem()->getQtyRefunded() > 0): ?>
+            <li class="item">
+                <span class="title"><?= /* @escapeNotVerified */ __('Refunded') ?></span>
+                <span class="content"><?= /* @escapeNotVerified */ $block->getItem()->getQtyRefunded()*1 ?></span>
+            </li>
+        <?php endif; ?>
+        </ul>
+    </td>
+    <td class="col stock-status" data-th="<?= $block->escapeHtml(__('stock-status')) ?>">
+        <dl class="item-options">
+                <dd>
+                    <?php
+                    if($_item->getProductType() == "configurable" || $_item->getProductType() == "grouped"){
+                        $ordered_product = $stockHelper->getProductBySku($_item->getSku());
+                    }else{
+                      $ordered_product = $stockHelper->getLoadProduct($_item->getProductId());  
+                    }
+                    
+                      
+                      if(!$stockHelper->getHideStockStatus()){
+                        $stockItems = $stockHelper->getStockItem($_item->getProductId());
+                        echo $stockItems->getIsInStock() ? __('In Stock')." " : ('Out of stock')." ";
+                      }
+                    // echo "<pre>";
+                    // var_dump($ordered_product->getData('mageants_custom_stock_status'));
+                    // var_dump($ordered_product->getData('mageants_custom_stock_rule'));
+                    // var_dump($ordered_product->getData('mageants_qty_base_rule_status'));
+                    // var_dump($_item->getProductId());
+                    $icons = $stockHelper->getCustomStockLabel(
+                        $ordered_product->getData('mageants_custom_stock_status'), 
+                        $ordered_product->getData('mageants_custom_stock_rule'), 
+                        $ordered_product->getData('mageants_qty_base_rule_status'), 
+                        $skuData['0']['entity_id']
+                    );
+                      if(empty($icons) && ($_item->getProductType() == "configurable" || $_item->getProductType() == "grouped")){
+                            $ordered_product = $stockHelper->getLoadProduct($_item->getProductId());     
+                            $icons = $stockHelper->getCustomStockLabel($ordered_product->getData('mageants_custom_stock_status'), $ordered_product->getData('mageants_custom_stock_rule'), $ordered_product->getData('mageants_qty_base_rule_status'), $_item->getProductId());
+                      }
+                    if (@$icons['icon']!=""){ 
+                        if (isset($icons['label'])) {
+                            echo $icons['label'];
+                        }?>
+                        <img src="<?php echo $icons['icon'];?>" id ="custome_stock_icon" custom_stock_status_icon alt="" title="" />
+                    <?php } else {
+                        if (isset($icons['label'])) {
+                            echo $icons['label'];
+                        }
+                        // echo  __($ordered_product->getResource()->getAttribute('mageants_custom_stock_status')->getFrontend()->getValue($ordered_product));
+                    }?>
+                </dd>
+        </dl>
+    </td>
+    <td class="col subtotal" data-th="<?= $block->escapeHtml(__('Subtotal')) ?>">
+        <?= $block->getItemRowTotalHtml() ?>
+    </td>
+</tr>

@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright © Magestore. All rights reserved.
+  ~ See COPYING.txt for license details.
+  -->
+
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">
+                os_supplier_transaction_listing.os_supplier_transaction_listing_data_source
+            </item>
+        </item>
+    </argument>
+    <settings>
+        <spinner>supplier_transaction_template_columns</spinner>
+        <deps>
+            <dep>os_supplier_transaction_listing.os_supplier_transaction_listing_data_source</dep>
+        </deps>
+    </settings>
+
+    <dataSource name="os_supplier_transaction_listing_data_source"
+                component="Magento_Ui/js/grid/provider">
+        <settings>
+            <updateUrl path="mui/index/render"/>
+            <storageConfig>
+                <param name="indexField" xsi:type="string">id</param>
+                <param name="cacheRequests" xsi:type="boolean">false</param>
+            </storageConfig>
+        </settings>
+        <dataProvider class="Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider"
+                      name="os_supplier_transaction_listing_data_source">
+            <settings>
+                <requestFieldName>supplier_transaction_id</requestFieldName>
+                <primaryFieldName>supplier_transaction_id</primaryFieldName>
+            </settings>
+        </dataProvider>
+    </dataSource>
+    <listingToolbar name="listing_top">
+        <bookmark name="bookmarks"/>
+        <columnsControls name="columns_controls"/>
+        <exportButton name="export_button">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="component" xsi:type="string">Magestore_PurchaseOrderSuccess/js/grid/export</item>
+                </item>
+            </argument>
+        </exportButton>
+        <filters name="listing_filters"/>
+        <massaction name="listing_massaction">
+            <action name="delete">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="type" xsi:type="string">delete</item>
+                        <item name="label" xsi:type="string" translate="true">Delete</item>
+                        <item name="url" xsi:type="url" path="purchaseordercustomization/supplier_transaction/massDelete"/>
+                        <item name="confirm" xsi:type="array">
+                            <item name="title" xsi:type="string" translate="true">Delete items</item>
+                            <item name="message" xsi:type="string" translate="true">Are you sure you wan't to delete selected items?</item>
+                        </item>
+                    </item>
+                </argument>
+            </action>
+        </massaction>
+        <paging name="listing_paging"/>
+    </listingToolbar>
+    <columns name="supplier_transaction_template_columns">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="storageConfig" xsi:type="array">
+                    <item name="provider" xsi:type="string">
+                        os_supplier_transaction_listing.os_supplier_transaction_listing.listing_top.bookmarks
+                    </item>
+                    <item name="namespace" xsi:type="string">current</item>
+                </item>
+            </item>
+        </argument>
+        <settings>
+            <childDefaults>
+                <param name="fieldAction" xsi:type="array">
+                    <item name="provider" xsi:type="string">name =
+                        os_supplier_transaction_listing.os_supplier_transaction_listing.os_supplier_transaction_listing_columns.ids
+                    </item>
+                    <item name="target" xsi:type="string">toggleSelect</item>
+                    <item name="params" xsi:type="array">
+                        <item name="0" xsi:type="string">${ $.$data.rowIndex }</item>
+                        <item name="1" xsi:type="boolean">true</item>
+                    </item>
+                </param>
+            </childDefaults>
+        </settings>
+        <selectionsColumn name="ids">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="resizeEnabled" xsi:type="boolean">false</item>
+                    <item name="resizeDefaultWidth" xsi:type="string">55</item>
+                    <item name="indexField" xsi:type="string">supplier_transaction_id</item>
+                    <item name="sortOrder" xsi:type="number">10</item>
+                </item>
+            </argument>
+        </selectionsColumn>
+        <column name="transaction_created_date" component="Magento_Ui/js/grid/columns/date">
+            <settings>
+                <dataType>date</dataType>
+                <dateFormat>MMM d, y</dateFormat>
+                <filter>dateRange</filter>
+                <label translate="true">Transaction created date</label>
+                <sorting>asc</sorting>
+            </settings>
+        </column>
+        <column name="transaction_date" component="Magento_Ui/js/grid/columns/date">
+            <settings>
+                <dataType>date</dataType>
+                <dateFormat>MMM d, y</dateFormat>
+                <filter>dateRange</filter>
+                <label translate="true">Transaction date</label>
+                <sorting>asc</sorting>
+            </settings>
+        </column>
+        <column name="doc_no">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="filter" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">Doc no.</item>
+                    <item name="sortOrder" xsi:type="number">40</item>
+                </item>
+            </argument>
+        </column>
+        <column name="chq_no">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="filter" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">Chq no.</item>
+                    <item name="sortOrder" xsi:type="number">50</item>
+                </item>
+            </argument>
+        </column>
+        <column name="description_edited">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="filter" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">Description</item>
+                    <item name="sortOrder" xsi:type="number">60</item>
+                </item>
+            </argument>
+        </column>
+        <column name="debit_amount">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="filter" xsi:type="string">textRange</item>
+                    <item name="label" xsi:type="string" translate="true">Debit</item>
+                    <item name="sortOrder" xsi:type="number">70</item>
+                </item>
+            </argument>
+        </column>
+        <column name="credit_amount">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="filter" xsi:type="string">textRange</item>
+                    <item name="label" xsi:type="string" translate="true">Credit</item>
+                    <item name="sortOrder" xsi:type="number">80</item>
+                </item>
+            </argument>
+        </column>
+        <actionsColumn name="actions"
+                       component="Magestore_PurchaseOrderCustomization/js/grid/columns/button-actions"
+                       class="Magestore\PurchaseOrderCustomization\Ui\Component\Listing\Columns\Supplier\Transaction\Actions">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="align" xsi:type="string">left</item>
+                    <item name="editCallback" xsi:type="array">
+                        <item name="0" xsi:type="array">
+                            <item name="provider" xsi:type="string">
+                                os_supplier_form.os_supplier_form.transaction_list.transaction_list_buttons.edit_transaction_modal
+                            </item>
+                            <item name="target" xsi:type="string">openModal</item>
+                        </item>
+                        <item name="1" xsi:type="array">
+                            <item name="provider" xsi:type="string">index = supplier_transaction_id
+                            </item>
+                            <item name="target" xsi:type="string">set</item>
+                            <item name="params" xsi:type="array">
+                                <item name="0" xsi:type="string">value</item>
+                                <item name="1" xsi:type="string">${ $.$data.supplier_transaction_id }</item>
+                            </item>
+                        </item>
+                        <item name="2" xsi:type="array">
+                            <item name="provider" xsi:type="string">index = supplier_id
+                            </item>
+                            <item name="target" xsi:type="string">set</item>
+                            <item name="params" xsi:type="array">
+                                <item name="0" xsi:type="string">value</item>
+                                <item name="1" xsi:type="string">${ $.$data.supplier_id }</item>
+                            </item>
+                        </item>
+                        <item name="3" xsi:type="array">
+                            <item name="provider" xsi:type="string">index = transaction_created_date_edit
+                            </item>
+                            <item name="target" xsi:type="string">set</item>
+                            <item name="params" xsi:type="array">
+                                <item name="0" xsi:type="string">gridValue</item>
+                                <item name="1" xsi:type="string">${ $.$data.transaction_created_date }</item>
+                            </item>
+                        </item>
+                        <item name="4" xsi:type="array">
+                            <item name="provider" xsi:type="string">index = transaction_date_edit
+                            </item>
+                            <item name="target" xsi:type="string">set</item>
+                            <item name="params" xsi:type="array">
+                                <item name="0" xsi:type="string">gridValue</item>
+                                <item name="1" xsi:type="string">${ $.$data.transaction_date }</item>
+                            </item>
+                        </item>
+                        <item name="5" xsi:type="array">
+                            <item name="provider" xsi:type="string">index = type_edit
+                            </item>
+                            <item name="target" xsi:type="string">set</item>
+                            <item name="params" xsi:type="array">
+                                <item name="0" xsi:type="string">value</item>
+                                <item name="1" xsi:type="string">${ $.$data.type }</item>
+                            </item>
+                        </item>
+
+                        <item name="6" xsi:type="array">
+                            <item name="provider" xsi:type="string">index = doc_no_edit
+                            </item>
+                            <item name="target" xsi:type="string">set</item>
+                            <item name="params" xsi:type="array">
+                                <item name="0" xsi:type="string">value</item>
+                                <item name="1" xsi:type="string">${ $.$data.doc_no }</item>
+                            </item>
+                        </item>
+                        <item name="7" xsi:type="array">
+                            <item name="provider" xsi:type="string">index = chq_no_edit
+                            </item>
+                            <item name="target" xsi:type="string">set</item>
+                            <item name="params" xsi:type="array">
+                                <item name="0" xsi:type="string">value</item>
+                                <item name="1" xsi:type="string">${ $.$data.chq_no }</item>
+                            </item>
+                        </item>
+                        <item name="8" xsi:type="array">
+                            <item name="provider" xsi:type="string">index = amount_edit
+                            </item>
+                            <item name="target" xsi:type="string">set</item>
+                            <item name="params" xsi:type="array">
+                                <item name="0" xsi:type="string">value</item>
+                                <item name="1" xsi:type="string">${ $.$data.amount }</item>
+                            </item>
+                        </item>
+                        <item name="9" xsi:type="array">
+                            <item name="provider" xsi:type="string">index = currency_edit
+                            </item>
+                            <item name="target" xsi:type="string">set</item>
+                            <item name="params" xsi:type="array">
+                                <item name="0" xsi:type="string">value</item>
+                                <item name="1" xsi:type="string">${ $.$data.currency }</item>
+                            </item>
+                        </item>
+                        <item name="10" xsi:type="array">
+                            <item name="provider" xsi:type="string">index = description_option_edit
+                            </item>
+                            <item name="target" xsi:type="string">set</item>
+                            <item name="params" xsi:type="array">
+                                <item name="0" xsi:type="string">value</item>
+                                <item name="1" xsi:type="string">${ $.$data.description_option }</item>
+                            </item>
+                        </item>
+                    </item>
+                </item>
+            </argument>
+            <settings>
+                <label>Action</label>
+                <filter>false</filter>
+                <sortable>false</sortable>
+                <draggable>true</draggable>
+            </settings>
+        </actionsColumn>
+    </columns>
+</listing>

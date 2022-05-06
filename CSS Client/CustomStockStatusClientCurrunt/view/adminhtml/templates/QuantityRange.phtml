@@ -1,0 +1,74 @@
+<?php
+ $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+ $customStockStOption = $objectManager->create('\Mageants\CustomStockStatus\Block\Adminhtml\Product\Attribute\Edit\Tab\CustomOptionIcon');
+$allStatusOptions = $customStockStOption->getAttributeOptionCollection();
+$jsonCustomStatusOption = json_encode($allStatusOptions);
+
+$customRuleOptions = $block->getRuleAttributeOption();
+$jsonCustomRuleOption = json_encode($customRuleOptions);
+
+$ruleCollection = $block->getCustomRuleCollection();
+
+?>
+
+<fieldset class="fieldset">
+    <legend class="legend"><span><?php /* @noEscape */ echo __('Manage Quantity Range Status');?></span></legend>
+    <div id="manage-options-panel">
+        <div class="box">
+            <div class="hor-scroll1">
+                <div style="clear: both"></div>
+                <table cellpadding="5" cellspacing="8" id="custom_option_range_status_table" class="admin__control-table" >
+                    <thead>
+                    <th><?php /* @noEscape */ echo __('Quantity From');?></th>
+                    <th><?php /* @noEscape */ echo __('Quantity To');?></th>
+                    <th><?php /* @noEscape */ echo __('Custom Stock Status'); ?></th>
+                     <th><?php /* @noEscape */ echo __('Custom Stock Status Rule'); ?></th>
+                     <th><?php /* @noEscape */ echo __('Remove');?></th>
+                    </thead>
+                    <tbody id="custom_option_range_status_table_body"></tbody>
+                </table>
+                <br />
+                <button class="add-new-range-status action- scalable add" title="Add New Range Status">
+                    <span><?php /* @noEscape */ echo __('Add New Range Status'); ?></span>
+                </button>
+            </div>
+        </div>
+    </div>
+</fieldset>
+<?php // @codingStandardsIgnoreStart ?>
+<script>
+    require([
+        'jquery',
+        'Mageants_CustomStockStatus'
+    ], function($, customOptionRangeStatus) {
+        $( window ).ready(function() {
+
+           window.customStockStatus = <?php /* @noEscape */ echo $jsonCustomStatusOption; ?>
+
+           window.customStockRule = <?php /* @noEscape */ echo $jsonCustomRuleOption; ?>
+            
+            $('.add-new-range-status').click(function () {
+                customOptionRangeStatus.addCustomOptionRange();
+                return false;
+            });
+            $( "#custom_option_range_status_table_body" ).on( "click", ".custom-range-status-delete", function() {
+                customOptionRangeStatus.removeCurrentOptionRow(this);
+            });
+
+            <?php 
+            $rule = "";
+            if (count($ruleCollection->getData()) >= 1) {
+                foreach ($ruleCollection->getData() as $ruleOption) {
+                    // if($ruleOption['id'] != "")
+                    // {
+                        $rule = (int)$ruleOption['id'].",".(int)$ruleOption['from'].",".(int)$ruleOption['to'].",".(int)$ruleOption['option_id'].",".(int)$ruleOption['rule_id'];
+                    // }
+                    ?>
+                   customOptionRangeStatus.addCustomOptionRange(<?php echo $rule; ?>);
+
+                <?php }
+            } ?>
+        });
+});
+</script>
+<?php // @codingStandardsIgnoreEnd ?>

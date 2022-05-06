@@ -1,0 +1,40 @@
+<?php
+/**
+ * @category Mageants FreeGift
+ * @package Mageants_FreeGift
+ * @copyright Copyright (c) 2017 Mageants
+ * @author Mageants Team <support@mageants.com>
+ */
+?>
+
+<?php
+/** @var $block \Magento\ConfigurableProduct\Block\Product\View\Type\Configurable*/
+$_product    = $block->getProduct();
+$_attributes = $block->decorateArray($block->getAllowAttributes());
+?>
+<?php if ($_product->isSaleable() && count($_attributes)):?>
+    <?php foreach ($_attributes as $_attribute): ?>
+        <div class="field configurable required">
+            <label class="label" for="attribute<?php echo $_attribute->getAttributeId() ?>">
+                <span><?php echo $block->escapeHtml($_attribute->getProductAttribute()->getStoreLabel()) ?></span>
+            </label>
+            <div class="control">
+                <select name="freegift_super_attribute[<?php echo $_product->getSku() ?>][<?php echo $_attribute->getAttributeId() ?>]"
+                        data-validate="{required:true}"
+                        id="attribute<?php echo $_attribute->getAttributeId() ?>"
+                        class="super-attribute-select">
+                    <option value=""><?php echo __('Choose an Option...') ?></option>
+                </select>
+            </div>
+        </div>
+    <?php endforeach; ?>
+    <script>
+        require(['jquery', 'Mageants_FreeGift/js/type/configurable'], function($) {
+
+            var spConfig = <?php echo $block->unsetData('allow_products')->getJsonConfig() ?>;
+            spConfig.containerId = ".config-product-option-<?php echo $_product->getSku() ?>";
+
+            $('.config-product-option-<?php echo $_product->getSku() ?>').mgfreeConfigurable({spConfig: spConfig});
+        });
+    </script>
+<?php endif;?>

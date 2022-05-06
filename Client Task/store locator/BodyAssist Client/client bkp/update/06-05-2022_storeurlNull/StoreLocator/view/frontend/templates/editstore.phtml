@@ -1,0 +1,1514 @@
+<?php
+$storedata = $block->getstoredata();
+$saveurl = $this->getUrl('storelocator/index/save');
+$countryList = $block->getCountries();
+$hourarray = $block->getHourarray();
+$minutearray = $block->getMinutearray();
+
+?>
+<div class="dealercontent">
+	<form action="<?php echo $saveurl; ?>" method="post" enctype="multipart/form-data" id="dealerform" >
+		<input type="hidden" name="id" value="<?php echo $storedata['store_id'] ?>">
+		<div class="infotab">
+			<span id="information" class="infotitle">Information</span>
+			<div  class="dealerinfo information">
+				<fieldset class="fieldset info">
+					<div class="field">
+						 <div class="fields group group-2">
+							<div class="field">
+								<label class="label">Name</label>
+								<div class="control">
+									<input type="text" name="sname" class="input-text required-entry" id="sname" value="<?php echo $storedata['sname'] ?>" required>
+								</div>
+								<div class="error_msg_sname"></div>
+							</div>
+							<div class="field">
+								<label class="label">Position</label>
+								<input type="text" class="input-text" name="position" value="<?php echo $storedata['position'] ?>">
+							</div>
+							
+						</div>
+					</div>
+					<div class="field">
+						<div class="fields group group-2">
+							<div class="field">
+								<label class="label">Store Image</label>
+								<div class="control">
+									<input type="file" name="image" class="input-text" value="<?php echo $storedata['image'] ?>">
+								</div>
+							</div>
+							<div class="field">
+								<label class="label">Google Map Icon</label>
+								<div class="control">
+									<input type="file" name="icon" class="input-text" value="<?php echo $storedata['icon'] ?>">
+								</div>
+							</div>							
+						</div>
+					</div>
+				</fieldset>
+			</div>
+		</div>
+		<div class="infotab">
+			<span id="address" class="infotitle" >Address</span>
+			<div  class="dealerinfo address">
+				<fieldset class="fieldset info">
+					<div class="field">
+						<div class="fields group group-2">
+							<div class="field">
+								<label class="label">Address</label>
+								<div class="control">
+									<input type="text" name="address" class="input-text required-entry" id="add" value="<?php echo $storedata['address'] ?>" required>
+								</div>
+								<div class="error_msg_add"></div>
+							</div>
+							<div class="field">
+								<label class="label">Region</label>
+								<div class="control">
+									<input type="text" class="input-text" name="region" value="<?php echo $storedata['region'] ?>">
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="field">
+						<div class="fields group group-2">
+							<div class="field">
+								<label class="label">City</label>
+								<div class="control">
+									<input type="text" class="input-text required-entry" name="city" id="city" value="<?php echo $storedata['city'] ?>" required>
+								</div>
+								<div class="error_msg_city"></div>
+							</div>
+							<div class="field">
+								<label class="label">Postcode</label>
+								<div class="control">
+									<input type="text" class="input-text" name="postcode" value="<?php echo $storedata['position'] ?>">
+								</div>
+							</div>
+						</div>
+					</div>
+					
+					<div class="field">
+						<label class="label" id="country">Country</label>
+						<input type="hidden" name="savecontry" id="savecontry" value="<?php echo $storedata['country'] ?>">
+						<?php echo $countryList?>
+					</div>
+				</fieldset>
+			</div>
+		</div>
+		<div class="infotab">
+			<span id="storecoordinates" class="infotitle">Store Coordinates</span>
+			<div  class="dealerinfo storecoordinates">
+				<fieldset class="fieldset info">
+					<div class="field">
+						<div class="fields group group-2">
+							<div class="field">
+								<label class="label">Latitude</label>
+								<div class="control">
+									<input type="text" name="latitude" class="input-text required-entry" id="latitude" value="<?php echo $storedata['latitude'] ?>" required>
+								</div>
+								<div class="error_msg_latitude"></div>
+							</div>
+							<div class="field">
+								<label class="label">Longitude</label>
+								<div class="control">
+									<input type="text" name="longitude" class="input-text required-entry" id="longitude" value="<?php echo $storedata['longitude'] ?>" required>
+								</div>
+								<div class="error_msg_longitude"></div> 
+							</div>
+						</div>
+					</div>
+				</fieldset>
+			</div>
+		</div>
+		<div class="infotab">
+			<span id="contact" class="infotitle">Contact</span>
+			<div  class="dealerinfo contact"> 
+				<fieldset class="fieldset info">
+					<div class="field">
+						<div class="fields group group-2">
+							<div class="field">
+								<label class="label">Website</label>
+								<div class="control">
+									<input type="text" name="link" class="input-text" value="<?php echo $storedata['link'] ?>">
+								</div>
+							</div>
+							<div class="field">
+								<label class="label">Store Url</label>
+								<div class="control">
+									<input type="text" name="storeurl" class="input-text required-entry" id="storeurl" value="<?php echo $storedata['storeurl'] ?>" required>
+								</div>
+								<div class="error_msg_storeurl"></div>
+							</div>
+						</div>
+					</div>
+					<div class="field">
+						<div class="fields group group-2">
+							<div class="field">
+								<label class="label">Phone</label>
+								<div class="control">
+									<input type="text" name="phone" class="input-text" value="<?php echo $storedata['phone'] ?>">
+								</div>
+							</div>
+							<div class="field">
+								<label class="label">Email-Id</label>
+								<div class="control">
+									<input type="text" name="email" id="email" class="input-text required-entry" value="<?php echo $storedata['email'] ?>" required>
+								</div>
+								<div class="error_msg_email"></div>
+							</div>
+						</div>
+					</div>
+				</fieldset>
+			</div>
+		</div>
+		<div class="infotab">
+			<span id="storeschedule" class="infotitle">Store Schedule</span>
+			<div  class="dealerinfo storeschedule"> 
+				<fieldset class="fieldset info">
+					<div class="field">
+						<div class="fields group group-2">
+							<label class="label"><strong>MONDAY</strong></label>
+							<div class="field">
+								<label class="label">Open</label>
+								<select class="timeschedule" id="montime" name="mon_open">
+									<?php if($storedata['mon_open'] == 0){
+										?>
+											<option value="0" selected="selected">NO</option>
+											<option value="1">Yes</option>
+										<?php
+									}else{
+										?>
+											<option value="0">NO</option>
+											<option value="1" selected="selected">Yes</option>
+											<script type="text/javascript">
+												require(['jquery'], function($){ 
+													$(document).ready(function($){
+														$('.montime').addClass('show');
+													});
+												});
+											</script>
+										<?php
+									} ?>
+								</select>
+							</div>
+							<div class="scheduletime montime field">
+								<div class="fields group group-2">
+									<div class="field">
+										<label class="label">Opening Time</label>
+										<div class="fields group group-2">
+											<div class="field">
+												<select name="mon_otime[]" tabindex="1" type="time">
+													<?php 
+														$mon_otime = array();
+														$mon_otime = explode(",",$storedata['mon_otime']);
+														foreach ($hourarray as $value) {
+															if($mon_otime[0] == $value){
+															?>
+																<option value="<?php echo $value; ?>" selected="selected" ><?php echo $value; ?></option>
+															<?php 
+															}
+															?>
+																<option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+															<?php 
+														}
+													?>
+												</select>
+											</div>
+											<div class="field">
+												<select name="mon_otime[]" tabindex="1" type="time">
+													<?php 
+														foreach ($minutearray as $value) {
+															if($mon_otime[1] == $value){
+															?>
+																<option value="<?php echo $value; ?>" selected="selected" ><?php echo $value; ?></option>
+															<?php 
+															}
+															?>
+																<option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+															<?php  
+														}
+													?>
+												</select>
+											</div>
+										</div>
+									</div>
+									<div class="field">
+										<label class="label">Break Start Time</label>
+										<div class="fields group group-2">
+											<div class="field">
+												<select name="mon_bstime[]" tabindex="1" type="time">
+													<?php
+														$mon_bstime = array();
+														$mon_bstime = explode(",",$storedata['mon_bstime']); 
+														foreach ($hourarray as $value) {
+															if($mon_bstime[0] == $value){
+															?>
+																<option value="<?php echo $value; ?>" selected="selected" ><?php echo $value; ?></option>
+															<?php 
+															}
+															?>
+																<option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+															<?php   
+														}
+													?>
+												</select>											
+											</div>
+											<div class="field">
+												<select name="mon_bstime[]" tabindex="1" type="time">
+													<?php 
+														foreach ($minutearray as $value) {
+															if($mon_bstime[1] == $value){
+															?>
+																<option value="<?php echo $value; ?>" selected="selected" ><?php echo $value; ?></option>
+															<?php 
+															}
+															?>
+																<option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+															<?php   
+														}
+													?>
+												</select>
+											</div>
+										</div>
+									</div>
+								</div>
+								<hr />
+								<div class="fields group group-2">
+									<div class="field">
+										<label class="label">Break End Time</label>
+										<div class="fields group group-2">
+											<div class="field">
+												<select name="mon_betime[]" tabindex="1" type="time">
+													<?php
+														$mon_betime = array();
+														$mon_betime = explode(",",$storedata['mon_betime']); 
+														foreach ($hourarray as $value) {
+															if($mon_betime[0] == $value){
+															?>
+																<option value="<?php echo $value; ?>" selected="selected" ><?php echo $value; ?></option>
+															<?php 
+															}
+															?>
+																<option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+															<?php   
+														}
+													?>
+												</select>
+											</div>
+											<div class="field">
+												<select name="mon_betime[]" tabindex="1" type="time">
+													<?php 
+														foreach ($minutearray as $value) {
+															if($mon_betime[1] == $value){
+															?>
+																<option value="<?php echo $value; ?>" selected="selected" ><?php echo $value; ?></option>
+															<?php 
+															}
+															?>
+																<option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+															<?php   
+														}
+													?>
+												</select>
+											</div>
+										</div>
+									</div>
+									<div class="field">
+										<label class="label">Closing Time</label>
+										<div class="fields group group-2">
+											<div class="field">
+												<select name="mon_ctime[]" tabindex="1" type="time">
+													<?php
+														$mon_ctime = array();
+														$mon_ctime = explode(",",$storedata['mon_ctime']); 
+														foreach ($hourarray as $value) {
+															if($mon_ctime[0] == $value){
+															?>
+																<option value="<?php echo $value; ?>" selected="selected" ><?php echo $value; ?></option>
+															<?php 
+															}
+															?>
+																<option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+															<?php   
+														}
+													?>
+												</select>
+												
+											</div>
+											<div class="field">
+													<select name="mon_ctime[]" tabindex="1" type="time">
+														<?php 
+															foreach ($minutearray as $value) {
+																if($mon_ctime[1] == $value){
+																?>
+																	<option value="<?php echo $value; ?>" selected="selected" ><?php echo $value; ?></option>
+																<?php 
+																}
+																?>
+																	<option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+																<?php   
+															}
+														?>
+													</select>
+												</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="field">
+						<div class="fields group group-2">
+							<label class="label"><strong>Tuesday</strong></label>
+							<div class="field">
+								<label class="label">Open</label>
+								<select class="timeschedule" id="tuetime" name="tue_open">
+									<?php if($storedata['tue_open'] == 0){
+										?>
+											<option value="0" selected="selected">No</option>
+											<option value="1">Yes</option>
+										<?php
+									}else{
+										?>
+											<option value="0">No</option>
+											<option value="1" selected="selected">Yes</option>
+											<script type="text/javascript">
+												require(['jquery'], function($){ 
+													$(document).ready(function($){
+														$('.tuetime').addClass('show');
+													});
+												});
+											</script>
+										<?php
+									} ?>
+								</select>
+							</div>
+							<div class="scheduletime tuetime field">
+								<div class="fields group group-2">
+									<div class="field">
+										<label class="label">Opening Time</label>
+										<div class="fields group group-2">
+											<div class="field">
+												<select name="tue_otime[]" tabindex="1" type="time">
+													<?php 
+														$tue_otime = array();
+														$tue_otime = explode(",",$storedata['tue_otime']);
+														foreach ($hourarray as $value) {
+															if($tue_otime[0] == $value){
+															?>
+																<option value="<?php echo $value; ?>" selected="selected" ><?php echo $value; ?></option>
+															<?php 
+															}
+															?>
+																<option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+															<?php  
+														}
+													?>
+												</select>
+											</div>
+											<div class="field">
+												<select name="tue_otime[]" tabindex="1" type="time">
+													<?php 
+														foreach ($minutearray as $value) {
+															if($tue_otime[1] == $value){
+															?>
+																<option value="<?php echo $value; ?>" selected="selected" ><?php echo $value; ?></option>
+															<?php 
+															}
+															?>
+																<option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+															<?php  
+														}
+													?>
+												</select>
+											</div>
+										</div>
+									</div>
+									<div class="field">
+										<label class="label">Break Start Time</label>
+										<div class="fields group group-2">
+											<div class="field">
+												<select name="tue_bstime[]" tabindex="1" type="time">
+													<?php
+														$tue_bstime = array();
+														$tue_bstime = explode(",",$storedata['tue_bstime']); 
+														foreach ($hourarray as $value) {
+															if($tue_bstime[0] == $value){
+															?>
+																<option value="<?php echo $value; ?>" selected="selected" ><?php echo $value; ?></option>
+															<?php 
+															}
+															?>
+																<option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+															<?php  
+														}
+													?>
+												</select>										
+											</div>
+											<div class="field">
+												<select name="tue_bstime[]" tabindex="1" type="time">
+													<?php 
+														foreach ($minutearray as $value) {
+															if($tue_bstime[1] == $value){
+															?>
+																<option value="<?php echo $value; ?>" selected="selected" ><?php echo $value; ?></option>
+															<?php 
+															}
+															?>
+																<option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+															<?php  
+														}
+													?>
+												</select>
+											</div>
+										</div>
+									</div>
+								</div>
+								<hr />
+								<div class="fields group group-2">
+									<div class="field">
+										<label class="label">Break End Time</label>
+										<div class="fields group group-2">
+											<div class="field">
+												<select name="tue_betime[]" tabindex="1" type="time">
+													<?php
+														$tue_betime = array();
+														$tue_betime = explode(",",$storedata['tue_betime']); 
+														foreach ($hourarray as $value) {
+															if($tue_betime[0] == $value){
+															?>
+																<option value="<?php echo $value; ?>" selected="selected" ><?php echo $value; ?></option>
+															<?php 
+															}
+															?>
+																<option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+															<?php  
+														}
+													?>
+												</select>										
+											</div>
+											<div class="field">
+												<select name="tue_betime[]" tabindex="1" type="time">
+													<?php 
+														foreach ($minutearray as $value) {
+															if($tue_betime[1] == $value){
+															?>
+																<option value="<?php echo $value; ?>" selected="selected" ><?php echo $value; ?></option>
+															<?php 
+															}
+															?>
+																<option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+															<?php  
+														}
+													?>
+												</select>
+											</div>
+										</div>
+									</div>
+									<div class="field">
+										<label class="label">Closing Time</label>
+										<div class="fields group group-2">
+											<div class="field">
+												<select name="tue_ctime[]" tabindex="1" type="time">
+													<?php
+														$tue_ctime = array();
+														$tue_ctime = explode(",",$storedata['tue_ctime']); 
+														foreach ($hourarray as $value) {
+															if($tue_ctime[0] == $value){
+															?>
+																<option value="<?php echo $value; ?>" selected="selected" ><?php echo $value; ?></option>
+															<?php 
+															}
+															?>
+																<option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+															<?php  
+														}
+													?>
+												</select>												
+											</div>
+											<div class="field">
+												<select name="tue_ctime[]" tabindex="1" type="time">
+													<?php 
+														foreach ($minutearray as $value) {
+															if($tue_ctime[1] == $value){
+															?>
+																<option value="<?php echo $value; ?>" selected="selected" ><?php echo $value; ?></option>
+															<?php 
+															}
+															?>
+																<option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+															<?php  
+														}
+													?>
+												</select>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="field">
+						<div class="fields group group-2">
+							<label class="label"><strong>Wednesday</strong></label>
+							<div class="field">
+								<label class="label">Open</label>
+								<select class="timeschedule" id="wedtime" name="wed_open">
+									<?php if($storedata['wed_open'] == 0){
+										?>
+											<option value="0" selected="selected">No</option>
+											<option value="1">Yes</option>
+										<?php
+									}else{
+										?>
+											<option value="0">No</option>
+											<option value="1" selected="selected">Yes</option>
+											<script type="text/javascript">
+												require(['jquery'], function($){ 
+													$(document).ready(function($){
+														$('.wedtime').addClass('show');
+													});
+												});
+											</script>
+										<?php
+									} ?>
+								</select>
+							</div>
+							<div class="scheduletime wedtime field">
+								<div class="fields group group-2">
+									<div class="field">
+										<label class="label">Opening Time</label>
+										<div class="fields group group-2">
+											<div class="field">
+												<select name="wed_otime[]" tabindex="1" type="time">
+													<?php
+														$wed_otime = array();
+														$wed_otime = explode(",",$storedata['wed_otime']); 
+														foreach ($hourarray as $value) {
+															if($wed_otime[0] == $value){
+															?>
+																<option value="<?php echo $value; ?>" selected="selected" ><?php echo $value; ?></option>
+															<?php 
+															}
+															?>
+																<option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+															<?php  
+														}
+													?>
+												</select>
+											</div>
+											<div class="field">
+												<select name="wed_otime[]" tabindex="1" type="time">
+													<?php 
+														foreach ($minutearray as $value) {
+															if($wed_otime[1] == $value){
+															?>
+																<option value="<?php echo $value; ?>" selected="selected" ><?php echo $value; ?></option>
+															<?php 
+															}
+															?>
+																<option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+															<?php  
+														}
+													?>
+												</select>
+											</div>
+										</div>
+									</div>
+									<div class="field">
+										<label class="label">Break Start Time</label>
+										<div class="fields group group-2">
+											<div class="field">
+												<select name="wed_bstime[]" tabindex="1" type="time">
+													<?php
+														$wed_bstime = array();
+														$wed_bstime = explode(",",$storedata['wed_bstime']); 
+														foreach ($hourarray as $value) {
+															if($wed_bstime[0] == $value){
+															?>
+																<option value="<?php echo $value; ?>" selected="selected" ><?php echo $value; ?></option>
+															<?php 
+															}
+															?>
+																<option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+															<?php  
+														}
+													?>
+												</select>
+											</div>
+											<div class="field">
+												<select name="wed_bstime[]" tabindex="1" type="time">
+													<?php 
+														foreach ($minutearray as $value) {
+															if($wed_bstime[1] == $value){
+															?>
+																<option value="<?php echo $value; ?>" selected="selected" ><?php echo $value; ?></option>
+															<?php 
+															}
+															?>
+																<option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+															<?php 
+														}
+													?>
+												</select>
+											</div>
+										</div>
+									</div>
+									</div>
+								<hr />
+								<div class="fields group group-2">
+									<div class="field">
+										<label class="label">Break End Time</label>
+										<div class="fields group group-2">
+											<div class="field">
+												<select name="wed_betime[]" tabindex="1" type="time">
+													<?php
+														$wed_betime = array();
+														$wed_betime = explode(",",$storedata['wed_betime']); 
+														foreach ($hourarray as $value) {
+															if($wed_betime[0] == $value){
+															?>
+																<option value="<?php echo $value; ?>" selected="selected" ><?php echo $value; ?></option>
+															<?php 
+															}
+															?>
+																<option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+															<?php  
+														}
+													?>
+												</select>
+											</div>
+											<div class="field">
+												<select name="wed_betime[]" tabindex="1" type="time">
+													<?php 
+														foreach ($minutearray as $value) {
+															if($wed_betime[1] == $value){
+															?>
+																<option value="<?php echo $value; ?>" selected="selected" ><?php echo $value; ?></option>
+															<?php 
+															}
+															?>
+																<option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+															<?php  
+														}
+													?>
+												</select>
+											</div>
+										</div>
+									</div>
+									<div class="field">
+										<label class="label">Closing Time</label>
+										<div class="fields group group-2">
+											<div class="field">
+												<select name="wed_ctime[]" tabindex="1" type="time">
+													<?php
+														$wed_ctime = array();
+														$wed_ctime = explode(",",$storedata['wed_ctime']); 
+														foreach ($hourarray as $value) {
+															if($wed_ctime[0] == $value){
+															?>
+																<option value="<?php echo $value; ?>" selected="selected" ><?php echo $value; ?></option>
+															<?php 
+															}
+															?>
+																<option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+															<?php  
+														}
+													?>
+												</select>
+											</div>
+											<div class="field">
+												<select name="wed_ctime[]" tabindex="1" type="time">
+													<?php 
+														foreach ($minutearray as $value) {
+															if($wed_ctime[1] == $value){
+															?>
+																<option value="<?php echo $value; ?>" selected="selected" ><?php echo $value; ?></option>
+															<?php 
+															}
+															?>
+																<option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+															<?php  
+														}
+													?>
+												</select>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="field">
+						<div class="fields group group-2">
+							<label class="label"><strong>Thursday</strong></label>
+							<div class="field">
+								<label class="label">Open</label>
+								<select class="timeschedule" id="thutime" name="thu_open">
+									<?php if($storedata['thu_open'] == 0){
+										?>
+											<option value="0" selected="selected">No</option>
+											<option value="1">Yes</option>
+										<?php
+									}else{
+										?>
+											<option value="0">No</option>
+											<option value="1" selected="selected">Yes</option>
+											<script type="text/javascript">
+												require(['jquery'], function($){ 
+													$(document).ready(function($){
+														$('.thutime').addClass('show');
+													});
+												});
+											</script>
+										<?php
+									} ?>
+								</select>
+							</div>
+							<div class="scheduletime thutime field">
+								<div class="fields group group-2">
+									<div class="field">
+										<label class="label">Opening Time</label>
+										<div class="fields group group-2">
+											<div class="field">
+												<select name="thu_otime[]" tabindex="1" type="time">
+													<?php
+														$thu_otime = array();
+														$thu_otime = explode(",",$storedata['thu_otime']); 
+														foreach ($hourarray as $value) {
+															if($thu_otime[0] == $value){
+															?>
+																<option value="<?php echo $value; ?>" selected="selected" ><?php echo $value; ?></option>
+															<?php 
+															}
+															?>
+																<option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+															<?php 
+														}
+													?>
+												</select>										
+											</div>
+											<div class="field">
+												<select name="thu_otime[]" tabindex="1" type="time">
+													<?php 
+														foreach ($minutearray as $value) {
+															if($thu_otime[1] == $value){
+															?>
+																<option value="<?php echo $value; ?>" selected="selected" ><?php echo $value; ?></option>
+															<?php 
+															}
+															?>
+																<option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+															<?php 
+														}
+													?>
+												</select>
+											</div>
+										</div>
+									</div>
+									<div class="field">
+										<label class="label">Break Start Time</label>
+										<div class="fields group group-2">
+											<div class="field">
+												<select name="thu_bstime[]" tabindex="1" type="time">
+													<?php
+														$thu_bstime = array();
+														$thu_bstime = explode(",",$storedata['thu_bstime']); 
+														foreach ($hourarray as $value) {
+															if($thu_bstime[0] == $value){
+															?>
+																<option value="<?php echo $value; ?>" selected="selected" ><?php echo $value; ?></option>
+															<?php 
+															}
+															?>
+																<option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+															<?php
+														}
+													?>
+												</select>										
+											</div>
+											<div class="field">
+												<select name="thu_bstime[]" tabindex="1" type="time">
+													<?php 
+														foreach ($minutearray as $value) {
+															if($thu_bstime[1] == $value){
+															?>
+																<option value="<?php echo $value; ?>" selected="selected" ><?php echo $value; ?></option>
+															<?php 
+															}
+															?>
+																<option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+															<?php 
+														}
+													?>
+												</select>
+											</div>
+										</div>
+									</div>
+								</div>
+								<hr />
+								<div class="fields group group-2">
+									<div class="field">
+										<label class="label">Break End Time</label>
+										<div class="fields group group-2">
+											<div class="field">
+												<select name="thu_betime[]" tabindex="1" type="time">
+													<?php
+														$thu_betime = array();
+														$thu_betime = explode(",",$storedata['thu_betime']); 
+														foreach ($hourarray as $value) {
+															if($thu_betime[0] == $value){
+															?>
+																<option value="<?php echo $value; ?>" selected="selected" ><?php echo $value; ?></option>
+															<?php 
+															}
+															?>
+																<option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+															<?php 
+														}
+													?>
+												</select>										
+											</div>
+											<div class="field">
+												<select name="thu_betime[]" tabindex="1" type="time">
+													<?php 
+														foreach ($minutearray as $value) {
+															if($thu_betime[1] == $value){
+															?>
+																<option value="<?php echo $value; ?>" selected="selected" ><?php echo $value; ?></option>
+															<?php 
+															}
+															?>
+																<option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+															<?php 
+														}
+													?>
+												</select>
+											</div>
+										</div>
+									</div>
+									<div class="field">
+										<label class="label">Closing Time</label>
+										<div class="fields group group-2">
+											<div class="field">
+												<select name="thu_ctime[]" tabindex="1" type="time">
+													<?php
+														$thu_ctime = array();
+														$thu_ctime = explode(",",$storedata['thu_ctime']); 
+														foreach ($hourarray as $value) {
+															if($thu_ctime[0] == $value){
+															?>
+																<option value="<?php echo $value; ?>" selected="selected" ><?php echo $value; ?></option>
+															<?php 
+															}
+															?>
+																<option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+															<?php 
+														}
+													?>
+												</select>
+											</div>
+											<div class="field">
+												<select name="thu_ctime[]" tabindex="1" type="time">
+													<?php 
+														foreach ($minutearray as $value) {
+															if($thu_ctime[1] == $value){
+															?>
+																<option value="<?php echo $value; ?>" selected="selected" ><?php echo $value; ?></option>
+															<?php 
+															}
+															?>
+																<option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+															<?php 
+														}
+													?>
+												</select>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="field">
+						<div class="fields group group-2">
+						<label class="label"><strong>Friday</strong></label>
+						<div class="field">
+							<label class="label">Open</label>
+							<select class="timeschedule" id="fritime" name="fri_open">
+								<?php if($storedata['fri_open'] == 0){
+									?>
+										<option value="0" selected="selected">No</option>
+										<option value="1">Yes</option>
+									<?php
+								}else{
+									?>
+										<option value="0">No</option>
+										<option value="1" selected="selected">Yes</option>
+										<script type="text/javascript">
+											require(['jquery'], function($){ 
+												$(document).ready(function($){
+													$('.fritime').addClass('show');
+												});
+											});
+										</script>
+									<?php
+								} ?>
+							</select>
+						</div>
+						<div class="scheduletime fritime field">
+							<div class="fields group group-2">
+								<div class="field">
+									<label class="label">Opening Time</label>
+									<div class="fields group group-2">
+										<div class="field">
+											<select name="fri_otime[]" tabindex="1" type="time">
+												<?php
+													$fri_otime = array();
+													$fri_otime = explode(",",$storedata['fri_otime']); 
+													foreach ($hourarray as $value) {
+														if($fri_otime[0] == $value){
+														?>
+															<option value="<?php echo $value; ?>" selected="selected" ><?php echo $value; ?></option>
+														<?php 
+														}
+														?>
+															<option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+														<?php  
+													}
+												?>
+											</select>									
+										</div>
+										<div class="field">
+											<select name="fri_otime[]" tabindex="1" type="time">
+												<?php 
+													foreach ($minutearray as $value) {
+														if($fri_otime[1] == $value){
+														?>
+															<option value="<?php echo $value; ?>" selected="selected" ><?php echo $value; ?></option>
+														<?php 
+														}
+														?>
+															<option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+														<?php  
+													}
+												?>
+											</select>
+										</div>
+									</div>
+								</div>
+								<div class="field">
+									<label class="label">Break Start Time</label>
+									<div class="fields group group-2">
+										<div class="field">
+											<select name="fri_bstime[]" tabindex="1" type="time">
+												<?php
+													$fri_bstime = array();
+													$fri_bstime = explode(",",$storedata['fri_bstime']); 
+													foreach ($hourarray as $value) {
+														if($fri_bstime[0] == $value){
+														?>
+															<option value="<?php echo $value; ?>" selected="selected" ><?php echo $value; ?></option>
+														<?php 
+														}
+														?>
+															<option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+														<?php  
+													}
+												?>
+											</select>
+										</div>
+										<div class="field">
+											<select name="fri_bstime[]" tabindex="1" type="time">
+												<?php 
+													foreach ($minutearray as $value) {
+														if($fri_bstime[1] == $value){
+														?>
+															<option value="<?php echo $value; ?>" selected="selected" ><?php echo $value; ?></option>
+														<?php 
+														}
+														?>
+															<option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+														<?php  
+													}
+												?>
+											</select>
+										</div>
+									</div>
+								</div>
+							</div>
+							<hr />
+							<div class="fields group group-2">
+								<div class="field">
+									<label class="label">Break End Time</label>
+									<div class="fields group group-2">
+										<div class="field">
+											<select name="fri_betime[]" tabindex="1" type="time">
+												<?php
+													$fri_betime = array();
+													$fri_betime = explode(",",$storedata['fri_betime']); 
+													foreach ($hourarray as $value) {
+														if($fri_betime[0] == $value){
+														?>
+															<option value="<?php echo $value; ?>" selected="selected" ><?php echo $value; ?></option>
+														<?php 
+														}
+														?>
+															<option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+														<?php 
+													}
+												?>
+											</select>											
+										</div>
+										<div class="field">
+											<select name="fri_betime[]" tabindex="1" type="time">
+												<?php 
+													foreach ($minutearray as $value) {
+														if($fri_betime[1] == $value){
+														?>
+															<option value="<?php echo $value; ?>" selected="selected" ><?php echo $value; ?></option>
+														<?php 
+														}
+														?>
+															<option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+														<?php  
+													}
+												?>
+											</select>
+										</div>
+									</div>
+								</div>
+								<div class="field">
+									<label class="label">Closing Time</label>
+									<div class="fields group group-2">
+										<div class="field">
+											<select name="fri_ctime[]" tabindex="1" type="time">
+												<?php
+													$fri_ctime = array();
+													$fri_ctime = explode(",",$storedata['fri_ctime']); 
+													foreach ($hourarray as $value) {
+														if($fri_ctime[0] == $value){
+														?>
+															<option value="<?php echo $value; ?>" selected="selected" ><?php echo $value; ?></option>
+														<?php 
+														}
+														?>
+															<option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+														<?php  
+													}
+												?>
+											</select>								
+										</div>
+										<div class="field">
+											<select name="fri_ctime[]" tabindex="1" type="time">
+												<?php 
+													foreach ($minutearray as $value) {
+														if($fri_ctime[1] == $value){
+														?>
+															<option value="<?php echo $value; ?>" selected="selected" ><?php echo $value; ?></option>
+														<?php 
+														}
+														?>
+															<option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+														<?php  
+													}
+												?>
+											</select>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						</div>
+					</div>
+					<div class="field">
+						<div class="fields group group-2">
+							<label class="label"><strong>Saturday</strong></label>
+							<div class="field">
+								<label class="label">Open</label>
+								<select class="timeschedule" id="sattime" name="sat_open">
+									<?php if($storedata['sat_open'] == 0){
+										?>
+											<option value="0" selected="selected">No</option>
+											<option value="1">Yes</option>
+										<?php
+									}else{
+										?>
+											<option value="0">No</option>
+											<option value="1" selected="selected">Yes</option>
+											<script type="text/javascript">
+												require(['jquery'], function($){ 
+													$(document).ready(function($){
+														$('.sattime').addClass('show');
+													});
+												});
+											</script>
+										<?php
+									} ?>
+								</select>
+							</div>
+							<div class="scheduletime sattime field">
+								<div class="fields group group-2">
+									<div class="field">
+										<label class="label">Opening Time</label>
+										<div class="fields group group-2">
+											<div class="field">
+												<select name="sat_otime[]" tabindex="1" type="time">
+													<?php
+														$sat_otime = array();
+														$sat_otime = explode(",",$storedata['sat_otime']);
+														foreach ($hourarray as $value) {
+															if($sat_otime[0] == $value){
+															?>
+																<option value="<?php echo $value; ?>" selected="selected" ><?php echo $value; ?></option>
+															<?php 
+															}
+															?>
+																<option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+															<?php 
+														}
+													?>
+												</select>
+											</div>
+											<div class="field">
+												<select name="sat_otime[]" tabindex="1" type="time">
+													<?php 
+														foreach ($minutearray as $value) {
+															if($sat_otime[1] == $value){
+															?>
+																<option value="<?php echo $value; ?>" selected="selected" ><?php echo $value; ?></option>
+															<?php 
+															}
+															?>
+																<option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+															<?php 
+														}
+													?>
+												</select>
+											</div>
+										</div>
+									</div>
+									<div class="field">
+										<label class="label">Break Start Time</label>
+										<div class="fields group group-2">
+											<div class="field">
+												<select name="sat_bstime[]" tabindex="1" type="time">
+													<?php
+														$sat_bstime = array();
+														$sat_bstime = explode(",",$storedata['sat_bstime']);
+														foreach ($hourarray as $value) {
+															if($sat_bstime[0] == $value){
+															?>
+																<option value="<?php echo $value; ?>" selected="selected" ><?php echo $value; ?></option>
+															<?php 
+															}
+															?>
+																<option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+															<?php 
+														}
+													?>
+												</select>												
+											</div>
+											<div class="field">
+												<select name="sat_bstime[]" tabindex="1" type="time">
+													<?php 
+														foreach ($minutearray as $value) {
+															if($sat_bstime[1] == $value){
+															?>
+																<option value="<?php echo $value; ?>" selected="selected" ><?php echo $value; ?></option>
+															<?php 
+															}
+															?>
+																<option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+															<?php 
+														}
+													?>
+												</select>
+											</div>
+										</div>
+									</div>
+								</div>
+								<hr />
+								<div class="fields group group-2">
+									<div class="field">
+										<label class="label">Break End Time</label>
+										<div class="fields group group-2">
+											<div class="field">
+												<select name="sat_betime[]" tabindex="1" type="time">
+													<?php
+														$sat_betime = array();
+														$sat_betime = explode(",",$storedata['sat_betime']);
+														foreach ($hourarray as $value) {
+															if($sat_betime[0] == $value){
+															?>
+																<option value="<?php echo $value; ?>" selected="selected" ><?php echo $value; ?></option>
+															<?php 
+															}
+															?>
+																<option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+															<?php 
+														}
+													?>
+												</select>										
+											</div>
+											<div class="field">
+												<select name="sat_betime[]" tabindex="1" type="time">
+													<?php 
+														foreach ($minutearray as $value) {
+															if($sat_betime[1] == $value){
+															?>
+																<option value="<?php echo $value; ?>" selected="selected" ><?php echo $value; ?></option>
+															<?php 
+															}
+															?>
+																<option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+															<?php 
+														}
+													?>
+												</select>
+											</div>
+										</div>
+									</div>
+									<div class="field">
+										<label class="label">Closing Time</label>
+										<div class="fields group group-2">
+											<div class="field">
+												<select name="sat_ctime[]" tabindex="1" type="time">
+													<?php
+														$sat_ctime = array();
+														$sat_ctime = explode(",",$storedata['sat_ctime']);
+														foreach ($hourarray as $value) {
+															if($sat_ctime[0] == $value){
+															?>
+																<option value="<?php echo $value; ?>" selected="selected" ><?php echo $value; ?></option>
+															<?php 
+															}
+															?>
+																<option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+															<?php 
+														}
+													?>
+												</select>										
+											</div>
+											<div class="field">
+												<select name="sat_ctime[]" tabindex="1" type="time">
+													<?php 
+														foreach ($minutearray as $value) {
+															if($sat_ctime[1] == $value){
+															?>
+																<option value="<?php echo $value; ?>" selected="selected" ><?php echo $value; ?></option>
+															<?php 
+															}
+															?>
+																<option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+															<?php 
+														}
+													?>
+												</select>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="field">
+						<div class="fields group group-2">
+							<label class="label"><strong>Sunday</strong></label>
+							<div class="field">
+								<label class="label">Open</label>
+								<select class="timeschedule" id="suntime" name="sun_open">
+									<?php if($storedata['sun_open'] == 0){
+										?>
+											<option value="0" selected="selected">No</option>
+											<option value="1">Yes</option>
+										<?php
+									}else{
+										?>
+											<option value="0">No</option>
+											<option value="1" selected="selected">Yes</option>
+											<script type="text/javascript">
+												require(['jquery'], function($){ 
+													$(document).ready(function($){
+														$('.suntime').addClass('show');
+													});
+												});
+											</script>
+										<?php
+									} ?>
+								</select>
+							</div>
+							<div class="scheduletime suntime field">
+								<div class="fields group group-2">
+									<div class="field">
+										<label class="label">Opening Time</label>
+										<div class="fields group group-2">
+											<div class="field">
+												<select name="sun_otime[]" tabindex="1" type="time">
+													<?php
+														$sun_otime = array();
+														$sun_otime = explode(",",$storedata['sun_otime']);
+														foreach ($hourarray as $value) {
+															if($sun_otime[0] == $value){
+															?>
+																<option value="<?php echo $value; ?>" selected="selected" ><?php echo $value; ?></option>
+															<?php 
+															}
+															?>
+																<option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+															<?php 
+														}
+													?>
+												</select>										
+											</div>
+											<div class="field">
+												<select name="sun_otime[]" tabindex="1" type="time">
+													<?php 
+														foreach ($minutearray as $value) {
+															if($sun_otime[1] == $value){
+															?>
+																<option value="<?php echo $value; ?>" selected="selected" ><?php echo $value; ?></option>
+															<?php 
+															}
+															?>
+																<option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+															<?php 
+														}
+													?>
+												</select>
+											</div>
+										</div>
+									</div>
+									<div class="field">
+										<label class="label">Break Start Time</label>
+										<div class="fields group group-2">
+											<div class="field">
+												<select name="sun_bstime[]" tabindex="1" type="time">
+													<?php
+														$sun_bstime = array();
+														$sun_bstime = explode(",",$storedata['sun_bstime']);
+														foreach ($hourarray as $value) {
+															if($sun_bstime[0] == $value){
+															?>
+																<option value="<?php echo $value; ?>" selected="selected" ><?php echo $value; ?></option>
+															<?php 
+															}
+															?>
+																<option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+															<?php 
+														}
+													?>
+												</select>										
+											</div>
+											<div class="field">
+												<select name="sun_bstime[]" tabindex="1" type="time">
+													<?php 
+														foreach ($minutearray as $value) {
+															if($sun_bstime[1] == $value){
+															?>
+																<option value="<?php echo $value; ?>" selected="selected" ><?php echo $value; ?></option>
+															<?php 
+															}
+															?>
+																<option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+															<?php 
+														}
+													?>
+												</select>
+											</div>
+										</div>
+									</div>
+								</div>
+								<hr />
+								<div class="fields group group-2">
+									<div class="field">
+										<label class="label">Break End Time</label>
+										<div class="fields group group-2">
+											<div class="field">
+												<select name="sun_betime[]" tabindex="1" type="time">
+													<?php 
+														$sun_betime = array();
+														$sun_betime = explode(",",$storedata['sun_betime']);
+														foreach ($hourarray as $value) {
+															if($sun_betime[0] == $value){
+															?>
+																<option value="<?php echo $value; ?>" selected="selected" ><?php echo $value; ?></option>
+															<?php 
+															}
+															?>
+																<option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+															<?php 
+														}
+													?>
+												</select>										
+											</div>
+											<div class="field">
+												<select name="sun_betime[]" tabindex="1" type="time">
+													<?php 
+														foreach ($minutearray as $value) {
+															if($sun_betime[1] == $value){
+															?>
+																<option value="<?php echo $value; ?>" selected="selected" ><?php echo $value; ?></option>
+															<?php 
+															}
+															?>
+																<option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+															<?php 
+														}
+													?>
+												</select>
+											</div>
+										</div>
+									</div>
+									<div class="field">
+										<label class="label">Closing Time</label>
+										<div class="fields group group-2">
+											<div class="field">
+												<select name="sun_ctime[]" tabindex="1" type="time">
+													<?php
+														$sun_ctime = array();
+														$sun_ctime = explode(",",$storedata['sun_ctime']);
+														foreach ($hourarray as $value) {
+															if($sun_ctime[0] == $value){
+															?>
+																<option value="<?php echo $value; ?>" selected="selected" ><?php echo $value; ?></option>
+															<?php 
+															}
+															?>
+																<option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+															<?php 
+														}
+													?>
+												</select>										
+											</div>
+											<div class="field">
+												<select name="sun_ctime[]" tabindex="1" type="time">
+													<?php 
+														foreach ($minutearray as $value) {
+															if($sun_ctime[1] == $value){
+															?>
+																<option value="<?php echo $value; ?>" selected="selected" ><?php echo $value; ?></option>
+															<?php 
+															}
+															?>
+																<option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+															<?php 
+														}
+													?>
+												</select>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</fieldset>
+			</div>
+		</div>
+		<div class="infotab">
+			<button type="submit" class="btnsubmit action primary" name="submit">Submit</button>
+		</div>
+	</form>
+</div>

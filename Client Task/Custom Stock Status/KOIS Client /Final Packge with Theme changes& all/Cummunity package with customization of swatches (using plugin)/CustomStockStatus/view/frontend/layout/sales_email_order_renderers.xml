@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @category Mageants CustomStockStatus
+ * @package Mageants_CustomStockStatus
+ * @copyright Copyright (c) 2018 Mageants
+ * @author Mageants Team <info@mageants.com>
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd" label="Email Creditmemo Items List" design_abstraction="custom">
+    <body>
+        <referenceBlock name="sales.email.order.renderers.default">
+        	<action method="setTemplate" ifconfig="CustomStockSt/display_setting/displayonorderemail">
+                <argument name="template" xsi:type="string">Mageants_CustomStockStatus::email/items/order/default.phtml</argument>
+            </action>
+    		<block  class="Mageants\CustomStockStatus\Block\Product\CustomstatusEmail" name="category.products.customstatus" as="customstatus_list" template="Mageants_CustomStockStatus::customstock/email_list.phtml" />
+        </referenceBlock>
+    </body>
+</page>

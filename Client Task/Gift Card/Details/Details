@@ -1,0 +1,50 @@
+Details :
+=========
+
+MAGENTO ADMIN   
+https://alpamayo.artserver.gr
+user: Support_Artabout
+pass: Oa58WXRm287H
+
+SSH        
+88.198.18.218
+port: 50022    
+user: alpamayo
+pass: r!yuS$J3^B4*
+
+
+ssh alpamayo@88.198.18.218 -p 50022
+
+
+date : 18-04-2022
+------------------
+
+I installed extension on Magento 2.4.3 and had several errors on backend. Are you sure it is compatible with latest magento version?
+
+My main issue now is that gift card images/gallery are not displayed in product page
+https://alpamayo.artserver.gr/en/gift-card.html
+
+=================================================================================================================
+
+File Changes :
+
+- Mageants/GiftCertificate/view/frontend/layout/catalog_product_view.xml  - remove container
+- Mageants/GiftCertificate/view/frontend/web/css/css/giftcertificate.css  - .required-entry.manual-price = 49%
+- Mageants/GiftCertificate/view/frontend/web/js/giftcertificate.js   - change class in lines 10 to 25 
+    (fotoroma to img-fluid)
+- Mageants/GiftCertificate/view/frontend/templates/giftcertificate.phtml - change class in 
+    $("#click-me").click(function()
+
+
+
+Hello,
+
+    we have resolved issue of button language translation and highlight on selected template.
+    but getting other issue so we need to debug farther in product mode debugging is not possible 
+    also we make some change but not get in frontend so please provide staging site if have.
+
+Thank You.
+
+
+
+<img src="{{trans '%myVar' myVar=$data.template}}" style="width: 100%;" />

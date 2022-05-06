@@ -1,0 +1,128 @@
+***************
+REST Api ;-
+***************
+
+1. reorder particular order of customer
+=======================================
+
+Step-1) POST - http://127.0.0.1/magento242/rest/V1/reorder/000000002?customer_id=1 
+( set customer_id in parameters )
+
+Step-2) set Bearer Token
+
+
+2. reorder particular item of customer's order
+==============================================
+
+Step-1) POST - http://127.0.0.1/magento242/rest/V1/singleitemreorder/items/3000000002?customer_id=5 
+( set customer_id in parameters )
+
+Step-2) set Bearer Token
+
+Step-3) paste in body
+
+{
+    "OrderItem": {
+        "sku": "24-MB01",
+        "qty": 5
+    }
+}
+
+3. reorder all previous order of customer
+=========================================
+
+Step-1) POST - http://127.0.0.1/magento242/rest/V1/reorder/?customer_id=5 
+( set customer_id in parameters )
+
+Step-2) set Bearer Token
+
+
+***************
+GraphQl ;-
+***************
+
+1. reorder particular order of customer
+========================================
+
+Step-1) POST - http://127.0.0.1/magento242/graphql
+
+Step-2) paste below in body
+
+mutation{
+  SingleOrederReorder(
+  orderNumber:"3000000002"
+  customerId:5
+  ){
+    cart{
+     id
+      items
+      {
+        product
+        {
+        	sku
+        }
+        quantity
+      }
+    }
+  }
+}
+
+2. reorder All previous order's of customer
+==============================================
+
+Step-1) POST - http://127.0.0.1/magento242/graphql
+
+Step-2) paste below in body
+
+mutation{
+  AllReorder(
+    customerId:5
+  )
+  {
+    cart{
+     id
+      items
+      {
+        product
+        {
+          sku
+        }
+        quantity
+      }
+    }
+  }
+}
+
+3. reorder particular item of customer's order 
+==============================================
+
+Step-1) POST - http://127.0.0.1/magento242/graphql
+
+Step-2) paste below in body
+
+mutation {
+  SimpleProductsToCart(
+    input: {
+      customer_id:7
+      cart_items: [
+        {
+          data: {
+            quantity: 5
+            sku: "24-MB02"
+          }
+        }
+      ]
+    }
+  ) {
+    cart {
+      items {
+        id
+        product {
+          name
+          sku
+        }
+        quantity
+      }
+    }
+  }
+}

@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd" layout="2columns-left">
+	<head>
+      <css src="Mageants_StoreLocator::css/dealer.css" />
+      <script src="Mageants_StoreLocator::js/dealer.js"/>
+  </head> 
+	<update handle="customer_account" />
+    <body>
+      <referenceBlock name="content">
+			    <block class="Mageants\StoreLocator\Block\Index" name="storelocator.index.dealer" template="Mageants_StoreLocator::dealer.phtml" cacheable="false" />
+      </referenceBlock>
+    </body>
+</page>

@@ -1,0 +1,142 @@
+*****************************************
+Out Of Stock Notification :-
+*****************************************
+Api :-
+
+POST - http://127.0.0.1/magento242/rest/V1/out/stock/4
+
+{
+	"data":
+	{
+		
+		"customer_name":"Guest",
+		"customer_id":"0",
+		"email":"guest@gmail.com",
+		"product_sku":"24-MB01",
+		"product_name":"Joust Duffle Bag",
+		"product_url":"http://127.0.0.1/magento242/joust-duffle-bag.html",
+		"subscribe_date":"2021/10/28",
+		"status":"",
+		"notify_status":"1"
+	}
+
+}
+
+
+GraphQl :-
+
+{
+	CustomGraphql
+	(
+		customer_name:"Guest"
+		customer_id:"0"
+		email:"guest@gmail.com"
+		product_sku:"24-MB01"
+		product_name:"Joust Duffle Bag"
+		product_url:"http://127.0.0.1/magento242/joust-duffle-bag.html"
+		subscribe_date:"2021/10/28"
+		status:""
+		notify_status:"1"
+	)
+	{
+		customer_name
+		customer_id
+		email
+		product_sku
+		product_name
+		product_url
+		subscribe_date
+		status
+		notify_status
+	}
+}
+
+
+*****************************************
+Store View Pricing
+*****************************************
+
+ Api :-
+ 
+POST - http://127.0.0.1/magento242/rest/V1/get/products/24-UG01
+
+{
+	"data":
+	{
+		
+		"price":"120",
+		"store_id":"3",
+		"special_price":"110",
+		"cost":"1",
+		"special_from_date":"26/11/2021",
+		"special_to_date":"26/11/2025",
+		"msrp_display_actual_price_type":"1",
+		"msrp":"7"	
+	}
+}
+
+
+
+ Graphql :-
+
+
+{
+	GetSku(
+		sku:"24-WG01"
+		price:"120"
+		store_id:"3"
+		special_price:"110"
+		cost:"1"
+		special_from_date:"26/11/2021"
+		special_to_date:"26/11/2025"
+		msrp_display_actual_price_type:"1"
+		msrp:"7"
+	)
+	{
+		price
+		store_id
+		special_price
+		cost
+		special_from_date
+		special_to_date
+		msrp_display_actual_price_type
+		msrp
+	}
+}
+
+
+*****************************************
+shipping tracker 
+*****************************************
+Api :-
+
+POST  - http://127.0.0.1/magento242/rest/V1/get/order/000000001
+
+Graphql :-
+
+{
+	CustomerOrderList(increment_id:"000000004"){
+    fetchRecords{
+customer_id
+entity_id
+customer_name
+total_qty_ordered
+grand_total
+weight
+discount_amount
+status
+is_guest_customer
+store_name
+customer_gender
+customer_dob
+created_at
+shipping_description
+address_array
+    items{
+      title
+      sku
+      price
+    }
+  }
+	}
+}

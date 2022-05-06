@@ -1,0 +1,208 @@
+<?php
+// @codingStandardsIgnoreFile
+$statementHeader = $block->getStatementHeader();
+$statementFooter = $block->getStatementFooter();
+$period = $block->getPeriod();
+$supplierInfo = $block->getSupplierInfo();
+$openingBalance = $block->getOpeningBalance();
+$closingBalance = $block->getClosingBalance();
+$transactions = $block->getTransactions();
+?>
+<style type="text/css">
+    table {
+        page-break-inside: auto;
+        width: 100%
+    }
+
+    tr {
+        page-break-inside: avoid;
+        page-break-after: auto
+    }
+
+    thead {
+        display: table-header-group
+    }
+
+    tfoot {
+        display: table-footer-group
+    }
+
+
+    .page-header, .page-header-space {
+        height: 60px;
+    }
+
+    .page-footer, .page-footer-space {
+        height: 45px;
+
+    }
+
+    .page-footer {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+    }
+
+    .page-header {
+        position: fixed;
+        top: 0mm;
+        width: 100%;
+    }
+
+    .page {
+        page-break-after: always;
+    }
+
+    #transaction-table, #transaction-table th, #transaction-table td {
+        border: 1px solid black;
+        border-collapse: collapse;
+    }
+
+    .title-supplier-statement {
+        text-align: center;
+    }
+
+    .no-border {
+        border: hidden !important;
+    }
+
+    .blank-row {
+        height: 15px;
+    }
+    .title-payment-term{
+        text-align: right;
+    }
+</style>
+
+<div class="page-header">
+    <?php echo $statementHeader; ?>
+</div>
+
+<div class="page-footer">
+    <?php echo $statementFooter; ?>
+</div>
+
+
+<table>
+    <thead>
+    <tr>
+        <td>
+            <div class="page-header-space"></div>
+        </td>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr>
+        <td>
+            <div class="page">
+                <table id="transaction-table">
+                    <thead>
+                    <tr class="no-border">
+                        <td colspan="7" class="no-border title-supplier-statement">
+                            <span>SUPPLIER STATEMENT</span>
+                        </td>
+                    </tr>
+                    <tr class="no-border">
+                        <td colspan="7" class="no-border title-period">
+                            <span>Period: <?php echo $period; ?></span>
+                        </td>
+                    </tr>
+                    <tr class="no-border">
+                        <td colspan="4" class="no-border title-supplier-name-sku">
+                            <span>Supplier: <?php echo $supplierInfo['supplier_info']; ?></span>
+                        </td>
+                        <td colspan="3" class="no-border title-payment-term">
+                            <span>Payment term: <?php echo $supplierInfo['payment_term']; ?></span>
+                        </td>
+                    </tr>
+                    <tr class="blank-row">
+                        <td style="border-left: hidden; border-right: hidden;"></td>
+                    </tr>
+                    <tr>
+                        <th>Date</th>
+                        <th>Doc no.</th>
+                        <th>Chq no.</th>
+                        <th>Description</th>
+                        <th>Debit</th>
+                        <th>Credit</th>
+                        <th>Balance</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td><b>Opening Balance</b></td>
+                            <td><?php echo ($openingBalance < 0 ? number_format(abs($openingBalance), 2) : "") ?></td>
+                            <td><?php echo ($openingBalance >= 0 ?number_format($openingBalance, 2) : "") ?></td>
+                            <td></td>
+                        </tr>
+                        <?php
+                            $balance = $openingBalance;
+                            foreach($transactions as $transaction) :
+                        ?>
+                            <tr>
+                                <td><?php
+                                        $transactionDate = $transaction->getData('transaction_date');
+                                        if($transactionDate){
+                                            $transactionDate = date_create_from_format("Y-m-d", $transaction->getData('transaction_date'));
+                                            $transactionDate = date_format($transactionDate, 'd-m-Y');
+                                        }
+                                        echo $transactionDate;
+                                    ?></td>
+                                <td><?php echo $transaction->getData('doc_no'); ?></td>
+                                <td><?php echo $transaction->getData('chq_no'); ?></td>
+                                <td><?php echo $transaction->getData('description_edited'); ?></td>
+                                <td>
+                                    <?php
+                                        if($transaction->getData('type') ==
+                                            \Magestore\PurchaseOrderCustomization\Model\Supplier\Transaction\Options\Type::TYPE_DEBIT)
+                                        {
+                                            $balance -= $transaction->getData('amount');
+                                            echo number_format($transaction->getData('amount'), 2);
+                                        }
+                                    ?>
+                                </td>
+                                <td>
+                                    <?php
+                                    if($transaction->getData('type') ==
+                                        \Magestore\PurchaseOrderCustomization\Model\Supplier\Transaction\Options\Type::TYPE_CREDIT)
+                                    {
+                                        $balance += $transaction->getData('amount');
+                                        echo number_format($transaction->getData('amount'), 2);
+                                    }
+                                    ?>
+                                </td>
+                                <td><?php echo number_format($balance, 2); ?></td>
+                            </tr>
+                        <?php
+                            endforeach;
+                        ?>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td><b>Closing Balance</b></td>
+                            <td><?php echo ($closingBalance < 0 ? number_format(abs($closingBalance), 2) : "") ?></td>
+                            <td><?php echo ($closingBalance >= 0 ? number_format($closingBalance, 2) : "") ?></td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+
+    <tfoot>
+    <tr>
+        <td>
+            <!--place holder for the fixed-position footer-->
+            <div class="page-footer-space"></div>
+        </td>
+    </tr>
+    </tfoot>
+
+</table>

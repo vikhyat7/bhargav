@@ -1,0 +1,5 @@
+id,sku,price,store_id,special_price,msrp,cost,special_from_date,special_to_date,msrp_display_actual_price_type,tier_price
+1,24-MB01,100,3,2,5,4,11/30/2017,12/25/2017,1,"[{""price_id"":""8"",""website_id"":""0"",""all_groups"":""1"",""cust_group"":""32000"",""price"":""65.00"",""price_qty"":""3"",""website_price"":""65.0000"",""record_id"":""0""}]"
+2,24-MB04,100,2,3,,,,,,
+3,24-MB03,100,1,4,,,,,,
+4,24-MB05,100,3,5,,,,,,

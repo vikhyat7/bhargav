@@ -1,0 +1,58 @@
+<?php
+/**
+ * @category Mageants MaintenanceMode
+ * @package Mageants_MaintenanceMode
+ * @copyright Copyright (c) 2019 Mageants
+ * @author Mageants Team <support@mageants.com>
+ */
+
+/** @var \Mageants\MaintenanceMode\Block\Clock $block */
+
+$clockStyle = $block->getClockStyle();
+$clockBackgroundColor = $block->getClockBgColor();
+$clockNumberColor     = $block->getClockNumberColor();
+$template             = $block->getClockTemplate($clockStyle);
+$timerId              = uniqid('', false);
+
+if (!empty($template)) : ?>
+    <div id="ma-countdown-timer-<?= /* @noEscape */ $timerId ?>">
+        <?= /* @noEscape */ $template ?>
+    </div>
+    <style type="text/css">
+        #ma-countdown-timer-<?= /* @noEscape */ $timerId ?> .ma-countdown-txt,
+        #ma-countdown-timer-<?= /* @noEscape */ $timerId ?> .ma-countdown-days,
+        #ma-countdown-timer-<?= /* @noEscape */ $timerId ?> .ma-countdown-hours,
+        #ma-countdown-timer-<?= /* @noEscape */ $timerId ?> .ma-countdown-minutes,
+        #ma-countdown-timer-<?= /* @noEscape */ $timerId ?> .ma-countdown-seconds {
+            color: <?= /* @noEscape */ $clockNumberColor ?>;
+        }
+
+        <?php if ($clockStyle === 'circle' || $clockStyle === 'square' || $clockStyle === 'stack') : ?>
+        #ma-countdown-timer-<?= /* @noEscape */ $timerId ?> .ma-countdown-clock {
+            background-color: <?= /* @noEscape */ $clockBackgroundColor ?>;
+            border-color: <?= /* @noEscape */ '#cccccc' ?>;
+        }
+        <?php endif; ?>
+        <?php if ($clockStyle === 'modern') : ?>
+        #ma-countdown-timer-<?= /* @noEscape */ $timerId ?> .countdown-modern {
+            background: <?= /* @noEscape */ $clockBackgroundColor ?>;
+            border-color: <?= /* @noEscape */ $clockBackgroundColor ?>;
+        }
+        <?php endif; ?>
+    </style>
+
+    <script type="text/x-magento-init">
+    {
+        "#ma-countdown-timer-<?= /* @noEscape */$timerId ?>": {
+            "Mageants_MaintenanceMode/js/clock/macountdowntimer": {
+                "timer_id": "#ma-countdown-timer-<?= /* @noEscape */ $timerId ?>",
+                "timezone": "<?= /* @noEscape */ $block->getTimeZone() ?>",
+                "endTime": "<?= /* @noEscape */ $block->getEndTime() ?>",
+                "currentTime": "<?= /* @noEscape */ $block->getCurrentTime() ?>",
+                "baseUrl": "<?= /* @noEscape */ $block->getBaseUrl() ?>",
+                "autoSwitch": <?= /* @noEscape */ $block->getAutoSwitch() ?>
+            }
+        }
+    }
+    </script>
+<?php endif; ?>
