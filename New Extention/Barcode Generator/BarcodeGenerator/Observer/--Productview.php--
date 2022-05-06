@@ -1,0 +1,97 @@
+<?php
+/**
+ * @category Mageants BarcodeGenerator
+ * @package Mageants_BarcodeGenerator
+ * @copyright Copyright (c) 2018 Mageants
+ * @author Mageants Team <support@mageants.com>
+ */
+namespace Mageants\BarcodeGenerator\Observer;
+
+use Magento\Framework\Event\ObserverInterface;
+use Magento\Framework\App\Request\Http;
+
+/**
+ * Save Price class
+ */
+class Productview implements ObserverInterface
+{
+    /**
+     * request
+     *
+     * @var \Magento\Framework\App\Request\Http
+     */
+    private $request;
+
+  
+    /**
+     * message
+     *
+     * @var Magento\Framework\Message\ManagerInterface
+     */
+    private $message;
+
+    /**
+     * helper
+     *
+     * @var Mageants\BarcodeGenerator\Helper\Data
+     */
+    private $helper;
+
+    private $storeManager;
+
+    public function __construct(
+        Http $request,
+       
+        \Magento\Framework\Message\ManagerInterface $message,
+        \Mageants\BarcodeGenerator\Helper\Data $helper,
+        \Mageants\BarcodeGenerator\Helper\BarcodeData $barcodehelper,
+        \Magento\Catalog\Api\ProductRepositoryInterface $productRepository,
+        \Magento\Framework\Json\Helper\Data $jsonHelper,
+        \Magento\Catalog\Model\Attribute\ScopeOverriddenValue $scopeOverriddenValue,
+        \Magento\Store\Model\StoreManagerInterface $storeManager
+    ) {
+        $this->request = $request;
+       
+        $this->_message=$message;
+        $this->productRepository=$productRepository;
+        $this->helper =$helper;
+        $this->barcodehelper =$barcodehelper;
+        // $this->qrhelper =$qrhelper;
+        $this->jsonHelper = $jsonHelper;
+        $this->scopeOverriddenValue = $scopeOverriddenValue;
+        $this->_storeManager = $storeManager;
+    }
+    /**
+     * Execute and perform price for store view
+     */
+    // @codingStandardsIgnoreLine
+    public function execute(\Magento\Framework\Event\Observer $observer)
+    {
+
+        if ($this->helper->isEnable()==1) {
+        
+        $ProId = $observer->getProduct()->getId();
+        $barcodeType = $this->helper->barcodeType();
+        $barcodePrefix = $this->helper->barcodePrefix();
+
+
+        $barcode = $this->barcodehelper->barcodeText($ProId);
+
+        
+        $attributeCode = "barcode";
+        $product = $this->productRepository->getById($ProId);
+        $product->setData($attributeCode, $barcode);
+        $observer->getProduct()->setBarcode($barcode); 
+
+        $this->productRepository->save($product);
+        // echo($barcode);exit();
+
+        
+        }
+
+
+
+    }
+
+    
+}
