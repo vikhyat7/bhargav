@@ -1,0 +1,23 @@
+ftp
+Host: 91.238.161.228
+User: web
+Pass: 5dz8Gczj3NAw
+Port: 22 
+
+admin
+URL: https://www.componentshop.co.uk/csadmin
+user: admin
+pass: Chic@g1o8409
+
+ssh
+Same as ftp
+
+
+ssh web@91.238.161.228 -p 22
+
+
+Hello,
+ 
+ 	We have installed GiftCertificate in site, please Check and confirm.
+ 	Also we have attached User Guide for Configuration of extension.
+

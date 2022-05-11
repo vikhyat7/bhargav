@@ -148,25 +148,29 @@ Make Zip :
 Make zip => sudo zip -r 7.4.zip 7.4/
 Make file unzip => sudo unzip 7.4.zip
 
+Make tar :
+---------------
+
+tar -czf file.tar.gz file/
 
 ============================================================================================================================
 
 Install Magento Via CMD :
 -----------------------
 
-php bin/magento setup:install --base-url=http://127.0.0.1/magento234/ \
---db-host=localhost --db-name=m2118 --db-user=root --db-password=admin \
---admin-firstname=m --admin-lastname=2118 --admin-email=vishalsevani8420@gmail.com \
+php bin/magento setup:install --base-url=http://127.0.0.1/m235p1/ \
+--db-host=localhost --db-name=m235p1 --db-user=root --db-password=admin \
+--admin-firstname=M--admin-lastname=235p1 --admin-email=vishalsevani8420@gmail.com \
 --admin-user=master --admin-password=master123 --language=en_US \
 --currency=USD --timezone=America/Chicago --use-rewrites=1 \
 --backend-frontname="admin" --elasticsearch-host=127.0.0.1
 
 
 
-INSERT INTO `core_config_data`(`path`, `value`) VALUES ('web/unsecure/base_media_url','http://127.0.0.1/m2118/pub/media/');
-INSERT INTO `core_config_data`(`path`, `value`) VALUES ('web/secure/base_static_url','http://127.0.0.1/m2118/pub/static/');
-INSERT INTO `core_config_data`(`path`, `value`) VALUES ('web/unsecure/base_static_url','http://127.0.0.1/m2118/pub/static/');
-INSERT INTO `core_config_data`(`path`, `value`) VALUES ('web/secure/base_media_url','http://127.0.0.1/m2118/pub/media/');
+INSERT INTO `core_config_data`(`path`, `value`) VALUES ('web/unsecure/base_media_url','http://127.0.0.1/m235p1/pub/media/');
+INSERT INTO `core_config_data`(`path`, `value`) VALUES ('web/secure/base_static_url','http://127.0.0.1/m235p1/pub/static/');
+INSERT INTO `core_config_data`(`path`, `value`) VALUES ('web/unsecure/base_static_url','http://127.0.0.1/m235p1/pub/static/');
+INSERT INTO `core_config_data`(`path`, `value`) VALUES ('web/secure/base_media_url','http://127.0.0.1/m235p1/pub/media/');
 INSERT INTO core_config_data (path, value) VALUES ('dev/static/sign', 0) ON DUPLICATE KEY UPDATE value = 0;
 
 bin/magento module:disable Magento_TwoFactorAuth
@@ -178,12 +182,21 @@ check magento version : - bin/magento --version
 
 ============================================================================================================================
 
-sudo a2dismod php7.1
-sudo a2enmod php7.4
+sudo a2dismod php7.0
+sudo a2enmod php7.3
 sudo service apache2 restart
-sudo update-alternatives --set php /usr/bin/php7.4
+sudo update-alternatives --set php /usr/bin/php7.3
 
-============================================================================================================================
+==================================================================================================================
+
+Demo 12 :
+
+
+FTP & explicit FTPS port:  21
+FTP server: ftp.b7fb87dd732790222.temporary.link
+FTP username : demo12n@demo12.b7fb87dd732790222.temporary.link
+Password:~qx$w5Ofi!^9
+==================================================================================================================
 
 For Changing Magento Modes : -
 ------------------------------
